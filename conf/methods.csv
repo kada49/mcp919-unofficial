@@ -1,7 +1,7 @@
 searge,name,side,desc
 func_100011_g,getIsPotionDurationMax,0,
 func_100012_b,setPotionDurationMax,0,Toggle the isPotionDurationMax field.
-func_100015_a,isKeyDown,0,Returns whether the specified key binding is currently being pressed.
+func_100015_a,isKeyDown,0,Returns whether the specified key binding is currently being pressed.\n \n@param key The key tested
 func_104002_bU,isNoDespawnRequired,2,
 func_104055_i,setForceGamemode,1,
 func_104056_am,getForceGamemode,2,
@@ -12,14 +12,17 @@ func_110123_P,onChunkLoad,2,
 func_110124_au,getUniqueID,2,
 func_110128_b,onBroken,2,Called when this entity is broken. Entity parameter may be null.
 func_110131_b,removeFrameFromMap,2,Removes the dot representing this frame's position from the map when the item frame is broken.
+func_110132_b,removeInventoryChangeListener,2,removes the specified IInvBasic from receiving further change notices\n \n@param listener the listener to remove
 func_110133_a,setCustomName,2,Sets the name of this inventory. This is displayed to the client on opening.
+func_110134_a,addInventoryChangeListener,2,Add a listener that will be notified when any item in this inventory is modified.\n \n@param listener the listener to add
 func_110138_aP,getMaxHealth,2,
 func_110139_bj,getAbsorptionAmount,2,
 func_110140_aT,getAttributeMap,2,
-func_110142_aN,getCombatTracker,2,
+func_110142_aN,getCombatTracker,2,1.8.9
 func_110143_aJ,getHealth,2,
 func_110144_aD,getLastAttacker,2,
 func_110145_l,dismountEntity,2,Moves the entity to a position out of the way of its mount.
+func_110146_f,updateDistance,2,
 func_110147_ax,applyEntityAttributes,2,
 func_110148_a,getEntityAttribute,2,
 func_110149_m,setAbsorptionAmount,2,
@@ -302,12 +305,12 @@ func_130105_g,getMinecraftStartTimeMillis,2,Returns the saved value of System#cu
 func_135016_M,getLanguageManager,0,
 func_135018_a,getLanguages,0,
 func_135021_a,loadLocaleData,0,
-func_135022_a,loadLocaleDataFiles,0,"par2 is a list of languages. For each language $L and domain $D, attempts to load the resource $D:lang/$L.lang"
+func_135022_a,loadLocaleDataFiles,0,"For each domain $D and language $L, attempts to load the resource $D:lang/$L.lang"
 func_135023_a,formatMessage,0,"Calls String.format(translateKey(key), params)"
 func_135024_b,checkUnicode,0,
 func_135025_a,isUnicode,0,
 func_135026_c,translateKeyPrivate,0,"Returns the translation, or the key itself if the key could not be translated."
-func_135028_a,loadLocaleData,0,par1 is a list of Resources
+func_135028_a,loadLocaleData,0,Loads the locale data for the list of resources.
 func_135034_a,getLanguageCode,0,
 func_135035_b,isBidirectional,0,
 func_135040_d,getLanguages,0,
@@ -350,6 +353,8 @@ func_143020_a,readStructureComponentsFromNBT,2,
 func_143021_a,writeStructureComponentsToNBT,2,
 func_143022_a,writeToNBT,2,
 func_143025_a,getStructureName,2,
+func_143026_a,setStructureStart,2,
+func_143027_a,initializeStructureData,2,
 func_143031_a,registerStructureComponent,2,
 func_143032_b,getStructureComponent,2,
 func_143033_a,getStructureStartName,2,
@@ -551,19 +556,19 @@ func_146207_c,getSelectedText,0,returns the text between the cursor and selectio
 func_146208_g,getMaxStringLength,0,returns the maximum number of character that can be contained in this textbox
 func_146227_a,printChatMessage,0,
 func_146228_f,getChatWidth,0,
-func_146229_b,scroll,0,Scrolls the chat by the given number of lines.
+func_146229_b,scroll,0,Scrolls the chat by the given number of lines.\n \n@param amount The amount to scroll
 func_146230_a,drawChat,0,
 func_146231_a,clearChatMessages,0,Clears the chat.
 func_146232_i,getLineCount,0,
 func_146233_a,calculateChatboxWidth,0,
 func_146234_a,printChatMessageWithOptionalDeletion,0,"prints the ChatComponent to Chat. If the ID is not 0, deletes an existing Chat Line of that ID from the GUI"
-func_146236_a,getChatComponent,0,Gets the chat component under the mouse
+func_146236_a,getChatComponent,0,Gets the chat component under the mouse\n \n@param mouseX The x position of the mouse\n@param mouseY The y position of the mouse
 func_146237_a,setChatLine,0,
 func_146238_c,getSentMessages,0,Gets the list of messages previously sent through the chat GUI
-func_146239_a,addToSentMessages,0,"Adds this string to the list of sent messages, for recall using the up/down arrow keys"
+func_146239_a,addToSentMessages,0,"Adds this string to the list of sent messages, for recall using the up/down arrow keys\n \n@param message The message to add in the sendMessage List"
 func_146240_d,resetScroll,0,"Resets the chat scroll (executed when the GUI is closed, among others)"
 func_146241_e,getChatOpen,0,Returns true if the chat GUI is open
-func_146242_c,deleteChatLine,0,finds and deletes a Chat line by ID
+func_146242_c,deleteChatLine,0,finds and deletes a Chat line by ID\n \n@param id The ChatLine's id to delete
 func_146243_b,calculateChatboxHeight,0,
 func_146244_h,getChatScale,0,Returns the chatscale from mc.gameSettings.chatScale
 func_146245_b,refreshChat,0,
@@ -591,6 +596,12 @@ func_146283_a,drawHoveringText,0,Draws a List of strings as a tooltip. Every ent
 func_146284_a,actionPerformed,0,Called by the controls from the buttonList when activated. (Mouse pressed for buttons)
 func_146285_a,renderToolTip,0,
 func_146286_b,mouseReleased,0,"Called when a mouse button is released.  Args : mouseX, mouseY, releaseButton"
+func_146314_g,calcSaveDirName,0,Determine a save-directory name from the world name
+func_146315_i,toggleMoreWorldOptions,0,"Toggles between initial world-creation display, and ""more options"" display.\nCalled when user clicks ""More World Options..."" or ""Done"" (same button, different labels depending on current display)."
+func_146316_a,showMoreWorldOptions,0,"Shows additional world-creation options if toggle is true, otherwise shows main world-creation elements"
+func_146317_a,getUncollidingSaveDirName,0,"Ensures that a proposed directory name doesn't collide with existing names.\nReturns the name, possibly modified to avoid collisions.\n \n@param saveLoader used to check against existing names\n@param name the name to check, and possibly adjust (via the method's return)"
+func_146318_a,recreateFromExistingWorld,0,"Set the initial values of a new world to create, from the values from an existing world.\n \nCalled after construction when a user selects the ""Recreate"" button.\n \n@param original The world we're copying from"
+func_146319_h,updateDisplayState,0,Sets displayed GUI elements according to the current settings state
 func_146350_a,setButtonDelay,0,Sets the number of ticks to wait before enabling the buttons.
 func_146358_g,disableSecurityWarning,0,
 func_146359_e,copyLinkToClipboard,0,Copies the link to the system clipboard.
@@ -619,6 +630,8 @@ func_146553_h,drawTitle,0,
 func_146574_g,sendRespawnPacket,0,
 func_146575_b,drawWinGameScreen,0,
 func_146586_a,setDoneWorking,0,
+func_146618_g,addWorldSelectionButtons,0,
+func_146627_h,loadLevelList,0,Load the existing world saves for display
 func_146789_i,getOldServerPinger,0,
 func_146790_a,selectServer,0,
 func_146791_a,connectToServer,0,
@@ -706,6 +719,9 @@ func_147197_m,setPlayer,2,
 func_147198_k,setObjectiveDisplay,2,
 func_147199_i,leaveTeam,2,
 func_147200_e,setTeamOption,2,
+func_147203_d,getWittyComment,2,Get a random witty comment
+func_147204_b,getProfileResults,2,Get the profiling results from the last profile
+func_147205_a,saveProfileResults,2,Save the profiling results from the last profile
 func_147223_a,pingPendingNetworks,0,
 func_147224_a,ping,0,
 func_147225_b,tryCompatibilityPing,0,
@@ -824,6 +840,7 @@ func_147448_a,addTileEntities,2,
 func_147456_g,updateBlocks,2,
 func_147457_a,markTileEntityForRemoval,2,Adds the specified TileEntity to the pending removal list.
 func_147458_c,markBlockRangeForRenderUpdate,2,
+func_147461_a,getCollisionBoxes,2,
 func_147467_a,playMoodSoundAndCheckLight,2,
 func_147470_e,isFlammableWithin,2,
 func_147485_a,fireBlockEvent,2,
@@ -1023,6 +1040,7 @@ func_148329_a,scrollTo,0,Updates the gui slots ItemStack's based on scroll posit
 func_148334_a,generateNewRandomName,0,Randomly generates a new name built up of 3 or 4 randomly selected words.
 func_148335_a,reseedRandomGenerator,0,Resets the underlying random number generator using a given seed.
 func_148527_a,setRepositories,0,
+func_148529_f,clearResourcePack,0,
 func_148530_e,getResourcePackInstance,0,Getter for the IResourcePack instance associated with this ResourcePackRepository
 func_148535_c,getListMipmaps,0,
 func_148537_a,sendPacketToAllPlayersInDimension,2,
@@ -1227,6 +1245,7 @@ func_149254_d,getChunkCount,0,
 func_149255_a,getChunkX,0,
 func_149256_c,getChunkBytes,0,
 func_149271_f,getChunkZ,0,
+func_149272_d,getExtractedDataBytes,0,
 func_149273_e,getChunkX,0,
 func_149276_g,getExtractedSize,0,
 func_149289_c,getClientTime,2,
@@ -1234,6 +1253,13 @@ func_149294_c,getResponse,0,
 func_149299_b,getVerifyToken,2,
 func_149300_a,getSecretKey,2,
 func_149304_c,getProfile,2,
+func_149306_d,getDisplayName,0,
+func_149307_h,getAction,0,
+func_149308_i,getFriendlyFlags,0,
+func_149309_f,getSuffix,0,
+func_149310_g,getPlayers,0,
+func_149311_e,getPrefix,0,
+func_149312_c,getName,0,
 func_149321_d,getObjectiveName,0,
 func_149323_e,getScoreValue,0,
 func_149324_c,getPlayerName,0,
@@ -1577,6 +1603,8 @@ func_150931_i,getDamageVsEntity,2,Returns the amount of damage this item will de
 func_150932_j,getToolMaterialName,2,Return the name for this tool's material.
 func_150943_a,setSubtypeNames,2,
 func_150951_e,getStatName,2,
+func_150952_k,getCriteria,2,1.8.9
+func_150955_j,createChatComponent,2,1.8.9
 func_150967_d,getUncookedSaturationModifier,2,Gets the saturation modifier to apply to the heal amount when the player eats the uncooked version of this fish.
 func_150970_e,getCookedHealAmount,2,Gets the amount that eating the cooked version of this fish should heal the player.
 func_150972_b,getUnlocalizedName,2,"Gets the value that this fish type uses to replace ""XYZ"" in: ""fish.XYZ.raw"" / ""fish.XYZ.cooked"" for the unlocalized name and ""fish_XYZ_raw"" / ""fish_XYZ_cooked"" for the icon string."
@@ -1647,6 +1675,7 @@ func_151253_a,flagChunkForUpdate,2,
 func_151255_a,getStringBuffer,2,
 func_151256_a,writeAndFlush,2,
 func_151259_a,sendPacketToTrackedPlayers,2,Send the given packet to all players tracking this entity.
+func_151260_c,createSpawnPacket,2,Creates a spawn packet for the entity managed by this entry.
 func_151265_a,addLanEndpoint,2,Adds a channel that listens on publicly accessible network ports
 func_151267_d,getServer,2,
 func_151268_b,terminateEndpoints,2,Shuts down all open endpoints (with immediate effect?)
@@ -1674,6 +1703,7 @@ func_151353_a,registerDispenserBehaviors,2,
 func_151354_b,register,2,"Registers blocks, items, stats, etc."
 func_151357_h,showWorldInfoNotice,0,returns true if selecting this worldtype from the customize menu should display the generator.[worldtype].info message
 func_151358_j,setNotificationData,2,enables the display of generator.[worldtype].info message on the customize world menu
+func_151359_c,getTranslatedInfo,0,Gets the translation key for the info text for this world type.
 func_151367_b,onUserHurt,2,Whenever an entity that has this enchantment on one of its associated items is damaged this method will be called.
 func_151368_a,onEntityDamaged,2,Called whenever a mob is damaged with an item that has this enchantment on it.
 func_151384_a,applyThornEnchantments,2,
@@ -1694,7 +1724,7 @@ func_151428_a,getChatVisibility,2,
 func_151429_b,getResourceKey,0,
 func_151438_a,getSoundLevel,0,
 func_151439_a,setSoundLevel,0,
-func_151440_a,setOptionKeyBinding,0,Sets a key binding and then saves all settings.
+func_151440_a,setOptionKeyBinding,0,Sets a key binding and then saves all settings.\n \n@param key The key that the option will be set\n@param keyCode The option (keycode) to set.
 func_151461_a,getChatComponent,0,
 func_151462_b,setKeyCode,0,
 func_151463_i,getKeyCode,0,
@@ -1704,6 +1734,7 @@ func_151467_c,getKeybinds,0,
 func_151468_f,isPressed,0,Returns true on the initial key press. For continuous querying use {@link isKeyDown()}. Should be used in key events.
 func_151469_h,getKeyCodeDefault,0,
 func_151470_d,isKeyDown,0,Returns true if the key is pressed (used for continuous querying). Should be used in tickers.
+func_151475_a,setAttributeModifiers,2,
 func_151498_a,isStairOrSlab,2,True if the block is a stair block or a slab block
 func_151499_f,getEatingGrassTimer,2,Number of ticks since the entity started to eat grass
 func_151507_a,writeWatchedListToPacketBuffer,2,"Writes the list of watched objects (entity attribute of type {byte, short, int, float, string, ItemStack, ChunkCoordinates}) to the specified PacketBuffer"
@@ -1712,13 +1743,14 @@ func_151509_a,writeTo,2,
 func_151510_a,writeWatchableObjectToPacketBuffer,2,"Writes a watchable object (entity attribute of type {byte, short, int, float, string, ItemStack, ChunkCoordinates}) to the specified PacketBuffer"
 func_151517_h,isDamageAbsolute,2,Whether or not the damage ignores modification by potion effects or enchantments.
 func_151518_m,setDamageIsAbsolute,2,"Sets a value indicating whether the damage is absolute (ignores modification by potion effects or enchantments), and also clears out hunger damage."
-func_151519_b,getDeathMessage,2,Gets the death message that is displayed when the player dies
+func_151519_b,getDeathMessage,2,Gets the death message that is displayed when the player dies\n \n@param entityLivingBaseIn The EntityLivingBase that died
 func_151521_b,getDeathMessage,2,
 func_151522_h,getDamageSrcDisplayName,2,
 func_151523_a,getDifficultyEnum,2,
 func_151525_a,getDifficultyId,2,
 func_151526_b,getDifficultyResourceKey,2,
 func_151535_h,toNBTTagIntArray,2,
+func_151536_b,getLayerMaterialBlock,2,
 func_151555_a,getMetadataWithOffset,2,"Returns the direction-shifted metadata for blocks that require orientation, e.g. doors, stairs, ladders."
 func_151565_r,getMaterialMapColor,2,Retrieves the color index of the block. This is is the same color used by vanilla maps to represent this block.
 func_151616_a,biomesEqualOrMesaPlateau,2,
@@ -1731,6 +1763,7 @@ func_151626_c,getIntsCoolWarm,2,
 func_151634_b,canBiomesBeNeighbors,2,"Returns if two biomes can logically be neighbors. If one is hot and the other cold, for example, it returns false."
 func_151635_b,replaceBiomeEdge,2,Creates a border around a biome.
 func_151636_a,replaceBiomeEdgeIfNecessary,2,"Creates a border around a biome if necessary, e.g. A transition from hot to cold climates would otherwise occur."
+func_151643_b,getMapColor,0,
 func_151685_b,getRepairItem,2,Get a main crafting component of this Armor Material (example is Items.iron_ingot)
 func_151686_a,addStats,2,
 func_152104_k,isEmpty,2,
@@ -1751,6 +1784,7 @@ func_152120_b,setOwnerId,2,
 func_152122_n,hasPlayerInfo,0,Checks if this instance of AbstractClientPlayer has any associated player data.
 func_152123_o,hasSkin,0,Returns true if the player has an associated skin.
 func_152125_a,drawScaledCustomSizeModalRect,0,"Draws a scaled, textured, tiled modal rect at z = 0. This method isn't used anywhere in vanilla code."
+func_152129_a,makeDeleteWorldYesNo,0,"Generate a GuiYesNo asking for confirmation to delete a world\n \nCalled when user selects the ""Delete"" button.\n \n@param selectWorld A reference back to the GuiSelectWorld spawning the GuiYesNo\n@param name The name of the world selected for deletion\n@param id An arbitrary integer passed back to selectWorld's confirmClicked method"
 func_152339_d,removeEntity,2,Sends a packet to the player to remove an entity.
 func_152340_a,readImageToBuffer,0,
 func_152342_ad,getSkinManager,0,
@@ -1771,6 +1805,7 @@ func_152372_a,notifyOperators,2,Send an informative message to the server operat
 func_152373_a,notifyOperators,2,
 func_152374_a,notifyOperators,2,
 func_152376_a,calcDamageByCreature,2,Calculates the additional damage that will be dealt by an item with this enchantment. This alternative to calcModifierDamage is sensitive to the targets EnumCreatureAttribute.
+func_152377_a,getModifierForCreature,2,
 func_152378_a,getPlayerEntityByUUID,2,
 func_152379_p,getRenderDistanceChunks,2,
 func_152421_a,setSessionType,0,
@@ -1779,6 +1814,7 @@ func_152430_c,renderStreamIndicator,0,
 func_152433_a,loadTextureFromServer,0,
 func_152436_a,render,0,
 func_152437_a,render,0,
+func_152439_a,updateStreamAlpha,0,
 func_152446_a,read,2,
 func_152447_a,readType,2,
 func_152448_b,readKey,2,
@@ -1816,9 +1852,11 @@ func_152622_a,setPlayerViewRadius,2,
 func_152634_a,skinAvailable,0,
 func_152640_f,getValue,2,
 func_152641_a,onSerialization,2,
+func_152643_b,constructProfile,2,
 func_152644_a,getPermissionLevel,2,"Gets the permission level of the user, as defined in the ""level"" attribute of the ops.json file"
 func_152646_b,gameProfileFromJsonObject,2,
 func_152647_b,getIPFromJson,2,
+func_152648_b,toGameProfile,2,Convert a {@linkplain com.google.gson.JsonObject JsonObject} into a {@linkplain com.mojang.authlib.GameProfile}. The json object must have {@code uuid} and {@code name} attributes or {@code null} will be returned.
 func_152649_a,addEntry,2,Add an entry to this cache
 func_152650_a,getGameProfile,2,"Get a GameProfile given the MinecraftServer and the player's username. \n\n The UUID of the GameProfile will <b>not</b> be null. If the server is offline, a UUID based on the hash of the username will be used."
 func_152651_a,addEntry,2,Add an entry to this cache
@@ -1850,6 +1888,7 @@ func_152700_a,getGameProfileFromName,2,Gets the GameProfile of based on the prov
 func_152702_a,isBanned,2,
 func_152703_a,isUsernameBanned,2,
 func_152705_a,isWhitelisted,1,Returns true if the profile is in the whitelist.
+func_152706_a,getBannedProfile,2,"Gets the GameProfile for the UserListBanEntry with the specified username, if present"
 func_152707_c,addressToString,2,
 func_152708_a,isBanned,2,
 func_152709_b,getBanEntry,2,
@@ -1873,6 +1912,7 @@ func_152754_s,getJsonObject,0,
 func_152755_a,get,0,Send a GET request to the given URL.
 func_152764_a,parsePass,0,
 func_152765_a,parseGroup,0,
+func_152766_h,addOSData,2,Add OS data into the snooper
 func_152767_b,addStatToSnooper,2,
 func_152768_a,addClientStat,2,
 func_152780_c,getInputStreamAssets,0,
@@ -1884,18 +1924,26 @@ func_152792_a,loadSkin,0,Used in the Skull renderer to fetch a skin. May downloa
 func_152805_a,getPackDescription,0,
 func_152816_j,getStreamInfo,0,
 func_152819_E,stopBroadcasting,0,
+func_152820_d,logError,0,Log an error\n \n@param error The error to log
+func_152824_a,setIngestServer,0,Set a new IngestServer\n \n@param ingestServerSet The new IngestServer
 func_152825_o,isIngestTesting,0,
+func_152826_z,getPixelFormat,0,Return the PixelFormat
 func_152829_a,setRecordingDeviceVolume,0,
 func_152830_D,requestCommercial,0,
+func_152832_e,logWarning,0,Log an warning\n \n@param warning The warning to log
+func_152833_s,getIngestServer,0,Return the IngestServer's instance
 func_152837_b,setPlaybackDeviceVolume,0,
 func_152839_p,isBroadcastPaused,0,
+func_152841_a,setBroadcastListener,0,Set a new BroadcastListener\n \n@param broadcastListenerIn The BroadcastListener to set
 func_152843_l,getChannelInfo,0,
+func_152844_x,getStreamTime,0,Return the stream time
 func_152846_a,captureFramebuffer,0,caputres the current framebuffer
 func_152850_m,isBroadcasting,0,
 func_152852_P,getErrorCode,0,
+func_152855_t,getIngestList,0,Return the IngestList
 func_152856_w,isReady,0,
 func_152857_n,isReadyToBroadcast,0,
-func_152859_b,submitStreamFrame,0,passes the framebuffer on to the video stream
+func_152859_b,submitStreamFrame,0,passes the framebuffer on to the video stream\n \n@param frame The FrameBuffer tu submit
 func_152910_a,muteMicrophone,0,mutes or unmutes the microphone based on the boolean parameter passed into the method
 func_152914_u,stopBroadcasting,0,
 func_152915_s,updateStreamVolume,0,
@@ -1956,10 +2004,16 @@ func_154316_f,getPositionY,0,
 func_154317_g,getRealmsButton,0,
 func_154331_x,getLastActiveTime,2,
 func_154333_a,getName,0,Returns the name of the save format.
+func_154334_a,isConvertible,0,
+func_154335_d,isNewLevelIdAcceptable,0,
 func_154336_c,getSizeOnDisk,0,
+func_154337_m,getMouseX,0,
+func_154338_k,getWidth,0,
+func_154339_l,getMouseY,0,
 func_154346_a,hasAcceptedEULA,1,
 func_154347_a,loadEULAFile,1,
 func_154348_b,createEULAFile,1,
+func_154354_b,roundUp,2,
 func_174791_d,getPositionVector,2,"Get the position vector. <b>{@code null} is not allowed!</b> If you are not an entity in the world, return 0.0D, 0.0D, 0.0D"
 func_174792_t_,sendCommandFeedback,2,Returns true if the command sender should be sent feedback about executed commands
 func_174793_f,getCommandSenderEntity,2,Returns the entity associated with the command sender. MAY BE NULL!
@@ -1976,6 +2030,7 @@ func_174813_aQ,getEntityBoundingBox,2,
 func_174814_R,isSilent,2,@return True if this entity will not play sounds
 func_174815_a,applyEnchantments,2,
 func_174816_a,verifyExplosion,2,
+func_174817_o,setCommandStats,2,Set the CommandResultStats from the entity
 func_174818_b,getDistanceSq,2,
 func_174819_aU,getNBTTagCompound,2,
 func_174820_d,replaceItemInInventory,2,
@@ -1994,6 +2049,7 @@ func_174832_aS,isOutsideBorder,2,
 func_174833_aM,getAlwaysRenderNameTag,2,
 func_174834_g,clientUpdateEntityNBT,0,Called when client receives entity's NBTTagCompound from server.
 func_174838_j,getAlpha,0,
+func_174846_a,setBlockPos,0,Sets the position of the block that this particle came from. Used for calculating texture and color multiplier.
 func_174856_o,updateBoundingBox,2,Updates the entity bounding box based on current facing
 func_174857_n,getHangingPosition,2,
 func_174859_a,updateFacingWithBoundingBox,2,Updates facing and bounding box based on it
@@ -2101,6 +2157,7 @@ func_175035_a,renderModel,0,
 func_175036_a,renderModel,0,
 func_175037_a,getItemModelMesher,0,
 func_175038_a,putQuadNormal,0,
+func_175039_a,isNotRenderingEffectsInGUI,0,False when the renderer is rendering the item's effects into a GUI\n \n@param isNot If the renderer is not rendering the effects in a GUI
 func_175040_a,renderItemModelTransform,0,
 func_175041_b,registerItems,0,
 func_175042_a,renderItemIntoGUI,0,
@@ -2146,6 +2203,7 @@ func_175112_a,setItemValues,2,
 func_175113_c,getPatterns,2,Retrieves the amount of patterns stored on an ItemStack. If the tag does not exist this value will be 0.
 func_175114_c,getPatternList,0,Retrieves the list of patterns for this tile entity. The banner data will be initialized/refreshed before this happens.
 func_175115_b,getBaseColor,2,
+func_175116_e,getPatternResourceLocation,0,
 func_175117_e,removeBannerData,2,Removes all the banner related data from a provided instance of ItemStack.
 func_175124_c,getCommandResultStats,2,
 func_175131_l,getBlock,2,
@@ -2174,9 +2232,11 @@ func_175160_A,isCurrentViewEntity,0,
 func_175161_p,onUpdateWalkingPlayer,0,called every tick when the player is on foot. Performs all the things that normally happen during movement.
 func_175162_d,isOpenBlockSpace,0,Returns true if the block at the given BlockPos and the block above it are NOT full cubes.
 func_175163_u,sendHorseInventory,0,
+func_175173_a,sendAllWindowProperties,2,
 func_175174_a,drawTexturedModalRect,0,Draws a textured rectangle using the texture currently bound to the TextureManager
 func_175175_a,drawTexturedModalRect,0,Draws a texture rectangle using the texture currently bound to the TextureManager
 func_175176_b,renderExpBar,0,
+func_175177_a,setDefaultTitlesTimes,0,Set the differents times for the titles to their default values
 func_175178_a,displayTitle,0,
 func_175179_f,getFontRenderer,0,
 func_175180_a,renderGameOverlay,0,
@@ -2188,10 +2248,12 @@ func_175186_a,renderHorseJumpBar,0,
 func_175187_g,getSpectatorGui,0,
 func_175188_a,setRecordPlaying,0,
 func_175203_a,setCentered,0,Sets the Label to be centered
+func_175205_a,setValidator,0,
 func_175206_d,getId,0,
 func_175211_a,setWidth,0,
 func_175213_c,buildDisplayString,0,Builds the localized display string for this GuiListButton
 func_175221_e,getDisplayString,0,
+func_175232_g,getHeight,0,
 func_175236_d,isReducedDebug,0,
 func_175237_a,renderDebugInfo,0,
 func_175238_c,getDebugInfoRight,0,
@@ -2204,12 +2266,13 @@ func_175246_a,updatePlayerList,0,"Called by GuiIngame to update the information 
 func_175247_a,drawScoreboardValues,0,
 func_175248_a,setFooter,0,
 func_175249_a,renderPlayerlist,0,"Renders the playerlist, its background, headers and footers."
+func_175263_a,renderSelectedItem,0,
 func_175264_a,renderTooltip,0,
-func_175272_a,handleComponentHover,0,Draws the hover event specified by the given chat component
-func_175273_b,onResize,0,Called when the GUI is resized in order to update the world and the resolution
+func_175272_a,handleComponentHover,0,Draws the hover event specified by the given chat component\n \n@param component The IChatComponent to render\n@param x The x position where to render\n@param y The y position where to render
+func_175273_b,onResize,0,Called when the GUI is resized in order to update the world and the resolution\n \n@param w The width of the screen\n@param h The height of the screen
 func_175274_a,setText,0,Sets the text of the chat
-func_175275_f,sendChatMessage,0,
-func_175276_a,handleComponentClick,0,Executes the click event specified by the given chat component
+func_175275_f,sendChatMessage,0,Used to add chat messages to the client's GuiChat.
+func_175276_a,handleComponentClick,0,Executes the click event specified by the given chat component\n \n@param component The ChatComponent to check for click
 func_175277_d,isKeyComboCtrlX,0,
 func_175278_g,isKeyComboCtrlA,0,
 func_175279_e,isKeyComboCtrlV,0,
@@ -2218,6 +2281,7 @@ func_175281_b,sendChatMessage,0,
 func_175282_a,openWebLink,0,
 func_175283_s,isAltKeyDown,0,Returns true if either alt key is down
 func_175288_g,markChanged,0,Marks the selected resource packs list as changed to trigger a resource reload when the screen is closed
+func_175299_g,canSelectCurWorldType,0,"Returns whether the currently-selected world type is actually acceptable for selection\nUsed to hide the ""debug"" world type unless the shift key is depressed."
 func_175318_a,getText,0,
 func_175320_a,onTick,0,
 func_175378_g,updateActivePotionEffects,0,
@@ -2281,6 +2345,7 @@ func_175509_cj,getFleeceColor,2,Gets the wool color of this sheep.
 func_175510_a,getRandomSheepColor,2,"Chooses a ""vanilla"" sheep color based on the provided random."
 func_175511_a,getDyeColorMixFromParents,2,Attempts to mix both parent sheep to come up with a mixed dye color.
 func_175512_b,setFleeceColor,2,Sets the wool color of this sheep
+func_175513_a,getDyeRgb,2,
 func_175515_b,setMovementSpeed,2,
 func_175516_ck,getJumpingSound,2,
 func_175519_a,setJumping,2,
@@ -2442,8 +2507,8 @@ func_175723_af,getWorldBorder,2,
 func_175724_o,getLightBrightness,2,
 func_175725_q,getPrecipitationHeight,2,
 func_175726_f,getChunkFromBlockCoords,2,
-func_175727_C,canLightningStrike,2,
-func_175731_a,playSoundAtPos,0,Plays a sound at the specified position.
+func_175727_C,isRainingAt,2,Check if precipitation is currently happening at a position
+func_175731_a,playSoundAtPos,0,Plays a sound at the specified position.\n \n@param pos The position where to play the sound\n@param soundName The name of the sound to play\n@param volume The volume of the sound\n@param pitch The pitch of the sound\n@param distanceDelay True if the sound is delayed over distance
 func_175732_a,canCreatureTypeSpawnHere,2,
 func_175733_a,getEntityFromUuid,2,
 func_175734_a,getSpawnListEntryForTypeAt,2,
@@ -2466,6 +2531,7 @@ func_175764_a,parseInt,2,
 func_175765_c,parseDouble,2,
 func_175766_b,parseLong,2,
 func_175767_a,parseCoordinate,2,
+func_175768_b,getEntity,2,
 func_175769_b,parseDouble,2,
 func_175770_a,parseCoordinate,2,
 func_175772_d,getWorldBorder,2,
@@ -2474,6 +2540,8 @@ func_175784_d,getUsernames,2,
 func_175786_a,tryExecute,2,
 func_175792_a,generate,2,
 func_175794_a,generateStructure,2,
+func_175796_a,isPositionInStructure,2,
+func_175799_b,getScatteredFeatureSpawnList,2,Gets the scattered feature spawn list
 func_175804_a,fillWithBlocks,2,Fill the given area with the selected blocks
 func_175806_a,generateDispenserContents,2,
 func_175807_a,getBlockStateFromPos,2,
@@ -2483,6 +2551,7 @@ func_175810_a,placeDoorCurrentPosition,2,Places door on given position
 func_175811_a,setBlockState,2,
 func_175897_a,getComponentToAddBoundingBox,2,Create a bounding box with the specified dimensions and rotate it. Used to project a possible new component Bounding Box - to check if it would cut anything already spawned
 func_175898_b,isVecInside,2,Checks if given Vec3i is inside of StructureBoundingBox
+func_175900_c,getLayerMaterial,2,
 func_175903_a,setBlockAndNotifyAdequately,2,
 func_175914_a,setGeneratedBlock,2,
 func_175935_b,getGreatestDistance,2,Returns the absolute greatest distance in the BlockPos object.
@@ -2586,7 +2655,7 @@ func_176218_Q,getOffsetType,0,Get the OffsetType for this Block. Determines if t
 func_176219_a,registerBlock,2,
 func_176220_d,getStateById,2,Get a BlockState by it's ID (see getStateId)
 func_176221_a,getActualState,2,"Get the actual Block state of this Block at the given position. This applies properties not visible in the metadata, such as fence connections."
-func_176222_j,getDamageValue,2,
+func_176222_j,getDamageValue,2,Gets the meta to use for the Pick Block ItemStack result
 func_176223_P,getDefaultState,2,
 func_176224_k,fillWithRain,2,"Called similar to random ticks, but only when it is raining."
 func_176225_a,shouldSideBeRendered,0,
@@ -2635,6 +2704,7 @@ func_176357_a,getMetadataForFacing,2,
 func_176361_a,getFlowingBlock,2,
 func_176362_e,getLevel,2,
 func_176363_b,getStaticBlock,2,
+func_176364_g,shouldRenderSides,0,
 func_176365_e,checkForMixing,2,
 func_176366_f,getEffectiveFlowDecay,2,
 func_176368_m,getCanBlockBurn,2,
@@ -2870,17 +2940,22 @@ func_177091_f,unsetBrightness,0,
 func_177092_a,setBrightness,0,
 func_177093_a,renderLayers,0,
 func_177094_a,addLayer,0,
+func_177105_a,setLightmap,0,
 func_177137_d,setModelVisibilities,0,
 func_177138_b,renderRightArm,0,
 func_177139_c,renderLeftArm,0,
 func_177141_a,doRenderLayer,0,
 func_177142_b,shouldCombineTextures,0,
+func_177175_a,getArmorModel,0,
 func_177176_a,getCurrentArmor,0,
 func_177177_a,initArmor,0,
 func_177178_a,getArmorResource,0,
+func_177179_a,setModelPartVisible,0,
 func_177180_b,isSlotForLeggings,0,
 func_177181_a,getArmorResource,0,
 func_177182_a,renderLayer,0,
+func_177183_a,renderGlint,0,
+func_177194_a,setModelVisible,0,
 func_177219_e,isInterpolate,0,
 func_177221_b,getSpawnerPosition,2,
 func_177222_d,getMobRotation,0,
@@ -2983,6 +3058,7 @@ func_177452_b,sendMessageToTeamOrEvryPlayer,2,
 func_177453_a,sendMessageToAllTeamMembers,2,
 func_177458_a,getPossibleCreatures,2,
 func_177459_a,provideChunk,2,
+func_177460_a,populateChunk,2,
 func_177478_c,getNibbleIndex,2,
 func_177479_b,isLowerNibble,2,
 func_177480_a,getFromIndex,2,
@@ -3178,6 +3254,7 @@ func_178003_a,preRenderChunk,0,
 func_178004_a,initialize,0,
 func_178010_a,setupArrayPointers,0,
 func_178011_a,setSelected,0,
+func_178012_a,drawTextureAt,0,
 func_178038_a,framebufferRenderExt,0,
 func_178039_p,handleMouseInput,0,
 func_178047_f,getMouseY,0,
@@ -3193,12 +3270,22 @@ func_178086_a,register,0,
 func_178087_a,getParticleIcon,0,
 func_178088_b,getItemModel,0,
 func_178089_a,getItemModel,0,
+func_178095_a,renderPlayerArm,0,Render the player's arm\n \n@param equipProgress The progress of equiping the item\n@param swingProgress The swing movement progression
 func_178096_b,transformFirstPersonItem,0,Performs transformations prior to the rendering of a held item in first person.
 func_178097_a,renderItemMap,0,
+func_178098_a,doBowTransformations,0,Translate and rotate the render to look like holding a bow\n \n@param partialTicks Partial ticks
 func_178099_a,renderItem,0,
+func_178100_c,getMapAngleFromPitch,0,Return the angle to render the Map\n \n@param pitch The player's pitch
+func_178101_a,rotateArroundXAndY,0,Rotate the render around X and Y\n \n@param angleY The angle for the rotation arround Y
 func_178102_b,renderPlayerArms,0,
+func_178103_d,doBlockTransformations,0,Translate and rotate the render for holding a block
+func_178104_a,performDrinking,0,Perform the drinking animation movement\n \n@param partialTicks Partials ticks
+func_178105_d,doItemUsedTransformations,0,Rotate and translate render to show item consumption\n \n@param swingProgress The swing movement progress
 func_178106_b,renderLeftArm,0,
 func_178107_a,isBlockTranslucent,0,Returns true if given block is translucent
+func_178108_a,renderBlockInHand,0,Render the block in the player's hand\n \n@param partialTicks Partial ticks\n@param atlas The TextureAtlasSprite to render
+func_178109_a,setLightMapFromPlayer,0,Set the OpenGL LightMapTextureCoords based on the AbstractClientPlayer
+func_178110_a,rotateWithPlayerRotations,0,Rotate the render according to the player's yaw and pitch
 func_178113_a,getModelLocation,0,
 func_178119_d,registerAllBlocks,0,
 func_178120_a,getBlockStateMapper,0,
@@ -3234,6 +3321,8 @@ func_178209_a,getVertexData,0,
 func_178210_d,getFace,0,
 func_178211_c,getTintIndex,0,
 func_178212_b,hasTintIndex,0,
+func_178216_a,remapVert,0,
+func_178217_e,remapQuad,0,
 func_178235_a,setDefaultUvs,0,
 func_178236_a,getFaceUvs,0,
 func_178247_d,parsePositionTo,0,
@@ -3291,11 +3380,15 @@ func_178349_a,setUvs,0,
 func_178358_a,parseVector3f,0,
 func_178367_a,getFacing,0,Gets the direction of the block's facing.
 func_178392_a,makeItemModel,0,
+func_178401_a,lockVertexUv,0,
 func_178402_a,fillVertexData,0,
 func_178403_a,getPositionsDiv16,0,
 func_178404_a,storeVertexData,0,
 func_178405_a,makeQuadVertexData,0,
 func_178406_a,rotateScale,0,
+func_178407_a,rotatePart,0,
+func_178408_a,applyFacing,0,
+func_178409_a,lockUv,0,
 func_178410_a,getFacingFromVertexData,0,
 func_178411_a,getMatrixIdentity,0,
 func_178412_b,getFaceBrightness,0,
@@ -3466,13 +3559,15 @@ func_178889_l,getCurrentGameType,0,
 func_178890_a,onPlayerRightClick,0,
 func_178891_a,clickBlockCreative,0,
 func_178893_a,isHittingPosition,0,
+func_178894_a,isPlayerRightClickingOnEntity,0,Return true when the player rightclick on an entity\n \n@param player The player's instance\n@param entityIn The entity clicked\n@param movingObject The object clicked
 func_178902_a,getEntityFX,0,
+func_178908_a,splitText,0,
 func_178922_a,updateEffectLayer,0,
 func_178923_d,tickParticle,0,
 func_178924_a,moveToLayer,0,
 func_178925_a,updateEffectAlphaLayer,0,
 func_178926_a,emitParticleAtEntity,0,
-func_178927_a,spawnEffectParticle,0,Spawns the relevant particle according to the particle id.
+func_178927_a,spawnEffectParticle,0,"Spawns the relevant particle according to the particle id.\n \n@param xCoord X position of the particle\n@param yCoord Y position of the particle\n@param zCoord Z position of the particle\n@param xSpeed X speed of the particle\n@param ySpeed Y speed of the particle\n@param zSpeed Z speed of the particle\n@param parameters Parameters for the particle (color for redstone, ...)"
 func_178928_b,moveToAlphaLayer,0,
 func_178929_a,registerParticle,0,
 func_178930_c,registerVanillaParticles,0,
@@ -3499,6 +3594,7 @@ func_179013_a,getRawBuffer,0,
 func_179014_c,getVertexCount,0,
 func_179016_d,getVertexFormat,0,
 func_179022_a,renderByItem,0,
+func_179025_a,getVertexInformation,0,
 func_179027_a,getFacing,0,
 func_179038_a,getWorldRendererByLayer,0,
 func_179039_a,getWorldRendererByLayerId,0,
@@ -3525,6 +3621,7 @@ func_179101_C,disableRescaleNormal,0,
 func_179102_b,setFogStart,0,
 func_179103_j,shadeModel,0,
 func_179104_a,colorMaterial,0,
+func_179105_a,texGen,0,
 func_179106_n,disableFog,0,
 func_179107_e,cullFace,0,
 func_179108_z,enableNormalize,0,
@@ -3645,6 +3742,8 @@ func_179414_a,writeToNBT,2,
 func_179415_b,getX,2,Gets the X axis rotation
 func_179416_c,getY,2,Gets the Y axis rotation
 func_179422_b,endOfData,2,Called when no more data is available in this Iterator.
+func_179431_f,maxTargetRange,2,Return the max target range of the entiity (16 by default)
+func_179438_f,getFollowRange,2,
 func_179445_a,isSuitableTarget,2,A static method used to see if an entity is a suitable target through a number of checks.
 func_179446_a,setEntityAttackTarget,2,
 func_179479_b,setExecutionChance,2,Changes task random possibility for execution
@@ -3670,14 +3769,24 @@ func_179634_c,getTypeNames,2,Returns the names of all possible Result Types.
 func_179635_a,getTypeByName,2,Retrieves the Type indicated by the supplied name string.
 func_179636_a,getTypeID,2,Retrieves the integer ID of the result type.
 func_179637_b,getTypeName,2,Retrieves the name of the type.
+func_179647_f,getNamePredicates,2,
+func_179648_b,getXpLevelPredicates,2,
+func_179649_c,getGamemodePredicates,2,
 func_179652_a,matchOneEntity,2,Returns one entity of the given class that matches the given at-token. Returns null if more than one entity matches.
 func_179653_a,parseIntWithDefault,2,
 func_179654_a,getWorlds,2,Returns the worlds to match the entities in for the specified command sender and token. This returns the sender's world if the selector specifies a location or all currently loaded worlds on the server if not.
 func_179655_b,isEntityTypeValid,2,Checks to make sure that the specified type is valid
 func_179656_b,matchEntities,2,Returns all entities of the given class that matches the given at-token in a list.
+func_179657_e,getScorePredicates,2,
+func_179659_d,getTeamPredicates,2,
 func_179660_a,filterResults,2,Filters the results based on the paramaters of the selector
+func_179662_g,getRotationsPredicates,2,
+func_179667_a,setScoreBoardStat,2,Set a stat in the scoreboard\n \n@param entityID The username of the player or the UUID of an Entity\n@param objectiveName The name of the Objective
 func_179668_a,readStatsFromNBT,2,
+func_179669_a,removeScoreBoardStat,2,Remove a stat from the scoreboard
 func_179670_b,writeStatsToNBT,2,
+func_179671_a,addAllStats,2,Add all stats in the CommandResultStats
+func_179672_a,setCommandStatScore,2,Set the score on the ScoreBoard\n \n@param scorePoint The score to set to the score board
 func_179677_a,checkForStuck,2,"Checks if entity haven't been moved when last checked and if so, clears current {@link net.minecraft.pathfinding.PathEntity}"
 func_179678_a,setHeightRequirement,2,Sets vertical space requirement for path
 func_179679_a,getPathFinder,2,
@@ -3714,8 +3823,12 @@ func_179748_k,getParticleArgs,0,Gets the particle arguments. Some particles rely
 func_179749_a,getParticleType,0,
 func_179750_b,isLongDistance,0,
 func_179754_d,getChunkSize,0,
+func_179756_a,getExtractedData,2,
+func_179760_a,getThreshold,0,
 func_179763_a,getTagCompound,0,
 func_179764_a,getEntity,0,
+func_179767_a,getEntries,0,
+func_179768_b,getAction,0,
 func_179777_a,getSignPosition,0,
 func_179780_a,getEntity,0,
 func_179783_a,getURL,0,
@@ -3727,6 +3840,8 @@ func_179804_d,getDisplayTime,0,
 func_179805_b,getMessage,0,
 func_179806_c,getFadeInTime,0,
 func_179807_a,getType,0,
+func_179813_h,getColor,0,
+func_179814_i,getNameTagVisibility,0,
 func_179819_c,getPlayer,0,
 func_179821_b,getPosition,0,
 func_179823_a,getPos,0,
@@ -3805,7 +3920,9 @@ func_180168_b,getAdditionalDifficulty,0,
 func_180169_a,calculateAdditionalDifficulty,2,
 func_180170_c,getClampedAdditionalDifficulty,2,
 func_180173_a,spawnItemStack,2,
+func_180174_a,dropInventoryItems,2,
 func_180175_a,dropInventoryItems,2,
+func_180176_a,dropInventoryItems,2,
 func_180179_a,reset,0,
 func_180182_a,getRandomUuid,2,
 func_180184_b,normalizeAngle,0,
@@ -3834,6 +3951,7 @@ func_180267_a,canCreatureTypeSpawnAtLocation,2,
 func_180276_a,getBiomeFromBiomeList,2,
 func_180277_d,createMutatedBiome,2,
 func_180283_a,getColorAtPos,0,
+func_180285_a,getColorAtPos,0,
 func_180286_a,getGrassColorAtPos,0,
 func_180287_b,getFoliageColorAtPos,0,
 func_180288_c,getWaterColorAtPos,0,
@@ -3853,12 +3971,13 @@ func_180331_a,getBlock,2,Get the World coordinates of the Block with the given C
 func_180332_e,getXEnd,2,Get the last world X coordinate that belongs to this Chunk
 func_180333_d,getZStart,2,Get the first world Z coordinate that belongs to this Chunk
 func_180334_c,getXStart,2,Get the first world X coordinate that belongs to this Chunk
+func_180342_d,clearAffectedBlockPositions,2,
 func_180343_e,getAffectedBlockPositions,2,
 func_180346_a,getBlock,2,
 func_180359_a,hasRailAt,2,
 func_180362_b,getBlockState,2,
 func_180374_a,hasModifier,2,
-func_180383_a,getRegisteredBlock,2,Returns the Block in the blockRegistry with the specified name.
+func_180383_a,getRegisteredBlock,2,Returns the Block in the blockRegistry with the specified name.\n \n@param blockName The block's name to register
 func_180421_g,getLookPosZ,2,
 func_180422_f,getLookPosY,2,
 func_180423_e,getLookPosX,2,
@@ -3896,6 +4015,7 @@ func_180454_a,renderItem,0,
 func_180455_b,renderString,0,"Render single line string by setting GL color, current (posX,posY), and calling renderStringAtPos()"
 func_180456_s,getMinecartType,2,
 func_180457_u,getDefaultDisplayTile,2,
+func_180458_a,getMinecart,2,
 func_180459_n,moveDerailedMinecart,2,Moves a minecart that is not attached to a rail
 func_180461_b,canExtractItem,2,"Returns true if automation can extract the given item in the given slot from the given side. Args: slot, item, side"
 func_180462_a,canInsertItem,2,"Returns true if automation can insert the given item in the given slot from the given side. Args: slot, item, side"
@@ -3910,12 +4030,13 @@ func_180470_cg,getBedLocation,2,
 func_180471_a,getToolDigEfficiency,2,Block hardness will be further counted in net/minecraft/block/Block.getPlayerRelativeBlockHardness
 func_180472_a,displayVillagerTradeGui,2,
 func_180473_a,setSpawnPoint,2,
+func_180474_b,renderPortal,0,
 func_180475_a,renderScoreboard,0,
 func_180476_e,renderPumpkinOverlay,0,
 func_180477_d,renderPlayerStats,0,
 func_180478_c,renderStreamIndicator,0,
 func_180479_a,renderTooltip,0,
-func_180480_a,renderVignette,0,Renders a Vignette arount the entire screen that changes with light level.
+func_180480_a,renderVignette,0,Renders a Vignette arount the entire screen that changes with light level.\n \n@param lightLevel The current brightness\n@param scaledRes The current resolution of the game
 func_180481_a,setEquipmentBasedOnDifficulty,2,Gives armor or weapon for entity based on given DifficultyInstance
 func_180482_a,onInitialSpawn,2,"Called only once on an entity when first time spawned, via egg, mob spawner, natural spawning etc, but not called when entity is reloaded from nbt. Mainly used for initializing attributes and inventory"
 func_180483_b,setEnchantmentBasedOnDifficulty,2,Enchants Entity's current equipments based on given DifficultyInstance
@@ -3944,12 +4065,12 @@ func_180511_b,clickBlock,0,Called when the player is hitting a block with an ite
 func_180512_c,onPlayerDamageBlock,0,
 func_180513_a,getStrongholdGen,2,
 func_180514_a,recreateStructures,2,
-func_180517_a,replaceBlocksForBiome,2,
-func_180518_a,setBlocksInChunk,2,
+func_180517_a,replaceBlocksForBiome,2,"Possibly reshapes the biome if appropriate for the biome type, and replaces some stone with things like dirt, grass, gravel, ice"
+func_180518_a,setBlocksInChunk,2,"Generates a bare-bones chunk of nothing but stone or ocean blocks, formed, but featureless."
 func_180521_a,skinAvailable,0,
 func_180522_a,getCoordinateInfo,2,
 func_180523_a,addBlockInfo,2,
-func_180524_a,getTabCompletionOptions,2,
+func_180524_a,getTabCompletionOptions,2,Get a list of possible completion options for when the TAB key is pressed. This can be a list of commands if no command is specified or a partial command is specified. It could also be a list of arguments for the command that is specified.\n \n@param sender The command sender who is requesting tab completion results.\n@param input The input that was passed when the TAB key was pressed.\n@param pos The block pos that the players mouse is over. <b>Could be null!</b>
 func_180525_a,addTabCompletionOptions,2,Return a list of options when the user types TAB
 func_180526_a,parseDouble,2,
 func_180527_d,parseBoolean,2,
@@ -3965,6 +4086,7 @@ func_180543_a,renderSkull,0,
 func_180546_a,renderTileEntity,0,
 func_180547_a,normalize,0,
 func_180548_c,bindEntityTexture,0,
+func_180549_a,renderShadowBlock,0,
 func_180565_e,unsetScoreTeamColor,0,
 func_180574_a,drawRechargeRay,0,Draws the ray from the dragon to it's crystal
 func_180597_a,cacheActiveRenderInfo,0,
@@ -3990,7 +4112,7 @@ func_180624_a,decorate,2,
 func_180625_c,getFoliageColorAtPos,0,
 func_180626_a,getFloatTemperature,2,Gets a floating point representation of this biome's temperature
 func_180627_b,getGrassColorAtPos,0,
-func_180628_b,generateBiomeTerrain,2,
+func_180628_b,generateBiomeTerrain,2,"Given x, z coordinates, we count down all the y positions starting at 255 and working our way down. When we hit a non-air block, we replace it with this.topBlock (default grass, descendants may set otherwise), and then a relatively shallow layer of blocks of type this.fillerBlock (default dirt). A random set of blocks below y == 5 (but always including y == 0) is replaced with bedrock.\n \nIf we don't hit non-air until somewhat below sea level, we top with gravel and fill down with stone.\n \nIf this.fillerBlock is red sand, we replace some of that with red sandstone."
 func_180630_a,findBiomePosition,2,
 func_180631_a,getBiomeGenerator,2,Returns the biome generator
 func_180632_j,setDefaultState,2,
@@ -4091,21 +4213,106 @@ func_180791_a,drawSlot,0,
 func_180793_a,affectEntity,2,
 func_180798_a,renderDebugInfoLeft,0,
 func_180799_ab,isInLava,2,
+func_181012_aH,getTeleportDirection,2,
+func_181013_g,setRenderYawOffset,2,Set the render yaw offset\n \n@param offset The render yaw offset
+func_181015_d,setPortal,2,"Marks the entity as being inside a portal, activating teleportation logic in onEntityUpdate() in the following tick(s).\n \n@param pos The postion of the portal that the entity is in"
+func_181020_a,setBaseColorAndPatterns,2,
+func_181021_d,getPatterns,2,
+func_181022_b,stopUseShader,0,
+func_181023_a,updateTileEntities,0,
+func_181026_s,hasMarker,2,"Gets whether the armor stand has marker enabled. If true, the armor stand's bounding box is set to zero and cannot be interacted with."
+func_181027_m,setMarker,2,"Marker defines where if true, the size is 0 and will not be rendered or intractable."
+func_181029_i,resetPlayersOverlayFooterHeader,0,Reset the GuiPlayerTabOverlay's message header and footer
+func_181030_a,resetFooterHeader,0,
+func_181033_a,canDestroyBlock,2,
+func_181034_q,shouldBroadcastRconToOps,2,Get if RCON command events should be broadcast to ops
+func_181035_ah,shouldUseNativeTransport,2,Get if native transport should be used. Native transport means linux server performance improvements and optimized packet sending/receiving on linux
+func_181036_a,pickBlockWithNBT,0,"Return an ItemStack with the NBTTag of the TileEntity (""Owner"" if the block is a skull)\n \n@param itemIn The item from the block picked\n@param meta Metadata of the item\n@param tileEntityIn TileEntity of the block picked"
+func_181037_M,getProfileProperties,0,Return the player's GameProfile properties
+func_181040_m,getIsHittingBlock,0,Return isHittingBlock
+func_181041_d,isOnLAN,0,Return true if the server is a LAN server
+func_181055_a,forceTileEntityRender,0,If true the {@link TileEntitySpecialRenderer} will always be rendered while the player is in the render bounding box {@link TileEntity#getRenderBoundingBox()} and his squared distance with the {@link TileEntity} is smaller than {@link TileEntity#getMaxRenderDistanceSquared()}.
+func_181057_v,getPlayerList,2,
+func_181070_c,getMapColor,2,The color which represents this entry on a map.
+func_181076_a,getFacingFromAxis,2,
+func_181079_c,set,2,Set the values
+func_181086_a,isInvalidNeighbor,2,
+func_181087_e,hasInvalidNeighbor,2,
+func_181117_a,getPos,2,Return the BlockPos of the Pattern
+func_181124_a,createNetworkManagerAndConnect,0,Create a new NetworkManager from the server host and connect it to the server\n \n@param address The address of the server\n@param serverPort The server port\n@param useNativeTransport True if the client use the native transport system
+func_181147_e,shouldRenderClouds,0,Return true if the clouds should be rendered
+func_181148_f,isUsingNativeTransport,0,Return true if the client connect to a server using the native transport system
+func_181157_b,initializeClassLookup,2,
+func_181159_b,atan2,2,
+func_181168_c,getPotionLocations,2,
+func_181535_r,getMusicTicker,0,Return the musicTicker's instance
+func_181536_a,draw,0,Draw with the WorldRenderer\n \n@param posX X position for the render\n@param posY Y position for the render\n@param texU X position for the texture\n@param texV Y position for the texture\n@param width Width of the render\n@param height Height of the render\n@param red The red component of the render's color\n@param green The green component of the render's color\n@param blue The blue component of the render's color\n@param alpha The alpha component of the render's color
+func_181537_a,setConnectedToRealms,0,Set if the player is connected to a realms server\n \n@param isConnected The value that set if the player is connected to a realms server or not
+func_181538_aA,getCurrentAction,0,Return the current action's name
+func_181539_aj,getFrameTimer,0,Return the FrameTimer's instance
+func_181540_al,isConnectedToRealms,0,Return true if the player is connected to a realms server
+func_181544_b,setSeaLevel,2,Warning this value may not be respected in all cases as it is still hardcoded in many places.
+func_181545_F,getSeaLevel,2,
+func_181551_a,renderSelectedItem,0,
+func_181552_c,getFrameColor,0,
+func_181553_a,blendColors,0,
+func_181554_e,renderLagometer,0,
+func_181559_a,renderChar,0,Render the given char
+func_181560_a,updateCameraAndRender,0,
+func_181561_a,drawSelectionBoundingBox,0,
+func_181562_a,getRenderChunkOffset,0,"Returns RenderChunk offset from given RenderChunk in given direction, or null if it can't be seen by player at given BlockPos."
+func_181563_a,drawOutlinedBoundingBox,0,
+func_181564_a,renderItem,0,
+func_181565_a,draw,0,Draw with the WorldRenderer\n \n@param renderer The WorldRenderer's instance\n@param x X position where the render begin\n@param y Y position where the render begin\n@param width The width of the render\n@param height The height of the render\n@param red Red component of the color\n@param green Green component of the color\n@param blue Blue component of the color\n@param alpha Alpha component of the color
+func_181617_a,runTask,2,"Run a task and return the result, catching any execution exceptions and logging them to the specified logger"
+func_181623_g,canSpawnInBlock,2,Return true if an entity can be spawned inside the block (used to get the player's bed spawn location)
+func_181656_b,hasNaN,0,
 func_181662_b,pos,0,
 func_181663_c,normal,0,
+func_181664_j,getBufferSize,0,
+func_181665_a,getDistanceSq,0,
 func_181666_a,color,0,
+func_181667_k,nextVertexFormatIndex,0,
 func_181668_a,begin,0,
 func_181669_b,color,0,
+func_181670_b,growBuffer,0,
 func_181671_a,lightmap,0,
+func_181672_a,getVertexState,0,
 func_181673_a,tex,0,
+func_181674_a,sortVertexData,0,
 func_181675_d,endVertex,0,
+func_181679_a,draw,0,
+func_181681_a,getTransform,0,
+func_181682_g,getAllTransforms,0,
 func_181688_b,getTransform,0,
 func_181689_a,applyTransform,0,
+func_181701_a,getBlockPosOffset16,0,
+func_181719_f,getIntegerSize,0,
+func_181720_d,getOffset,0,
+func_181721_a,addElement,0,
+func_181722_a,bufferData,0,
+func_181743_a,addForClass,2,
+func_181746_c,getFrames,0,Return the array of frames
+func_181747_a,addFrame,0,Add a frame at the next index in the array frames\n \n@param runningTime The game's uptime in nanoseconds
+func_181748_a,getLagometerValue,0,Return a value from time and multiplier to display the lagometer\n \n@param time The time corresponding to the frame\n@param multiplier Use to multiply
+func_181749_a,getLastIndex,0,Return the last index used when 240 frames have been set
+func_181750_b,getIndex,0,Return the index of the next frame in the array
+func_181751_b,parseIndex,0,Change 240 to 0\n \n@param rawIndex The index to parse
+func_181756_a,getInteger,0,"Get an Integer from the cache if it exists, otherwise return {@code Integer.valueOf()}"
+func_181758_c,hsvToRGB,0,
+func_183002_r,shouldBroadcastConsoleToOps,2,Get if console command events should be broadcast to ops
+func_183005_a,isThereOneNegativeScale,0,Return true if only one scale is negative\n \n@param itemTranformVec The ItemTransformVec3f instance
+func_183023_f,bypassesPlayerLimit,2,
+func_183024_b,bypassesPlayerLimit,2,
+func_183026_b,bypassesPlayerLimit,2,
+func_183028_i,deleteOldServerResourcesPacks,0,"Keep only the 10 most recent resources packs, delete the others"
+func_183029_j,getCpu,0,
+func_183500_a,setGuiSize,0,Set the gui to the specified width and height\n \n@param w The width of the screen\n@param h The height of the screen
 func_70000_a,addServerStatsToSnooper,2,
 func_70001_b,addServerTypeToSnooper,2,
 func_70002_Q,isSnooperEnabled,2,Returns whether snooping is enabled or not.
 func_70003_b,canCommandSenderUseCommand,2,"Returns {@code true} if the CommandSender is allowed to execute the command, {@code false} if not"
-func_70005_c_,getName,2,"Gets the name of this command sender (usually username, but possibly ""Rcon"")"
+func_70005_c_,getName,2,Get the name of this object. For players this returns their username
 func_70007_b,resetLog,1,Clears the RCon log
 func_70008_c,getLogContents,1,Gets the contents of the RCon log
 func_70011_f,getDistance,2,"Gets the distance to the position. Args: x, y, z"
@@ -4233,17 +4440,17 @@ func_70431_c,hasItemStack,2,Returns true if the specified ItemStack exists in th
 func_70432_d,storeItemStack,2,stores an itemstack in the users inventory
 func_70436_m,dropAllItems,2,Drop all armor and main inventory items.
 func_70437_b,setItemStack,2,"Set the stack helds by mouse, used in GUI/Container"
-func_70440_f,armorItemInSlot,2,returns a player armor item (as itemstack) contained in specified armor slot.
+func_70440_f,armorItemInSlot,2,returns a player armor item (as itemstack) contained in specified armor slot.\n \n@param slotIn the slot index requested
 func_70441_a,addItemStackToInventory,2,"Adds the item stack to the inventory, returns false if it is impossible."
-func_70442_a,writeToNBT,2,"Writes the inventory out as a list of compound tags. This is where the slot indices are used (+100 for armor, +80 for crafting)."
-func_70443_b,readFromNBT,2,Reads from the given tag list and fills the slots in the inventory with the correct items.
+func_70442_a,writeToNBT,2,"Writes the inventory out as a list of compound tags. This is where the slot indices are used (+100 for armor, +80 for crafting).\n \n@param nbtTagListIn List to append tags to"
+func_70443_b,readFromNBT,2,Reads from the given tag list and fills the slots in the inventory with the correct items.\n \n@param nbtTagListIn tagList to read from
 func_70445_o,getItemStack,2,"Stack helds by mouse, used in GUI and Containers"
 func_70447_i,getFirstEmptyStack,2,Returns the first item stack that is empty.
 func_70448_g,getCurrentItem,2,Returns the item stack currently held by the player.
 func_70449_g,damageArmor,2,Damages armor in each slot by the specified amount.
 func_70451_h,getHotbarSize,2,Get the size of the player hotbar inventory
 func_70452_e,storePartialItemStack,2,This function stores as many items of an ItemStack as possible in a matching slot and returns the quantity of left over items.
-func_70453_c,changeCurrentItem,0,Switch the current item to the next one or the previous one
+func_70453_c,changeCurrentItem,0,"Switch the current item to the next one or the previous one\n \n@param direction Direction to switch (1, 0, -1). 1 (any > 0) to select item left of current (decreasing currentItem index), -1 (any < 0) to select item right of current (increasing currentItem index). 0 has no effect."
 func_70455_b,copyInventory,2,Copy the ItemStack contents from another InventoryPlayer instance
 func_70463_b,getStackInRowAndColumn,2,"Returns the itemstack in the slot specified (Top left is 0, 0). Args: row, column"
 func_70468_h,getCurrentRecipe,2,
@@ -4293,7 +4500,7 @@ func_70624_b,setAttackTarget,2,Sets the active target the Task system uses for t
 func_70625_a,faceEntity,2,Changes pitch and yaw so that the entity calling the function is facing the entity provided as an argument.
 func_70626_be,updateEntityActionState,2,
 func_70627_aG,getTalkInterval,2,"Get number of ticks, at least during which the living entity will be silent."
-func_70628_a,dropFewItems,2,Drop 0-2 items of this living's type
+func_70628_a,dropFewItems,2,Drop 0-2 items of this living's type\n \n@param wasRecentlyHit true if this this entity was recently hit by appropriate entity (generally only if player or tameable)\n@param lootingModifier level of enchanment to be applied to this drop
 func_70629_bd,updateAITick,2,"main AI tick function, replaces updateEntityActionState"
 func_70631_g_,isChild,2,"If Animal, checks if the age timer is negative"
 func_70632_aY,isBlocking,2,
@@ -4640,7 +4847,7 @@ func_71504_g,populateEnvironment,2,Populates this crash report with initial info
 func_71505_b,getCrashCause,2,Returns the Throwable object that is the cause for the crash and Crash Report.
 func_71506_a,getSectionsInStringBuilder,2,Gets the various sections of the crash report into the given StringBuilder
 func_71507_a,addCrashSection,2,Adds a Crashreport section with the given name with the given value (convered .toString())
-func_71514_a,getCommandAliases,2,Gets a list of aliases for this command
+func_71514_a,getCommandAliases,2,Get a list of aliases for this command. <b>Never return null!</b>
 func_71515_b,processCommand,2,Callback when the command is invoked
 func_71517_b,getCommandName,2,Gets the name of the command
 func_71518_a,getCommandUsage,2,Gets the usage string for the command.
@@ -4660,9 +4867,9 @@ func_71542_c,getAllUsernames,2,
 func_71552_a,setTime,2,Set the time in the server object.
 func_71553_b,addTime,2,Adds (or removes) time in the server object.
 func_71554_c,toggleDownfall,2,Toggle rain and enable thundering.
-func_71555_a,getCommands,2,"returns a map of string to commads. All commands are returned, not just ones which someone has permission to use."
-func_71556_a,executeCommand,2,
-func_71557_a,getPossibleCommands,2,returns all commands that the commandSender can use
+func_71555_a,getCommands,2,Get a Map of all the name to command pairs stored in this command manager.
+func_71556_a,executeCommand,2,"Attempt to execute a command. This method should return the number of times that the command was executed. If the command does not exist or if the player does not have permission, 0 will be returned. A number greater than 1 can be returned if a player selector is used.\n \n@param sender The person who executed the command. This could be an EntityPlayer, RCon Source, Command Block, etc.\n@param rawCommand The raw arguments that were passed. This includes the command name."
+func_71557_a,getPossibleCommands,2,Get a list of commands that the given command sender has access to execute.\n \n@param sender The command sender
 func_71559_a,dropFirstString,2,creates a new array and sets elements 0..n-2 to be 0..n-1 of the input (n elements)
 func_71560_a,registerCommand,2,adds the command and any aliases it has to the internal map of available commands
 func_71565_a,filterAllowedCharacters,2,Filter string by only keeping those characters for which isAllowedCharacter() returns true.
@@ -4789,7 +4996,7 @@ func_72721_a,hasCloudFog,0,Checks if the given position is to be rendered with c
 func_72723_d,getDebugInfoEntities,0,Gets the entities info for use on the Debug screen
 func_72725_b,markBlocksForUpdate,0,Marks the blocks in the given range for update
 func_72728_f,deleteAllDisplayLists,0,Deletes all display lists
-func_72731_b,drawSelectionBox,0,"Draws the selection box for the player. Args: entityPlayer, rayTraceHit, i, itemStack, partialTickTime"
+func_72731_b,drawSelectionBox,0,"Draws the selection box for the player. Args: entityPlayer, rayTraceHit, i, itemStack, partialTickTime\n \n@param execute If equals to 0 the method is executed"
 func_72732_a,setWorldAndLoadRenderers,0,set null to clear
 func_72734_e,updateClouds,0,
 func_72735_c,getDebugInfoRenders,0,Gets the render info for use on the Debug screen
@@ -4888,10 +5095,10 @@ func_72980_b,playSound,2,"par8 is loudness, all pars passed to minecraftInstance
 func_72981_t,getDebugLoadedEntities,0,This string is 'All: (number of loaded entities)' Viewable by press ing F3
 func_73022_a,removeAllEntities,0,also releases skins.
 func_73025_a,doPreChunk,0,
-func_73027_a,addEntityToWorld,0,Add an ID to Entity mapping to entityHashSet
+func_73027_a,addEntityToWorld,0,Add an ID to Entity mapping to entityHashSet\n \n@param entityID The ID to give to the entity to spawn\n@param entityToSpawn The Entity to spawn in the World
 func_73028_b,removeEntityFromWorld,0,
 func_73029_E,doVoidFogParticles,0,
-func_73031_a,invalidateBlockReceiveRegion,0,"Invalidates an AABB region of blocks from the receive queue, in the event that the block has been modified client-side in the intervening 80 receive ticks."
+func_73031_a,invalidateBlockReceiveRegion,0,"Invalidates an AABB region of blocks from the receive queue, in the event that the block has been modified client-side in the intervening 80 receive ticks.\n \n@param x1 X position of the block where the region begin\n@param y1 Y position of the block where the region begin\n@param z1 Z position of the block where the region begin\n@param x2 X position of the block where the region end\n@param y2 Y position of the block where the region end\n@param z2 Z position of the block where the region end"
 func_73039_n,getEntityTracker,2,Gets the EntityTracker
 func_73040_p,getPlayerManager,2,
 func_73041_k,flush,2,Syncs all changes to disk and wait for completion.
@@ -4929,7 +5136,7 @@ func_73153_a,populate,2,Populates chunk with ores etc etc
 func_73154_d,provideChunk,2,"Will return back a chunk, if it doesn't exist and its not a MP client it will generates all the blocks for the specified chunk from the map seed and chunk seed"
 func_73156_b,unloadQueuedChunks,2,Unloads chunks that are marked to be unloaded. This is not guaranteed to unload every such chunk.
 func_73157_c,canSave,2,Returns if the IChunkProvider supports saving.
-func_73158_c,loadChunk,2,loads or generates the chunk at the chunk location specified
+func_73158_c,loadChunk,2,loads or generates the chunk at the chunk location specified\n \n@param chunkX x coord of the chunk to load (block coord >> 4)\n@param chunkZ z coord of the chunk to load (block coord >> 4)
 func_73164_a,initializeNoiseField,2,"generates a subset of the level's terrain data. Takes 7 arguments: the [empty] noise array, the position, and the size."
 func_73187_a,initializeNoiseField,2,"generates a subset of the level's terrain data. Takes 7 arguments: the [empty] noise array, the position, and the size."
 func_73234_b,unloadChunk,0,Unload chunk from ChunkProviderClient's hashmap. Called in response to a Packet50PreChunk with its mode field set to false
@@ -4983,14 +5190,14 @@ func_73972_b,addDemoButtons,0,Adds Demo buttons on Main Menu for players who are
 func_74275_a,updateTimer,0,Updates all fields of the Timer using the current time
 func_74290_a,getTimestampedPNGFileForDirectory,0,"Creates a unique PNG file in the given directory named by a timestamp.  Handles cases where the timestamp alone is not enough to create a uniquely named file, though it still might suffer from an unlikely race condition where the filename was unique when this method was called, but another process or thread created a file at the same path immediately after this method returned."
 func_74296_a,getOptionFloatValue,0,
-func_74297_c,getKeyBinding,0,Gets a key binding.
-func_74298_c,getKeyDisplayString,0,Represents a key or mouse button as a string. Args: key
-func_74299_a,getTranslation,0,"Returns the translation of the given index in the given String array. If the index is smaller than 0 or greater than/equal to the length of the String array, it is changed to 0."
+func_74297_c,getKeyBinding,0,Gets a key binding.\n \n@param settingOption The KeyBinding is generated from this option
+func_74298_c,getKeyDisplayString,0,Represents a key or mouse button as a string. Args: key\n \n@param key The key to display
+func_74299_a,getTranslation,0,"Returns the translation of the given index in the given String array. If the index is smaller than 0 or greater than/equal to the length of the String array, it is changed to 0.\n \n@param strArray The array of string containing the string to translate\n@param index The index in the array of the string to translate"
 func_74300_a,loadOptions,0,Loads the options from the options file. It appears that this has replaced the previous 'loadOptions'
 func_74303_b,saveOptions,0,Saves the options to the options file.
-func_74304_a,setOptionFloatValue,0,"If the specified option is controlled by a slider (float value), this will set the float value."
-func_74305_a,parseFloat,0,Parses a string into a float.
-func_74306_a,setOptionValue,0,"For non-float options. Toggles the option on/off, or cycles through the list i.e. render distances."
+func_74304_a,setOptionFloatValue,0,"If the specified option is controlled by a slider (float value), this will set the float value.\n \n@param settingsOption The option to set to a value\n@param value The value that the option will take"
+func_74305_a,parseFloat,0,Parses a string into a float.\n \n@param str The string to parse
+func_74306_a,setOptionValue,0,"For non-float options. Toggles the option on/off, or cycles through the list i.e. render distances.\n \n@param settingsOption The option to set to a value\n@param value The value that the option will take"
 func_74308_b,getOptionOrdinalValue,0,
 func_74372_a,grabMouseCursor,0,Grabs the mouse cursor it doesn't move and isn't seen.
 func_74373_b,ungrabMouseCursor,0,Ungrabs the mouse cursor so it can be moved and set it to the center of the screen
@@ -5017,7 +5224,7 @@ func_74524_c,createDirectByteBuffer,0,Creates and returns a direct byte buffer w
 func_74526_a,generateDisplayLists,0,Generates the specified number of display lists and returns the first index.
 func_74527_f,createDirectIntBuffer,0,Creates and returns a direct int buffer with the specified capacity. Applies native ordering to speed up access.
 func_74529_h,createDirectFloatBuffer,0,Creates and returns a direct float buffer with the specified capacity. Applies native ordering to speed up access.
-func_74535_a,formatString,0,Formats the strings based on 'IStatStringFormat' interface.
+func_74535_a,formatString,0,Formats the strings based on 'IStatStringFormat' interface.\n \n@param str The String to format
 func_74539_c,getChatLineID,0,
 func_74540_b,getUpdatedCounter,0,
 func_74583_a,updateRenderInfo,0,Updates the current render info and camera location based on entity look angles and 1st/3rd person view mode
@@ -5172,7 +5379,7 @@ func_75252_g,isInterruptible,2,Determine if this AI Task is interruptible by a h
 func_75253_b,continueExecuting,2,Returns whether an in-progress EntityAIBase should continue executing
 func_75270_a,setSitting,2,Sets the sitting flag.
 func_75277_f,isRunning,2,@see #isRunning
-func_75295_a,canEasilyReach,2,Checks to see if this entity can find a short path to the given target.
+func_75295_a,canEasilyReach,2,Checks to see if this entity can find a short path to the given target.\n \n@param target the entity to find a path to
 func_75296_a,isSuitableTarget,2,"A method used to see if an entity is a suitable target through a number of checks. Args : entity, canTargetInvinciblePlayer"
 func_75366_f,findPossibleShelter,2,
 func_75382_a,hasPlayerGotBoneInHand,2,Gets if the Player has the Bone in the hand.
@@ -5311,7 +5518,7 @@ func_75790_f,getEnumGameType,0,Gets the EnumGameType.
 func_75799_b,getSaveList,0,
 func_75800_d,flushCache,2,
 func_75801_b,isOldMapFormat,2,gets if the map is old chunk saving (true) or McRegion (false)
-func_75802_e,deleteWorldDirectory,2,@args: Takes one argument - the name of the directory of the world to delete. @desc: Delete the world by deleting the associated directory recursively.
+func_75802_e,deleteWorldDirectory,2,@args: Takes one argument - the name of the directory of the world to delete. @desc: Delete the world by deleting the associated directory recursively.\n \n@param saveName The current save's name
 func_75803_c,getWorldInfo,2,Returns the world's WorldInfo object
 func_75804_a,getSaveLoader,2,Returns back a loader for the specified save directory
 func_75805_a,convertMapFormat,2,converts the map to mcRegion
@@ -5381,7 +5588,7 @@ func_75968_a,format,0,
 func_75971_g,registerStat,2,Register the stat into StatList.
 func_75984_f,getSpecial,2,"Special achievements have a 'spiked' (on normal texture pack) frame, special achievements are the hardest ones to achieve."
 func_75987_b,setSpecial,2,"Special achievements have a 'spiked' (on normal texture pack) frame, special achievements are the hardest ones to achieve."
-func_75988_a,setStatStringFormatter,0,Defines a string formatter for the achievement.
+func_75988_a,setStatStringFormatter,0,Defines a string formatter for the achievement.\n \n@param statStringFormatterIn 1.8.9
 func_75989_e,getDescription,0,Returns the fully description of the achievement - ready to be displayed on screen.
 func_75997_a,init,2,A stub functions called to make the static initializer for this class run.
 func_76030_b,getValue,2,Returns the object stored in this entry
@@ -5497,7 +5704,7 @@ func_76272_a,getTotalWeight,2,Returns the total weight of all items in a collect
 func_76273_a,getRandomItem,2,"Returns a random choice from the input items, with a total weight value."
 func_76304_a,generateNoiseOctaves,2,"pars:(par2,3,4=noiseOffset ; so that adjacent noise segments connect) (pars5,6,7=x,y,zArraySize),(pars8,10,12 = x,y,z noiseScale)"
 func_76305_a,generateNoiseOctaves,2,Bouncer function to the main one with some default arguments.
-func_76308_a,populateNoiseArray,2,"pars: noiseArray , xOffset , yOffset , zOffset , xSize , ySize , zSize , xScale, yScale , zScale , noiseScale.  noiseArray should be xSize*ySize*zSize in size"
+func_76308_a,populateNoiseArray,2,noiseArray should be xSize*ySize*zSize in size
 func_76310_a,grad,2,
 func_76311_b,lerp,2,
 func_76316_a,onInventoryChanged,2,Called by InventoryBasic.onInventoryChanged() on a array that is never filled.
@@ -5505,8 +5712,9 @@ func_76317_a,clearProfiling,2,Clear profiling.
 func_76318_c,endStartSection,2,End current section and start a new section
 func_76319_b,endSection,2,End section
 func_76320_a,startSection,2,Start section
-func_76321_b,getProfilingData,2,Get profiling data
+func_76321_b,getProfilingData,2,Get profiling data\n \n@param profilerName The profiler's name
 func_76322_c,getNameOfLastSection,2,
+func_76329_a,getColor,0,"Return a color to display the profiler, generated from the hash code of the profiler's name"
 func_76333_a,smooth,0,Smooths mouse input
 func_76337_a,ticksToElapsedTime,0,"Returns the time elapsed for the given number of ticks, in ""mm:ss"" format."
 func_76338_a,stripControlCodes,0,
@@ -5520,7 +5728,7 @@ func_76349_b,setProjectile,2,Define the damage type as projectile based.
 func_76350_n,isDifficultyScaled,2,Return whether this damage source will have its damage amount scaled based on the current difficulty.
 func_76351_m,setDifficultyScaled,2,Set whether this damage source will have its damage amount scaled based on the current difficulty.
 func_76352_a,isProjectile,2,Returns true if the damage is projectile based.
-func_76353_a,causeArrowDamage,2,returns EntityDamageSourceIndirect of an arrow
+func_76353_a,causeArrowDamage,2,returns EntityDamageSourceIndirect of an arrow\n \n@param indirectEntityIn The entity that shoot the arrow
 func_76354_b,causeIndirectMagicDamage,2,
 func_76355_l,getDamageType,2,Return the name of damage type.
 func_76356_a,causeThrownDamage,2,
@@ -5528,7 +5736,7 @@ func_76357_e,canHarmInCreative,2,
 func_76358_a,causeMobDamage,2,
 func_76359_i,setDamageAllowedInCreativeMode,2,
 func_76361_j,setFireDamage,2,Define the damage type as fire based.
-func_76362_a,causeFireballDamage,2,returns EntityDamageSourceIndirect of a fireball
+func_76362_a,causeFireballDamage,2,returns EntityDamageSourceIndirect of a fireball\n \n@param indirectEntityIn The entity that shoot the fireball
 func_76363_c,isUnblockable,2,
 func_76364_f,getSourceOfDamage,2,
 func_76365_a,causePlayerDamage,2,returns an EntityDamageSource of type player
@@ -5654,7 +5862,7 @@ func_76732_a,setTemperatureRainfall,2,Sets the temperature and rainfall of this 
 func_76733_a,setFillerBlockMetadata,2,
 func_76735_a,setBiomeName,2,
 func_76736_e,isHighHumidity,2,Checks to see if the rainfall level of the biome is extremely high
-func_76738_d,canSpawnLightningBolt,2,"Return true if the biome supports lightning bolt spawn, either by have the bolts enabled and have rain enabled."
+func_76738_d,canRain,2,Check if rain can occur in biome
 func_76739_b,setColor,2,
 func_76741_f,getSpawningChance,2,returns the chance a creature has to spawn.
 func_76742_b,setEnableSnow,2,sets enableSnow to true during biome initialization. returns BiomeGenBase.
@@ -5683,7 +5891,7 @@ func_76978_a,renderOffsetAABB,0,"Renders a white box with the bounds of the AABB
 func_76979_b,doRenderShadowAndFire,0,"Renders the entity's shadow and fire (if its on fire). Args: entity, x, y, z, yaw, partialTickTime"
 func_76982_b,getWorldFromRenderManager,0,Returns the render manager's world object
 func_76983_a,getFontRendererFromRenderManager,0,Returns the font renderer from the set render manager
-func_76986_a,doRender,0,"Actually renders the given argument. This is a synthetic bridge method, always casting down its argument and then handing it off to a worker function which does the actual work. In all probabilty, the class Render is generic (Render<T extends Entity>) and this method has signature public void func_76986_a(T entity, double d, double d1, double d2, float f, float f1). But JAD is pre 1.5 so doe"
+func_76986_a,doRender,0,Renders the desired {@code T} type Entity.
 func_77008_a,setLightmap,0,
 func_77010_a,renderPainting,0,
 func_77030_a,getColorMultiplier,0,"Returns an ARGB int color back. Args: entityLiving, lightBrightness, partialTickTime"
@@ -5778,7 +5986,7 @@ func_77509_b,getEfficiencyModifier,2,Return the extra efficiency of tools based 
 func_77510_g,getAquaAffinityModifier,2,Returns the aqua affinity status of enchantments on current equipped item of player.
 func_77511_a,getMaxEnchantmentLevel,2,Returns the biggest level of the enchantment on the array of ItemStack passed.
 func_77513_b,buildEnchantmentList,2,"Create a list of random EnchantmentData (enchantments) that can be added together to the ItemStack, the 3rd parameter is the total enchantability level."
-func_77514_a,calcItemStackEnchantability,2,"Returns the enchantability of itemstack, it's uses a singular formula for each index (2nd parameter: 0, 1 and 2), cutting to the max enchantability power of the table (3rd parameter)"
+func_77514_a,calcItemStackEnchantability,2,"Returns the enchantability of itemstack, using a separate calculation for each enchantNum (0, 1 or 2), cutting to the max enchantability power of the table, which is locked to a max of 15."
 func_77516_a,applyEnchantmentModifierArray,2,Executes the enchantment modifier on the array of ItemStack passed.
 func_77517_e,getFortuneModifier,2,Returns the fortune enchantment modifier of the current equipped item of player.
 func_77518_a,applyEnchantmentModifier,2,Executes the enchantment modifier on the ItemStack passed.
@@ -5860,9 +6068,11 @@ func_77849_c,onFoodEaten,2,
 func_77861_e,getToolMaterialName,2,Return the name for this tool's material.
 func_77872_a,updateMapData,2,
 func_77873_a,getMapData,2,
+func_77904_a,getPotionEffect,2,
 func_77905_c,getPotionPrefix,2,"Given a potion data value, get its prefix as a translation ID."
 func_77906_a,brewBitOperations,2,Manipulates the specified bit of the potion damage value according to the rules passed from applyIngredient.
 func_77907_h,countSetFlags,2,Returns the number of 1 bits in the given integer.
+func_77908_a,getPotionPrefixIndexFlags,2,
 func_77909_a,getPotionPrefixIndex,2,"Given a potion data value, get its prefix index number."
 func_77910_c,isFlagSet,2,"Returns 1 if the flag is set, 0 if it is not set."
 func_77911_a,calcPotionLiquidColor,2,Given a {@link Collection}<{@link PotionEffect}> will return an Integer color.
@@ -5954,7 +6164,7 @@ func_78263_a,getCharWidth,0,Returns the width of this character as rendered.
 func_78264_a,setUnicodeFlag,0,Set unicodeFlag controlling whether strings should be rendered with Unicode fonts instead of the default.png font.
 func_78265_b,resetStyles,0,Reset all style flag fields in the class to false; called at the start of string rendering
 func_78266_a,renderDefaultChar,0,"Render a single character with the default.png font at current (posX,posY) location..."
-func_78267_b,splitStringWidth,0,Returns the width of the wordwrapped String (maximum length is parameter k)
+func_78267_b,splitStringWidth,0,Returns the width of the wordwrapped String (maximum length is parameter k)\n \n@param str The string to split\n@param maxLength The maximum length of a word
 func_78268_b,renderSplitString,0,Perform actual work of rendering a multi-line string with wordwrap and with darker drop shadow color if flag is set
 func_78269_a,trimStringToWidth,0,Trims a string to fit a specified Width.
 func_78270_c,isFormatSpecial,0,Checks if the char code is O-K...lLrRk-o... used to set special formatting.
@@ -5980,15 +6190,15 @@ func_78434_a,setAreaTransparent,0,Makes the given area of the image transparent 
 func_78435_c,hasTransparency,0,Returns true if the given area of the image contains transparent pixels
 func_78440_a,renderItemInFirstPerson,0,Renders the active item in the player's hand when in first person mode. Args: partialTickTime
 func_78441_a,updateEquippedItem,0,
-func_78442_d,renderFireInFirstPerson,0,Renders the fire on the screen for first person mode. Arg: partialTickTime
+func_78442_d,renderFireInFirstPerson,0,Renders the fire on the screen for first person mode. Arg: partialTickTime\n \n@param partialTicks Partial ticks
 func_78444_b,resetEquippedProgress,0,Resets equippedProgress
 func_78445_c,resetEquippedProgress2,0,Resets equippedProgress
 func_78447_b,renderOverlays,0,Renders all the overlays that are in first person mode. Args: partialTickTime
-func_78448_c,renderWaterOverlayTexture,0,Renders a texture that warps around based on the direction the player is looking. Texture needs to be bound before being called. Used for the water overlay. Args: parialTickTime
+func_78448_c,renderWaterOverlayTexture,0,Renders a texture that warps around based on the direction the player is looking. Texture needs to be bound before being called. Used for the water overlay. Args: parialTickTime\n \n@param partialTicks Partial ticks
 func_78464_a,updateRenderer,0,Updates the entity renderer
 func_78466_h,updateFogColor,0,calculates fog and calls glClearColor
 func_78467_g,orientCamera,0,sets up player's eye (or camera in third person mode)
-func_78468_a,setupFog,0,Sets up the fog to be rendered. If the arg passed in is -1 the fog starts at 0 and goes to 80% of far plane distance and is used for sky rendering.
+func_78468_a,setupFog,0,Sets up the fog to be rendered. If the arg passed in is -1 the fog starts at 0 and goes to 80% of far plane distance and is used for sky rendering.\n \n@param startCoords If is -1 the fog start at 0.0
 func_78469_a,setFogColorBuffer,0,Update and return fogColorBuffer with the RGBA values passed as arguments
 func_78470_f,updateTorchFlicker,0,Recompute a random value that is applied to block color in updateLightmap()
 func_78471_a,renderWorld,0,
@@ -6000,7 +6210,7 @@ func_78476_b,renderHand,0,Render player hand
 func_78477_e,updateFovModifierHand,0,Update FOV modifier hand
 func_78478_c,setupOverlayRendering,0,Setup orthogonal projection for rendering GUI screen overlays
 func_78479_a,setupCameraTransform,0,"sets up projection, view effects, camera position/rotation"
-func_78481_a,getFOVModifier,0,Changes the field of view of the player depending on if they are underwater or not
+func_78481_a,getFOVModifier,0,Changes the field of view of the player depending on if they are underwater or not\n \n@param useFOVSetting If true the FOV set in the settings will be use in the calculation
 func_78482_e,hurtCameraEffect,0,
 func_78484_h,addRainParticles,0,
 func_78546_a,isBoundingBoxInFrustum,0,"Returns true if the bounding box is inside all 6 clipping planes, otherwise returns false."
@@ -6015,15 +6225,15 @@ func_78715_a,getEntityClassRenderObject,0,
 func_78716_a,getFontRenderer,0,Returns the font renderer
 func_78717_a,set,0,World sets this RenderManager's worldObj to the world provided
 func_78745_b,flipPlayer,0,Flips the player around.
-func_78746_a,setGameType,0,Sets the game type for the player.
+func_78746_a,setGameType,0,Sets the game type for the player.\n \n@param type The GameType to set
 func_78747_a,isSpectator,0,None
-func_78748_a,setPlayerCapabilities,0,Sets player capabilities depending on current gametype. params: player
+func_78748_a,setPlayerCapabilities,0,Sets player capabilities depending on current gametype. params: player\n \n@param player The player's instance
 func_78749_i,extendedReach,0,true for hitting entities far away.
 func_78750_j,syncCurrentPlayItem,0,Syncs the current player item with the server
 func_78752_a,sendPacketDropItem,0,Sends a Packet107 to the server to drop the item on the ground
 func_78753_a,windowClick,0,Handles slot clicks sends a packet to the server.
 func_78755_b,shouldDrawHUD,0,
-func_78756_a,sendEnchantPacket,0,GuiEnchantment uses this during multiplayer to tell PlayerControllerMP to send a packet indicating the enchantment action the player has taken.
+func_78756_a,sendEnchantPacket,0,GuiEnchantment uses this during multiplayer to tell PlayerControllerMP to send a packet indicating the enchantment action the player has taken.\n \n@param windowID The ID of the current window\n@param button The button id (enchantment selected)
 func_78757_d,getBlockReachDistance,0,player reach distance = 4F
 func_78758_h,isInCreativeMode,0,returns true if player is in creative mode
 func_78761_a,sendSlotPacket,0,Used in PlayerControllerMP to update the server with an ItemStack in a slot.
@@ -6055,6 +6265,7 @@ func_78853_a,loadServerList,0,"Loads a list of servers from servers.dat, by runn
 func_78855_b,saveServerList,0,"Runs getNBTCompound on each ServerData instance, puts everything into a ""servers"" NBT list and writes it to servers.dat."
 func_78856_c,countServers,0,Counts the number of ServerData instances in the list.
 func_78857_a,swapServers,0,"Takes two list indexes, and swaps their order around."
+func_78860_a,fromString,0,
 func_78861_a,getIP,0,
 func_78862_a,parseIntWithDefault,0,
 func_78863_b,getServerAddress,0,"Returns a server's address and port for the specified hostname, looking up the SRV record if possible"
@@ -6075,7 +6286,7 @@ func_78887_a,getNewBoundingBox,2,returns a new StructureBoundingBox with MAX val
 func_78888_b,expandTo,2,Expands a bounding box's dimensions to include the supplied bounding box.
 func_78898_a,updatePlayerMoveState,0,
 func_78909_a,getColorIndex,0,Takes in the pass the call list is being requested for. Args: renderPass
-func_78914_f,markDirty,0,Marks the current renderer data as dirty and needing to be updated.
+func_78914_f,noColor,0,Disabels color processing.
 func_80003_ah,getPlayerUsageSnooper,0,
 func_80006_f,getUniqueID,0,
 func_80007_l,getDimensionName,2,"Returns the dimension's name, e.g. ""The End"", ""Nether"", or ""Overworld""."
@@ -6087,7 +6298,7 @@ func_82147_ab,getPortalCooldown,2,Return the amount of cooldown before this enti
 func_82149_j,copyLocationAndAnglesFrom,2,Sets this entity's location and angles to the location and angles of the passed in entity.
 func_82150_aj,isInvisible,2,
 func_82159_b,getArmorPosition,2,
-func_82160_b,dropEquipment,2,Drop the equipment for this entity.
+func_82160_b,dropEquipment,2,Drop the equipment for this entity.\n \n@param wasRecentlyHit true if this this entity was recently hit by appropriate entity (generally only if player or tameable)\n@param lootingModifier level of enchanment to be applied to this drop
 func_82161_a,getArmorItemForSlot,2,Gets the vanilla armor Item that can go in the slot specified for the given tier.
 func_82164_bB,addRandomDrop,2,Causes this Entity to drop a random item.
 func_82165_m,isPotionActive,2,
@@ -6149,7 +6360,7 @@ func_82381_h,getArgumentMap,2,"Parses the given argument string, turning it into
 func_82386_a,matchOnePlayer,2,Returns the one player that matches the given at-token.  Returns null if more than one player matches.
 func_82402_b,renderItem,0,
 func_82422_c,transformHeldFull3DItemLayer,0,
-func_82448_a,transferEntityToWorld,2,Transfers an entity from a world to another world.
+func_82448_a,transferEntityToWorld,2,Transfers an entity from a world to another world.\n \n@param oldWorldIn The world transfering from\n@param toWorldIn The world transfering the entity to
 func_82482_a,dispense,2,Dispenses the specified ItemStack from a dispenser.
 func_82485_a,playDispenseSound,2,Play the dispense sound from the specified block.
 func_82486_a,doDispense,2,
@@ -6294,7 +6505,7 @@ func_85073_a,getPrunedStackTrace,2,"Resets our stack trace according to the curr
 func_85074_a,getCoordinateInfo,2,
 func_85089_a,getKey,2,
 func_85090_b,getValue,2,
-func_85094_b,renderDebugBoundingBox,0,Renders the bounding box around an entity when F3+B is pressed
+func_85094_b,renderDebugBoundingBox,0,Renders the bounding box around an entity when F3+B is pressed\n \n@param x X position where to render the debug bounding box\n@param y Y position where to render the debug bounding box\n@param z Z position where to render the debug bounding box\n@param entityYaw The entity yaw\n@param partialTicks The partials ticks
 func_85102_a,playSoundToNearExcept,2,Plays sound to all near players except the player reference given
 func_85118_a,addToCrashReport,2,Adds this WorldInfo instance to the crash report.
 func_85144_b,getCacheSizes,2,Gets a human-readable string that indicates the sizes of all the cache fields.  Basically a synchronized static toString.
@@ -6310,7 +6521,7 @@ func_90010_a,isPartOfLargeChest,2,Return whether the given inventory is part of 
 func_90011_a,createChild,2,
 func_90020_K,getLimitFramerate,0,
 func_90022_d,getListOfPlayers,2,
-func_90033_f,canLoadWorld,0,Return whether the given world can be loaded.
+func_90033_f,canLoadWorld,0,Return whether the given world can be loaded.\n \n@param saveName The current save's name
 func_90035_a,getClassFromID,2,Return the class assigned to this entity ID.
 func_90036_a,getFireAspectModifier,2,Returns the fire aspect modifier of the players held item.
 func_90999_ad,canRenderOnFire,0,Return whether this entity should be rendered as on fire.
@@ -6325,7 +6536,7 @@ func_92046_g,setFadeColour,0,
 func_92058_a,setEntityItemStack,2,Sets the ItemStack for this entity
 func_92059_d,getEntityItem,2,"Returns the ItemStack corresponding to the Entity (Note: if no item exists, will log an error but still return an ItemStack containing Block.stone)"
 func_92085_d,getIsBlank,2,
-func_92087_a,causeThornsDamage,2,Returns the EntityDamageSource of the Thorns enchantment
+func_92087_a,causeThornsDamage,2,Returns the EntityDamageSource of the Thorns enchantment\n \n@param source The Entity that wears the armor with thorn
 func_92088_a,makeFireworks,0,
 func_92089_a,canApply,2,Determines if this enchantment can be applied to a specific ItemStack.
 func_92093_a,getFireTimeForEntity,2,"Gets the amount of ticks an entity should be set fire, adjusted for fire protection."
@@ -6342,6 +6553,7 @@ func_92116_a,addEnchantmentBooksToList,0,Adds the enchantment books from the sup
 func_94041_b,isItemValidForSlot,2,Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
 func_94053_h,nextTextureIndexX,0,
 func_94059_bO,getAlwaysRenderNameTagForRender,0,
+func_94060_bK,getAttackingEntity,2,
 func_94061_f,setNoAI,2,Set whether this Entity's AI is disabled
 func_94083_c,getTntPlacedBy,2,returns null or the entityliving it was placed or ignited by
 func_94085_r,getDefaultDisplayTileOffset,2,
@@ -6454,14 +6666,18 @@ func_96528_e,getScores,2,
 func_96529_a,getValueFromObjective,2,Returns the value of the given objective for the given entity name
 func_96530_a,setObjectiveInDisplaySlot,2,"0 is tab menu, 1 is sidebar, 2 is below name"
 func_96531_f,getTeamNames,2,Retrieve all registered ScorePlayerTeam names
+func_96532_b,onObjectiveDisplayNameChanged,2,
+func_96533_c,onScoreObjectiveRemoved,2,
 func_96534_i,getSortedScores,2,"Returns an array of Score objects, sorting by Score.getScorePoints()"
 func_96535_a,addScoreObjective,2,Create and returns the score objective for the given name and ScoreCriteria
 func_96537_j,getObjectiveDisplaySlotNumber,2,"Returns 0 for (case-insensitive) 'list', 1 for 'sidebar', 2 for 'belowName', otherwise -1."
 func_96538_b,sendTeamUpdate,2,This packet will notify the players that this team is updated
 func_96539_a,getObjectiveInDisplaySlot,2,"0 is tab menu, 1 is sidebar, 2 is below name"
-func_96546_g,getPlayerIterator,2,
+func_96546_g,sendDisplaySlotRemovalPackets,2,
+func_96551_b,markSaveDataDirty,2,
 func_96559_d,getFrontOffsetY,2,
 func_96631_a,attemptDamageItem,2,"Attempts to damage the ItemStack with par1 amount of damage, If the ItemStack has the Unbreaking enchantment there is a chance for each point of damage to be negated. Returns true if it takes more damage than getMaxDamage(). Returns false otherwise or if the ItemStack can't be damaged or if all points of damage are negated."
+func_96635_a,setScore,2,
 func_96636_a,getName,2,
 func_96637_b,isReadOnly,2,
 func_96645_d,getObjective,2,
