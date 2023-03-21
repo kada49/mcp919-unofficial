@@ -10,7 +10,7 @@ import sys
 import logging
 from optparse import OptionParser
 
-from commands import Commands, CLIENT, SERVER, CalledProcessError
+from commands import Commands, CLIENT, SERVER, CalledProcessError, fixMCFile
 from mcp import decompile_side, updatemd5_side
 import clientCopy
 
@@ -147,6 +147,10 @@ def decompile(conffile, force_jad, force_csv, no_recompile, no_comments, no_refo
             # retroguard or other called process error so bail
             commands.logger.error('Decompile failed')
             sys.exit(1)
+            
+        commands.logger.info('> Fixing \'StructureMineshaftPieces.java\'')
+        commands.fixMCFile()
+        
         if not no_recompile:
             if cltdecomp:
                 try:
