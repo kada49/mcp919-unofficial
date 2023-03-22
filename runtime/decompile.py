@@ -149,7 +149,9 @@ def decompile(conffile, force_jad, force_csv, no_recompile, no_comments, no_refo
             sys.exit(1)
             
         commands.logger.info('> Fixing \'StructureMineshaftPieces.java\'')
-        commands.fixMCFile()
+        commands.fixMCFile(0)
+        commands.logger.info('> Fixing \'Cartesian.java\'')
+        commands.fixMCFile(1)
         
         if not no_recompile:
             if cltdecomp:

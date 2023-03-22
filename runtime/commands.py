@@ -207,18 +207,32 @@ class Commands(object):
             self.checkscala()
             self.readcommands(verify, no_patch=no_patch)
 
-    def fixMCFile(self):
+    def fixMCFile(self, fileIndex):
         currentPath = os.getcwd()
-        filePath = currentPath + "\\src\\minecraft\\net\\minecraft\\world\\gen\\structure\\StructureMineshaftPieces.java"
-        file = open(filePath, "r")
-        text = file.read()
-        file.close()
+        if fileIndex == 0:
+            filePath = currentPath + "\\src\\minecraft\\net\\minecraft\\world\\gen\\structure\\StructureMineshaftPieces.java"
+            file = open(filePath, "r")
+            text = file.read()
+            file.close()
     
-        text = text.replace("lvt_5_1_", "k")
+            text = text.replace("lvt_5_1_", "k")
     
-        file = open(filePath, "w")
-        file.write(text)
-        file.close()
+            file = open(filePath, "w")
+            file.write(text)
+            file.close()
+            
+        elif fileIndex == 1:
+            filePath = currentPath + "\\src\\minecraft\\net\\minecraft\\util\\Cartesian.java"
+            file = open(filePath, "r")
+            text = file.read()
+            file.close()
+            toReplace = "new Cartesian.Product.ProductIterator(this.clazz, this.iterables)"
+            replaced = "(Iterator<T[]>)(new Cartesian.Product.ProductIterator(this.clazz, this.iterables))"
+            text = text.replace(toReplace, replaced)
+    
+            file = open(filePath, "w")
+            file.write(text)
+            file.close()
 
     def getVersions(self):
         try:
