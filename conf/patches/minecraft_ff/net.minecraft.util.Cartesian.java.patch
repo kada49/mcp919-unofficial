@@ -10,3 +10,12 @@ diff -r -U 3 minecraft\net\minecraft\util\Cartesian.java minecraft_patched\net\m
        }
     }
  
+@@ -57,7 +57,7 @@
+       }
+ 
+       public Iterator<T[]> iterator() {
+-         return (Iterator<T[]>)(this.field_179428_b.length <= 0?Collections.singletonList((Object[])Cartesian.func_179319_b(this.field_179429_a, 0)).iterator():new Cartesian.Product.ProductIterator(this.field_179429_a, this.field_179428_b));
++         return (Iterator<T[]>)(this.field_179428_b.length <= 0?Collections.singletonList((Object[])Cartesian.func_179319_b(this.field_179429_a, 0)).iterator():(Iterator<T[]>)(new Cartesian.Product.ProductIterator(this.field_179429_a, this.field_179428_b)));
+       }
+ 
+ static class ProductIterator<T> extends UnmodifiableIterator<T[]> {
