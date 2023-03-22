@@ -920,9 +920,9 @@ class Commands(object):
             self.cmdscalac = "\"%s\"" % cmd
             
             try:
-                self.runcmd("%s -target:jvm-1.6 -version" % self.cmdscalac, quiet=True)
+                self.runcmd("%s -target:jvm-1.8 -version" % self.cmdscalac, quiet=True)
             except (CalledProcessError, OSError):
-                self.logger.info("%s does not support jvm-1.6 target, it is out of date. Ignoring" % self.cmdscalac)
+                self.logger.info("%s does not support jvm-1.8 target, it is out of date. Ignoring" % self.cmdscalac)
                 self.cmdscalac = None
         
     def checkjars(self, side):
@@ -1574,7 +1574,7 @@ class Commands(object):
                 self.logger.error("")
                 for line in ex.output.splitlines():
                     if line.strip():
-                        if line.find("jvm-1.6") != -1:
+                        if line.find("jvm-1.8") != -1:
                             self.logger.error(" === Your scala version is out of date, update to at least 2.10.0 ===")
                         if line[0] != "[" and line[0:4] != "Note":
                             self.logger.error(line)
