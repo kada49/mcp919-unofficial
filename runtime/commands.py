@@ -39,7 +39,7 @@ from pylibs.normpatch import normalisepatch
 
 CLIENT = 0
 SERVER = 1
-SIDE_NAME = {CLIENT: 'client', SERVER: 'server'}
+SIDE_NAME = {CLIENT: "client", SERVER: "server"}
 
 
 class Error(Exception):
@@ -54,11 +54,11 @@ class CalledProcessError(Error):
         self.output = output
 
     def __str__(self):
-        return "Command '%s' returned non-zero exit status %d" % (self.cmd, self.returncode)
+        return "Command \"%s\" returned non-zero exit status %d" % (self.cmd, self.returncode)
 
 
 def reallyrmtree(path):
-    if not sys.platform.startswith('win'):
+    if not sys.platform.startswith("win"):
         if os.path.exists(path):
             shutil.rmtree(path)
     else:
@@ -76,7 +76,7 @@ def reallyrmtree(path):
         except OSError:
             pass
         else:
-            raise OSError(errno.EPERM, "Failed to remove: '" + path + "'", path)
+            raise OSError(errno.EPERM, "Failed to remove: "" + path + """, path)
 
 
 def rmtree_onerror(func, path, _):
@@ -100,7 +100,7 @@ def filterdirs(src_dir, pattern=None, ignore_dirs=None, append_pattern=False, al
         test_dirlist = dirlist[:]
         for cur_dir in test_dirlist:
             if os.path.normpath(os.path.join(sub_dir, cur_dir)) in ignore_dirs:
-                # if the full subdir is in the ignored package list delete it so that we don't descend into it
+                # if the full subdir is in the ignored package list delete it so that we don"t descend into it
                 dirlist.remove(cur_dir)
         if pattern is None:
             if all_files:
@@ -120,14 +120,14 @@ def filterdirs(src_dir, pattern=None, ignore_dirs=None, append_pattern=False, al
 
 
 def cmdsplit(args):
-    if os.sep == '\\':
-        args = args.replace('\\', '\\\\')
+    if os.sep == "\\":
+        args = args.replace("\\", "\\\\")
     return shlex.split(args)
 
 
 #def truncate(text, length):
 #    if len(text) > length:
-#        return text[:length] + '...'
+#        return text[:length] + "..."
 #    return text
 def truncate(text, length):
     return text
@@ -136,7 +136,7 @@ def truncate(text, length):
 def csv_header(csvfile):
     fieldnames = []
     if os.path.isfile(csvfile):
-        with open(csvfile, 'rb') as fh:
+        with open(csvfile, "rb") as fh:
             csvreader = csv.DictReader(fh)
             fieldnames = csvreader.fieldnames
     return set(fieldnames)
@@ -145,9 +145,9 @@ def csv_header(csvfile):
 class Commands(object):
     """Contains the commands and initialisation for a full mcp run"""
 
-    MCPVersion = '9.19'
-    _default_config = 'conf/mcp.cfg'
-    _version_config = 'conf/version.cfg'
+    MCPVersion = "9.19"
+    _default_config = "conf/mcp.cfg"
+    _version_config = "conf/version.cfg"
 
     @classmethod
     def fullversion(cls):
@@ -157,10 +157,10 @@ class Commands(object):
             config = ConfigParser.SafeConfigParser()
             with open(os.path.normpath(cls._version_config)) as fh:
                 config.readfp(fh)
-            data_version = config.get('VERSION', 'MCPVersion')
-            client_version = config.get('VERSION', 'ClientVersion')
-            server_version = config.get('VERSION', 'ServerVersion')
-            full_version = ' (data: %s, client: %s, server: %s)' % (data_version, client_version, server_version)
+            data_version = config.get("VERSION", "MCPVersion")
+            client_version = config.get("VERSION", "ClientVersion")
+            server_version = config.get("VERSION", "ServerVersion")
+            full_version = " (data: %s, client: %s, server: %s)" % (data_version, client_version, server_version)
         except IOError:
             pass
         except ConfigParser.Error:
@@ -178,26 +178,26 @@ class Commands(object):
         self.checkfolders()
         self.startlogger()
 
-        self.logger.info('== MCP %s ==', Commands.fullversion())
+        self.logger.info("== MCP %s ==", Commands.fullversion())
 
         if not normalStart and not shortstart:
             self.logger.error("Json file not found in %s"%self.jsonFile)
             self.logger.error("Please run launcher & Minecraft at least once.")
             sys.exit()
 
-        if sys.platform.startswith('linux'):
-            self.osname = 'linux'
-        elif sys.platform.startswith('darwin'):
-            self.osname = 'osx'
-        elif sys.platform.startswith('win'):
-            self.osname = 'win'
+        if sys.platform.startswith("linux"):
+            self.osname = "linux"
+        elif sys.platform.startswith("darwin"):
+            self.osname = "osx"
+        elif sys.platform.startswith("win"):
+            self.osname = "win"
         else:
-            self.logger.error('OS not supported : %s', sys.platform)
+            self.logger.error("OS not supported : %s", sys.platform)
             sys.exit(1)
-        self.logger.debug('OS : %s', sys.platform)
+        self.logger.debug("OS : %s", sys.platform)
 
         # tell off people running as root as it screws up wine
-        if self.osname in ['linux', 'osx']:
+        if self.osname in ["linux", "osx"]:
             if not os.getuid():  # pylint: disable-msg=E1101
                 self.logger.error("!! Please don't run MCP as root !!")
                 sys.exit(1)
@@ -239,8 +239,8 @@ class Commands(object):
             config = ConfigParser.SafeConfigParser()
             with open(os.path.normpath(self._version_config)) as fh:
                 config.readfp(fh)
-            client_version = config.get('VERSION', 'ClientVersion')
-            server_version = config.get('VERSION', 'ServerVersion')
+            client_version = config.get("VERSION", "ClientVersion")
+            server_version = config.get("VERSION", "ServerVersion")
             return client_version, server_version
         except IOError:
             pass
@@ -250,10 +250,10 @@ class Commands(object):
         return None
 
     def checkcommand(self, name, command, java=False, single_line=False, check_return=True, error=True):
-        self.logger.debug("# %s: '%s'", name, command)
+        self.logger.debug("# %s: \"%s\"", name, command)
         try:
             if java:
-                command = '%s -jar %s' % (self.cmdjava, command)
+                command = "%s -jar %s" % (self.cmdjava, command)
             output = self.runcmd(command, quiet=True, check_return=check_return)
             if single_line:
                 output = output.splitlines()[0]
@@ -262,7 +262,7 @@ class Commands(object):
             return True
         except OSError as ex:
             if error:
-                self.logger.error('!! %s check FAILED !!', name)
+                self.logger.error("!! %s check FAILED !!", name)
                 self.logger.error(ex)
                 sys.exit(1)
         except CalledProcessError as ex:
@@ -270,126 +270,126 @@ class Commands(object):
             output = output.strip()
             self.logger.debug(output)
             if error:
-                self.logger.error('!! %s check FAILED !!', name)
+                self.logger.error("!! %s check FAILED !!", name)
                 self.logger.error(ex)
                 sys.exit(1)
         return False
 
     def readcommands(self, verify=False, no_patch=False):
         if verify:
-            self.logger.debug('# VERSION INFO')
-            self.logger.debug('python: %s', sys.version)
-            self.logger.debug('platform: %s', platform.platform())
-            self.checkcommand('java', '%s -version' % self.cmdjava)
-            self.checkcommand('javac', '%s -version' % self.cmdjavac)
-            self.checkcommand('javac runtime', '%s -J-version' % self.cmdjavac)
+            self.logger.debug("# VERSION INFO")
+            self.logger.debug("python: %s", sys.version)
+            self.logger.debug("platform: %s", platform.platform())
+            self.checkcommand("java", "%s -version" % self.cmdjava)
+            self.checkcommand("javac", "%s -version" % self.cmdjavac)
+            self.checkcommand("javac runtime", "%s -J-version" % self.cmdjavac)
             if self.cmdscalac: 
-                self.checkcommand('scalac', '%s -version' % self.cmdscalac)
-                self.checkcommand('scalac runtime', '%s -J-version' % self.cmdscalac)
+                self.checkcommand("scalac", "%s -version" % self.cmdscalac)
+                self.checkcommand("scalac runtime", "%s -J-version" % self.cmdscalac)
         if self.has_rg:
-            self.checkcommand('retroguard', '%s --version' % self.retroguard, java=True)
+            self.checkcommand("retroguard", "%s --version" % self.retroguard, java=True)
         if self.has_ss:
-            self.checkcommand('specialsource', '%s --version' % self.specialsource, java=True)
+            self.checkcommand("specialsource", "%s --version" % self.specialsource, java=True)
 
-        self.exceptor = os.path.normpath(self.config.get('COMMANDS', 'Exceptor'))
+        self.exceptor = os.path.normpath(self.config.get("COMMANDS", "Exceptor"))
         if verify:
-            self.checkcommand('mcinjector', '%s --version' % self.exceptor, java=True)
+            self.checkcommand("mcinjector", "%s --version" % self.exceptor, java=True)
 
         # verify below along with jad if required
-        self.jadretro = os.path.normpath(self.config.get('COMMANDS', 'JadRetro'))
+        self.jadretro = os.path.normpath(self.config.get("COMMANDS", "JadRetro"))
 
-        self.patcher = os.path.normpath(self.config.get('COMMANDS', 'Patcher_%s' % self.osname))
+        self.patcher = os.path.normpath(self.config.get("COMMANDS", "Patcher_%s" % self.osname))
         if verify:
-            self.checkcommand('patch', '%s --version' % self.patcher, single_line=True)
+            self.checkcommand("patch", "%s --version" % self.patcher, single_line=True)
 
         self.has_wine = False
         self.has_jad = False
         self.has_ff = False
         self.has_astyle = False
-        if self.osname in ['linux']:
-            self.wine = os.path.normpath(self.config.get('COMMANDS', 'Wine'))
+        if self.osname in ["linux"]:
+            self.wine = os.path.normpath(self.config.get("COMMANDS", "Wine"))
             if verify:
-                self.has_wine = self.checkcommand('wine', '%s --version' % self.wine, error=False)
-            self.astyle = os.path.normpath(self.config.get('COMMANDS', 'AStyle_linux'))
+                self.has_wine = self.checkcommand("wine", "%s --version" % self.wine, error=False)
+            self.astyle = os.path.normpath(self.config.get("COMMANDS", "AStyle_linux"))
             if verify:
-                self.has_astyle = self.checkcommand('astyle', '%s --version' % self.astyle, error=False)
+                self.has_astyle = self.checkcommand("astyle", "%s --version" % self.astyle, error=False)
             if self.has_wine:
-                self.jad = self.wine + ' ' + os.path.normpath(self.config.get('COMMANDS', 'Jad_win'))
+                self.jad = self.wine + " " + os.path.normpath(self.config.get("COMMANDS", "Jad_win"))
                 if not self.has_astyle:
-                    self.astyle = self.wine + ' ' + os.path.normpath(self.config.get('COMMANDS', 'AStyle_win'))
+                    self.astyle = self.wine + " " + os.path.normpath(self.config.get("COMMANDS", "AStyle_win"))
                     if verify:
-                        self.has_astyle = self.checkcommand('astyle', '%s --version' % self.astyle, error=False)
+                        self.has_astyle = self.checkcommand("astyle", "%s --version" % self.astyle, error=False)
             else:
-                # need to set to string so the below CmdJad stuff doesn't error out
-                self.jad = ''
+                # need to set to string so the below CmdJad stuff doesn"t error out
+                self.jad = ""
         else:
-            self.jad = os.path.normpath(self.config.get('COMMANDS', 'Jad_%s' % self.osname))
-            self.astyle = os.path.normpath(self.config.get('COMMANDS', 'AStyle_%s' % self.osname))
+            self.jad = os.path.normpath(self.config.get("COMMANDS", "Jad_%s" % self.osname))
+            self.astyle = os.path.normpath(self.config.get("COMMANDS", "AStyle_%s" % self.osname))
             if verify:
-                self.has_astyle = self.checkcommand('astyle', '%s --version' % self.astyle, error=False)
+                self.has_astyle = self.checkcommand("astyle", "%s --version" % self.astyle, error=False)
 
         # only check jad and jadretro if we can use it
         if self.jad:
             if verify:
-                has_jadretro = self.checkcommand('jadretro', '%s' % self.jadretro, java=True, single_line=True,
+                has_jadretro = self.checkcommand("jadretro", "%s" % self.jadretro, java=True, single_line=True,
                                                  error=False)
-                has_jad = self.checkcommand('jad', '%s' % self.jad, single_line=True, check_return=False,
+                has_jad = self.checkcommand("jad", "%s" % self.jad, single_line=True, check_return=False,
                                             error=False)
                 self.has_jad = has_jad and has_jadretro
 
-        self.fernflower = os.path.normpath(self.config.get('COMMANDS', 'Fernflower'))
+        self.fernflower = os.path.normpath(self.config.get("COMMANDS", "Fernflower"))
         if verify:
-            self.has_ff = self.checkcommand('fernflower', '%s' % self.fernflower, java=True, single_line=True,
+            self.has_ff = self.checkcommand("fernflower", "%s" % self.fernflower, java=True, single_line=True,
                                             error=False)
 
         # check requirements
         # windows: all requirements supplied
-        # osx: require python and patch, will error out before now anyway so don't need to check further
+        # osx: require python and patch, will error out before now anyway so don"t need to check further
         # linux: require python, patch and either wine for jad or fernflower, and optionally astyle if wine not present
         if verify:
             reqs = []
-            if self.osname in ['linux']:
+            if self.osname in ["linux"]:
                 if not self.has_wine:
                     if not self.has_ff:
-                        self.logger.error('!! Please install either wine or fernflower for decompilation !!')
+                        self.logger.error("!! Please install either wine or fernflower for decompilation !!")
                         sys.exit(1)
                     if not self.has_astyle:
-                        self.logger.error('!! Please install either wine or astyle for source cleanup !!')
+                        self.logger.error("!! Please install either wine or astyle for source cleanup !!")
                 else:
-                    reqs.append('wine')
+                    reqs.append("wine")
             if self.has_jad:
-                reqs.append('jad')
+                reqs.append("jad")
             if self.has_ff:
-                reqs.append('ff')
+                reqs.append("ff")
             if self.has_jad_patch:
-                reqs.append('jad patches')
+                reqs.append("jad patches")
             if self.has_ff_patch:
-                reqs.append('ff patches')
+                reqs.append("ff patches")
             if self.has_osx_patch:
-                reqs.append('osx patches')
+                reqs.append("osx patches")
             if self.has_srg:
-                reqs.append('srgs')
+                reqs.append("srgs")
             if self.has_map_csv:
-                reqs.append('map csvs')
+                reqs.append("map csvs")
             if self.has_name_csv:
-                reqs.append('name csvs')
+                reqs.append("name csvs")
             if self.has_doc_csv:
-                reqs.append('doc csvs')
+                reqs.append("doc csvs")
             if self.has_param_csv:
-                reqs.append('param csvs')
+                reqs.append("param csvs")
             if self.has_renumber_csv:
-                reqs.append('renumber csv')
+                reqs.append("renumber csv")
             if self.has_astyle:
-                reqs.append('astyle')
+                reqs.append("astyle")
             if self.has_astyle_cfg:
-                reqs.append('astyle config')
+                reqs.append("astyle config")
             if self.cmdscalac:
-                reqs.append('scalac')
+                reqs.append("scalac")
             if self.has_rg:
-                reqs.append('rg')
+                reqs.append("rg")
             if self.has_ss:
-                reqs.append('ss')
-            self.logger.info('# found %s', ', '.join(reqs))
+                reqs.append("ss")
+            self.logger.info("# found %s", ", ".join(reqs))
             if not self.has_jad_patch and not no_patch:
                 self.has_jad = False
             if not self.has_ff_patch and not no_patch:
@@ -397,33 +397,33 @@ class Commands(object):
             if not self.has_astyle_cfg:
                 self.has_astyle = False
             if not self.has_map_csv and not self.has_srg:
-                self.logger.error('!! need either srgs or csvs !!')
+                self.logger.error("!! need either srgs or csvs !!")
                 sys.exit(1)
             if not self.has_exc:
-                self.logger.error('!! need mcinjector configs !!')
+                self.logger.error("!! need mcinjector configs !!")
                 sys.exit(1)
             if not self.has_jad and not self.has_ff:
-                self.logger.error('!! need either jad or fernflower available with patches !!')
+                self.logger.error("!! need either jad or fernflower available with patches !!")
                 sys.exit(1)
 
-        self.cmdpatch = self.config.get('COMMANDS', 'CmdPatch', raw=1) % self.patcher
-        self.cmdjad = self.config.get('COMMANDS', 'CmdJad', raw=1) % self.jad
-        self.cmdastyle = self.config.get('COMMANDS', 'CmdAStyle', raw=1) % self.astyle
-        self.cmdrg = self.config.get('COMMANDS', 'CmdRG', raw=1) % self.cmdjava
-        self.cmdrgreobf = self.config.get('COMMANDS', 'CmdRGReobf', raw=1) % self.cmdjava
-        self.cmdss = self.config.get('COMMANDS', 'CmdSS', raw=1) % (self.cmdjava, self.specialsource)
-        self.cmdssreobf = self.config.get('COMMANDS', 'CmdSSReobf', raw=1) % (self.cmdjava, self.specialsource, ','.join(self.ignorepkg))
-        self.cmdjadretro = self.config.get('COMMANDS', 'CmdJadretro', raw=1) % (self.cmdjava, self.jadretro)
-        self.cmdfernflower = self.config.get('COMMANDS', 'CmdFernflower', raw=1) % (self.cmdjava, self.fernflower)
-        self.cmdexceptor = self.config.get('COMMANDS', 'CmdExceptor', raw=1) % (self.cmdjava, self.exceptor)
-        self.cmdexceptordry = self.config.get('COMMANDS', 'CmdExceptorDry', raw=1) % (self.cmdjava, self.exceptor)
-        self.cmdrecomp = self.config.get('COMMANDS', 'CmdRecomp', raw=1) % self.cmdjavac
+        self.cmdpatch = self.config.get("COMMANDS", "CmdPatch", raw=1) % self.patcher
+        self.cmdjad = self.config.get("COMMANDS", "CmdJad", raw=1) % self.jad
+        self.cmdastyle = self.config.get("COMMANDS", "CmdAStyle", raw=1) % self.astyle
+        self.cmdrg = self.config.get("COMMANDS", "CmdRG", raw=1) % self.cmdjava
+        self.cmdrgreobf = self.config.get("COMMANDS", "CmdRGReobf", raw=1) % self.cmdjava
+        self.cmdss = self.config.get("COMMANDS", "CmdSS", raw=1) % (self.cmdjava, self.specialsource)
+        self.cmdssreobf = self.config.get("COMMANDS", "CmdSSReobf", raw=1) % (self.cmdjava, self.specialsource, ",".join(self.ignorepkg))
+        self.cmdjadretro = self.config.get("COMMANDS", "CmdJadretro", raw=1) % (self.cmdjava, self.jadretro)
+        self.cmdfernflower = self.config.get("COMMANDS", "CmdFernflower", raw=1) % (self.cmdjava, self.fernflower)
+        self.cmdexceptor = self.config.get("COMMANDS", "CmdExceptor", raw=1) % (self.cmdjava, self.exceptor)
+        self.cmdexceptordry = self.config.get("COMMANDS", "CmdExceptorDry", raw=1) % (self.cmdjava, self.exceptor)
+        self.cmdrecomp = self.config.get("COMMANDS", "CmdRecomp", raw=1) % self.cmdjavac
         if self.cmdscalac is None:
             self.cmdrecompscala = None
         else:
-            self.cmdrecompscala = self.config.get('COMMANDS', 'CmdRecompScala', raw=1) % self.cmdscalac
-        self.cmdstartsrv = self.config.get('COMMANDS', 'CmdStartSrv', raw=1) % self.cmdjava
-        self.cmdstartclt = self.config.get('COMMANDS', 'CmdStartClt', raw=1) % self.cmdjava
+            self.cmdrecompscala = self.config.get("COMMANDS", "CmdRecompScala", raw=1) % self.cmdscalac
+        self.cmdstartsrv = self.config.get("COMMANDS", "CmdStartSrv", raw=1) % self.cmdjava
+        self.cmdstartclt = self.config.get("COMMANDS", "CmdStartClt", raw=1) % self.cmdjava
 
     def startlogger(self):
         self.logger = logging.getLogger()
@@ -438,9 +438,9 @@ class Commands(object):
         errorhandler = logging.FileHandler(filename=self.mcperrlogfile)
         errorhandler.setLevel(logging.WARNING)
         # create formatter and add it to the handlers
-        formatterconsole = logging.Formatter('%(message)s')
+        formatterconsole = logging.Formatter("%(message)s")
         consolehandler.setFormatter(formatterconsole)
-        formatterfile = logging.Formatter('%(asctime)s - %(message)s', datefmt='%H:%M:%S')
+        formatterfile = logging.Formatter("%(asctime)s - %(message)s", datefmt="%H:%M:%S")
         filehandler.setFormatter(formatterfile)
         errorhandler.setFormatter(formatterfile)
         # add the handlers to logger
@@ -449,11 +449,11 @@ class Commands(object):
         self.logger.addHandler(errorhandler)
 
         # HINT: SECONDARY LOGGER FOR CLIENT & SERVER
-        self.loggermc = logging.getLogger('MCRunLog')
+        self.loggermc = logging.getLogger("MCRunLog")
         self.loggermc.setLevel(logging.DEBUG)
         chmc = logging.StreamHandler()
         chmc.setLevel(logging.DEBUG)
-        formatterconsolemc = logging.Formatter('[%(asctime)s] %(message)s', datefmt='%H:%M:%S')
+        formatterconsolemc = logging.Formatter("[%(asctime)s] %(message)s", datefmt="%H:%M:%S")
         chmc.setFormatter(formatterconsolemc)
         # add the handlers to logger
         self.loggermc.addHandler(chmc)
@@ -467,26 +467,26 @@ class Commands(object):
             if self.conffile is not None:
                 config.read(os.path.normpath(self.conffile))
         except IOError:
-            logging.error('!! Missing mcp.cfg !!')
+            logging.error("!! Missing mcp.cfg !!")
             sys.exit(1)
         self.config = config
 
         # HINT: We read the directories for cleanup
-        self.dirtemp = os.path.normpath(config.get('DEFAULT', 'DirTemp'))
-        self.dirsrc = os.path.normpath(config.get('DEFAULT', 'DirSrc'))
-        self.dirlogs = os.path.normpath(config.get('DEFAULT', 'DirLogs'))
-        self.dirbin = os.path.normpath(config.get('DEFAULT', 'DirBin'))
-        self.dirjars = os.path.normpath(config.get('DEFAULT', 'DirJars'))
-        self.dirreobf = os.path.normpath(config.get('DEFAULT', 'DirReobf'))
-        self.dirlib = os.path.normpath(config.get('DEFAULT', 'DirLib'))
-        self.dirmodsrc = os.path.normpath(config.get('DEFAULT', 'DirModSrc'))
+        self.dirtemp = os.path.normpath(config.get("DEFAULT", "DirTemp"))
+        self.dirsrc = os.path.normpath(config.get("DEFAULT", "DirSrc"))
+        self.dirlogs = os.path.normpath(config.get("DEFAULT", "DirLogs"))
+        self.dirbin = os.path.normpath(config.get("DEFAULT", "DirBin"))
+        self.dirjars = os.path.normpath(config.get("DEFAULT", "DirJars"))
+        self.dirreobf = os.path.normpath(config.get("DEFAULT", "DirReobf"))
+        self.dirlib = os.path.normpath(config.get("DEFAULT", "DirLib"))
+        self.dirmodsrc = os.path.normpath(config.get("DEFAULT", "DirModSrc"))
 
         # HINT: We read the position of the CSV files
-        self.csvclasses = os.path.normpath(config.get('CSV', 'Classes'))
-        self.csvmethods = os.path.normpath(config.get('CSV', 'Methods'))
-        self.csvfields = os.path.normpath(config.get('CSV', 'Fields'))
-        self.csvparams = os.path.normpath(config.get('CSV', 'Params'))
-        self.csvnewids = os.path.normpath(config.get('CSV', 'NewIds'))
+        self.csvclasses = os.path.normpath(config.get("CSV", "Classes"))
+        self.csvmethods = os.path.normpath(config.get("CSV", "Methods"))
+        self.csvfields = os.path.normpath(config.get("CSV", "Fields"))
+        self.csvparams = os.path.normpath(config.get("CSV", "Params"))
+        self.csvnewids = os.path.normpath(config.get("CSV", "NewIds"))
 
         # check what csvs we have
         self.has_map_csv = False
@@ -499,45 +499,45 @@ class Commands(object):
         header_fields = csv_header(self.csvfields)
         header_params = csv_header(self.csvparams)
         header_newids = csv_header(self.csvnewids)
-        if set(['notch', 'name', 'package', 'side']) <= header_classes and \
-           set(['notch', 'searge', 'notchsig', 'sig', 'classnotch', 'classname', 'package', 'side']) <= header_methods and \
-           set(['notch', 'searge', 'classnotch', 'classname', 'package', 'side']) <= header_fields:
+        if set(["notch", "name", "package", "side"]) <= header_classes and \
+           set(["notch", "searge", "notchsig", "sig", "classnotch", "classname", "package", "side"]) <= header_methods and \
+           set(["notch", "searge", "classnotch", "classname", "package", "side"]) <= header_fields:
             self.has_map_csv = True
-        if header_methods >= set(['searge', 'name', 'side']) <= header_fields:
+        if header_methods >= set(["searge", "name", "side"]) <= header_fields:
             self.has_name_csv = True
-        if header_methods >= set(['searge', 'name', 'desc', 'side']) <= header_fields:
+        if header_methods >= set(["searge", "name", "desc", "side"]) <= header_fields:
             self.has_doc_csv = True
-        if set(['param', 'name', 'side']) <= header_params:
+        if set(["param", "name", "side"]) <= header_params:
             self.has_param_csv = True
-        if set(['client', 'server', 'newid']) <= header_newids:
+        if set(["client", "server", "newid"]) <= header_newids:
             self.has_renumber_csv = True
 
         # HINT: We get the client/server versions
         self.versionClient, self.versionServer = self.getVersions()
 
         # HINT: We read the names of the SRG output
-        self.srgsconfclient = os.path.normpath(config.get('SRGS', 'ConfClient'))
-        self.srgsconfserver = os.path.normpath(config.get('SRGS', 'ConfServer'))
-        self.srgsclient = os.path.normpath(config.get('SRGS', 'Client'))
-        self.srgsserver = os.path.normpath(config.get('SRGS', 'Server'))
-        self.deobsrgclient = os.path.normpath(config.get('SRGS', 'DeobfClient'))
-        self.deobsrgserver = os.path.normpath(config.get('SRGS', 'DeobfServer'))
-        self.reobsrgclient = os.path.normpath(config.get('SRGS', 'ReobfClient'))
-        self.reobsrgserver = os.path.normpath(config.get('SRGS', 'ReobfServer'))
-        self.reobsrgclientsrg = os.path.normpath(config.get('SRGS', 'ReobfClientSrg'))
-        self.reobsrgserversrg = os.path.normpath(config.get('SRGS', 'ReobfServerSrg'))
-        self.reobsrgclientcls = os.path.normpath(config.get('SRGS', 'ReobfClientCls'))
-        self.reobsrgservercls = os.path.normpath(config.get('SRGS', 'ReobfServerCls'))
+        self.srgsconfclient = os.path.normpath(config.get("SRGS", "ConfClient"))
+        self.srgsconfserver = os.path.normpath(config.get("SRGS", "ConfServer"))
+        self.srgsclient = os.path.normpath(config.get("SRGS", "Client"))
+        self.srgsserver = os.path.normpath(config.get("SRGS", "Server"))
+        self.deobsrgclient = os.path.normpath(config.get("SRGS", "DeobfClient"))
+        self.deobsrgserver = os.path.normpath(config.get("SRGS", "DeobfServer"))
+        self.reobsrgclient = os.path.normpath(config.get("SRGS", "ReobfClient"))
+        self.reobsrgserver = os.path.normpath(config.get("SRGS", "ReobfServer"))
+        self.reobsrgclientsrg = os.path.normpath(config.get("SRGS", "ReobfClientSrg"))
+        self.reobsrgserversrg = os.path.normpath(config.get("SRGS", "ReobfServerSrg"))
+        self.reobsrgclientcls = os.path.normpath(config.get("SRGS", "ReobfClientCls"))
+        self.reobsrgservercls = os.path.normpath(config.get("SRGS", "ReobfServerCls"))
 
-        self.mcplogfile = os.path.normpath(config.get('MCP', 'LogFile'))
-        self.mcperrlogfile = os.path.normpath(config.get('MCP', 'LogFileErr'))
+        self.mcplogfile = os.path.normpath(config.get("MCP", "LogFile"))
+        self.mcperrlogfile = os.path.normpath(config.get("MCP", "LogFileErr"))
 
-        if config.has_option('MCP', 'UpdateUrl'):
-            updateurl = config.get('MCP', 'UpdateUrl')
+        if config.has_option("MCP", "UpdateUrl"):
+            updateurl = config.get("MCP", "UpdateUrl")
             self.updateurl = updateurl.format(version=Commands.MCPVersion)
         else:
             self.updateurl = None
-        ignoreupdate = config.get('MCP', 'IgnoreUpdate').split(',')
+        ignoreupdate = config.get("MCP", "IgnoreUpdate").split(",")
         self.ignoreupdate = [os.path.normpath(p) for p in ignoreupdate]
 
         # do we have full srg files
@@ -546,16 +546,16 @@ class Commands(object):
             self.has_srg = True
 
         # HINT: We read the position of the jar files
-        #self.dirnatives = os.path.normpath(config.get('JAR', 'DirNatives'))
-        #self.jarclient = os.path.normpath(config.get('JAR', 'Client'))
+        #self.dirnatives = os.path.normpath(config.get("JAR", "DirNatives"))
+        #self.jarclient = os.path.normpath(config.get("JAR", "Client"))
         self.jarclient = os.path.join(self.dirjars, "versions", self.versionClient, "%s.jar"%self.versionClient)
-        self.jarserver = os.path.normpath(config.get('JAR', 'Server'))
+        self.jarserver = os.path.normpath(config.get("JAR", "Server"))
         if not os.path.exists(self.jarserver):
-            self.jarserver = '.'.join(self.jarserver.split('.')[0:-1]) + '.%s'%self.versionServer + '.jar'
+            self.jarserver = ".".join(self.jarserver.split(".")[0:-1]) + ".%s"%self.versionServer + ".jar"
 
 
-        self.md5jarclt = config.get('JAR', 'MD5Client').lower()
-        self.md5jarsrv = config.get('JAR', 'MD5Server').lower()
+        self.md5jarclt = config.get("JAR", "MD5Client").lower()
+        self.md5jarsrv = config.get("JAR", "MD5Server").lower()
 
         #if workdir == None:
         #    mcDir = MinecraftDiscovery.getMinecraftPath()
@@ -593,42 +593,42 @@ class Commands(object):
         self.dirnatives = os.path.join(self.dirjars, "versions", self.versionClient, "%s-natives"%self.versionClient)
 
         jarslwjgl = []
-        jarslwjgl.append(os.path.join(self.dirjars,self.mcLibraries['jinput']['filename']))
-        jarslwjgl.append(os.path.join(self.dirjars,self.mcLibraries['lwjgl']['filename']))
-        jarslwjgl.append(os.path.join(self.dirjars,self.mcLibraries['lwjgl_util']['filename']))
+        jarslwjgl.append(os.path.join(self.dirjars,self.mcLibraries["jinput"]["filename"]))
+        jarslwjgl.append(os.path.join(self.dirjars,self.mcLibraries["lwjgl"]["filename"]))
+        jarslwjgl.append(os.path.join(self.dirjars,self.mcLibraries["lwjgl_util"]["filename"]))
 
-        #jarslwjgl = config.get('JAR', 'LWJGL').split(',')
+        #jarslwjgl = config.get("JAR", "LWJGL").split(",")
         self.jarslwjgl = [os.path.normpath(p) for p in jarslwjgl]
 
         # HINT: We read keys relevant to retroguard
-        self.retroguard = os.path.normpath(config.get('RETROGUARD', 'Location'))
-        self.rgconfig = os.path.normpath(config.get('RETROGUARD', 'RetroConf'))
-        self.rgclientconf = os.path.normpath(config.get('RETROGUARD', 'ClientConf'))
-        self.rgserverconf = os.path.normpath(config.get('RETROGUARD', 'ServerConf'))
-        self.rgclientout = os.path.normpath(config.get('RETROGUARD', 'ClientOut'))
-        self.rgserverout = os.path.normpath(config.get('RETROGUARD', 'ServerOut'))
-        self.rgclientlog = os.path.normpath(config.get('RETROGUARD', 'ClientLog'))
-        self.rgserverlog = os.path.normpath(config.get('RETROGUARD', 'ServerLog'))
-        self.rgclientdeoblog = os.path.normpath(config.get('RETROGUARD', 'ClientDeobLog'))
-        self.rgserverdeoblog = os.path.normpath(config.get('RETROGUARD', 'ServerDeobLog'))
-        self.rgreobconfig = os.path.normpath(config.get('RETROGUARD', 'RetroReobConf'))
-        self.rgclientreobconf = os.path.normpath(config.get('RETROGUARD', 'ClientReobConf'))
-        self.rgserverreobconf = os.path.normpath(config.get('RETROGUARD', 'ServerReobConf'))
-        self.nullpkg = config.get('RETROGUARD', 'NullPkg')
+        self.retroguard = os.path.normpath(config.get("RETROGUARD", "Location"))
+        self.rgconfig = os.path.normpath(config.get("RETROGUARD", "RetroConf"))
+        self.rgclientconf = os.path.normpath(config.get("RETROGUARD", "ClientConf"))
+        self.rgserverconf = os.path.normpath(config.get("RETROGUARD", "ServerConf"))
+        self.rgclientout = os.path.normpath(config.get("RETROGUARD", "ClientOut"))
+        self.rgserverout = os.path.normpath(config.get("RETROGUARD", "ServerOut"))
+        self.rgclientlog = os.path.normpath(config.get("RETROGUARD", "ClientLog"))
+        self.rgserverlog = os.path.normpath(config.get("RETROGUARD", "ServerLog"))
+        self.rgclientdeoblog = os.path.normpath(config.get("RETROGUARD", "ClientDeobLog"))
+        self.rgserverdeoblog = os.path.normpath(config.get("RETROGUARD", "ServerDeobLog"))
+        self.rgreobconfig = os.path.normpath(config.get("RETROGUARD", "RetroReobConf"))
+        self.rgclientreobconf = os.path.normpath(config.get("RETROGUARD", "ClientReobConf"))
+        self.rgserverreobconf = os.path.normpath(config.get("RETROGUARD", "ServerReobConf"))
+        self.nullpkg = config.get("RETROGUARD", "NullPkg")
 
         # HINT: We read keys relevant to exceptor
-        self.xclientjson = os.path.normpath(config.get('EXCEPTOR', 'XClientJson'))
-        self.xserverjson = os.path.normpath(config.get('EXCEPTOR', 'XServerJson'))
-        self.xclientconf = os.path.normpath(config.get('EXCEPTOR', 'XClientCfg'))
-        self.xserverconf = os.path.normpath(config.get('EXCEPTOR', 'XServerCfg'))
-        self.xclientout = os.path.normpath(config.get('EXCEPTOR', 'XClientOut'))
-        self.xserverout = os.path.normpath(config.get('EXCEPTOR', 'XServerOut'))
-        self.xclientlog = os.path.normpath(config.get('EXCEPTOR', 'XClientLog'))
-        self.xserverlog = os.path.normpath(config.get('EXCEPTOR', 'XServerLog'))
-        self.xclientlogdry = os.path.normpath(config.get('EXCEPTOR', 'XClientLogReobf'))
-        self.xserverlogdry = os.path.normpath(config.get('EXCEPTOR', 'XServerLogReobf'))
-        self.xclientmeta = os.path.normpath(config.get('EXCEPTOR', 'XClientMeta'))
-        self.xservermeta = os.path.normpath(config.get('EXCEPTOR', 'XServerMeta'))
+        self.xclientjson = os.path.normpath(config.get("EXCEPTOR", "XClientJson"))
+        self.xserverjson = os.path.normpath(config.get("EXCEPTOR", "XServerJson"))
+        self.xclientconf = os.path.normpath(config.get("EXCEPTOR", "XClientCfg"))
+        self.xserverconf = os.path.normpath(config.get("EXCEPTOR", "XServerCfg"))
+        self.xclientout = os.path.normpath(config.get("EXCEPTOR", "XClientOut"))
+        self.xserverout = os.path.normpath(config.get("EXCEPTOR", "XServerOut"))
+        self.xclientlog = os.path.normpath(config.get("EXCEPTOR", "XClientLog"))
+        self.xserverlog = os.path.normpath(config.get("EXCEPTOR", "XServerLog"))
+        self.xclientlogdry = os.path.normpath(config.get("EXCEPTOR", "XClientLogReobf"))
+        self.xserverlogdry = os.path.normpath(config.get("EXCEPTOR", "XServerLogReobf"))
+        self.xclientmeta = os.path.normpath(config.get("EXCEPTOR", "XClientMeta"))
+        self.xservermeta = os.path.normpath(config.get("EXCEPTOR", "XServerMeta"))
 
         # do we have the exc files
         self.has_exc = False
@@ -636,34 +636,34 @@ class Commands(object):
             self.has_exc = True
 
         # HINT: We read keys relevant to decompilation
-        self.srcclienttmp = os.path.normpath(config.get('DECOMPILE', 'SrcClientTemp'))
-        self.srcservertmp = os.path.normpath(config.get('DECOMPILE', 'SrcServerTemp'))
-        self.clsclienttmp = os.path.normpath(config.get('DECOMPILE', 'ClsClientTemp'))
-        self.clsservertmp = os.path.normpath(config.get('DECOMPILE', 'ClsServerTemp'))
-        self.ffsource = config.get('DECOMPILE', 'FFSource')
-        self.ffclientin    = config.get('DECOMPILE', 'FFClientIn')
-        self.ffclientout   = config.get('DECOMPILE', 'FFClientOut')
-        self.ffclientextra = config.get('DECOMPILE', 'FFClientExtra')
-        self.ffserverin    = config.get('DECOMPILE', 'FFServerIn')
-        self.ffserverout   = config.get('DECOMPILE', 'FFServerOut')
-        self.ffserverextra = config.get('DECOMPILE', 'FFServerExtra')
+        self.srcclienttmp = os.path.normpath(config.get("DECOMPILE", "SrcClientTemp"))
+        self.srcservertmp = os.path.normpath(config.get("DECOMPILE", "SrcServerTemp"))
+        self.clsclienttmp = os.path.normpath(config.get("DECOMPILE", "ClsClientTemp"))
+        self.clsservertmp = os.path.normpath(config.get("DECOMPILE", "ClsServerTemp"))
+        self.ffsource = config.get("DECOMPILE", "FFSource")
+        self.ffclientin    = config.get("DECOMPILE", "FFClientIn")
+        self.ffclientout   = config.get("DECOMPILE", "FFClientOut")
+        self.ffclientextra = config.get("DECOMPILE", "FFClientExtra")
+        self.ffserverin    = config.get("DECOMPILE", "FFServerIn")
+        self.ffserverout   = config.get("DECOMPILE", "FFServerOut")
+        self.ffserverextra = config.get("DECOMPILE", "FFServerExtra")
 
         # HINT: We read the output directories
-        self.binclienttmp = os.path.normpath(config.get('OUTPUT', 'BinClientTemp'))
-        self.binservertmp = os.path.normpath(config.get('OUTPUT', 'BinServerTemp'))
-        self.srcclient = os.path.normpath(config.get('OUTPUT', 'SrcClient'))
-        self.srcserver = os.path.normpath(config.get('OUTPUT', 'SrcServer'))
-        self.testclient = config.get('OUTPUT', 'TestClient')
-        self.testserver = config.get('OUTPUT', 'TestServer')
+        self.binclienttmp = os.path.normpath(config.get("OUTPUT", "BinClientTemp"))
+        self.binservertmp = os.path.normpath(config.get("OUTPUT", "BinServerTemp"))
+        self.srcclient = os.path.normpath(config.get("OUTPUT", "SrcClient"))
+        self.srcserver = os.path.normpath(config.get("OUTPUT", "SrcServer"))
+        self.testclient = config.get("OUTPUT", "TestClient")
+        self.testserver = config.get("OUTPUT", "TestServer")
 
         # HINT: Patcher related configs
-        self.patchclient = os.path.normpath(config.get('PATCHES', 'PatchClient'))
-        self.patchserver = os.path.normpath(config.get('PATCHES', 'PatchServer'))
-        self.patchtemp = os.path.normpath(config.get('PATCHES', 'PatchTemp'))
-        self.ffpatchclient = os.path.normpath(config.get('PATCHES', 'FFPatchClient'))
-        self.ffpatchserver = os.path.normpath(config.get('PATCHES', 'FFPatchServer'))
-        self.patchclient_osx = os.path.normpath(config.get('PATCHES', 'PatchClient_osx'))
-        self.patchserver_osx = os.path.normpath(config.get('PATCHES', 'PatchServer_osx'))
+        self.patchclient = os.path.normpath(config.get("PATCHES", "PatchClient"))
+        self.patchserver = os.path.normpath(config.get("PATCHES", "PatchServer"))
+        self.patchtemp = os.path.normpath(config.get("PATCHES", "PatchTemp"))
+        self.ffpatchclient = os.path.normpath(config.get("PATCHES", "FFPatchClient"))
+        self.ffpatchserver = os.path.normpath(config.get("PATCHES", "FFPatchServer"))
+        self.patchclient_osx = os.path.normpath(config.get("PATCHES", "PatchClient_osx"))
+        self.patchserver_osx = os.path.normpath(config.get("PATCHES", "PatchServer_osx"))
 
         # check what patches we have
         self.has_jad_patch = False
@@ -678,77 +678,77 @@ class Commands(object):
             self.has_osx_patch = True
 
         # HINT: Recompilation related configs
-        self.binclient = os.path.normpath(config.get('RECOMPILE', 'BinClient'))
-        self.binserver = os.path.normpath(config.get('RECOMPILE', 'BinServer'))
-        self.clientrecomplog = os.path.normpath(config.get('RECOMPILE', 'LogClient'))
-        self.serverrecomplog = os.path.normpath(config.get('RECOMPILE', 'LogServer'))
+        self.binclient = os.path.normpath(config.get("RECOMPILE", "BinClient"))
+        self.binserver = os.path.normpath(config.get("RECOMPILE", "BinServer"))
+        self.clientrecomplog = os.path.normpath(config.get("RECOMPILE", "LogClient"))
+        self.serverrecomplog = os.path.normpath(config.get("RECOMPILE", "LogServer"))
 
-        configpathclient = config.get('RECOMPILE', 'ClassPathClient').split(',')        
+        configpathclient = config.get("RECOMPILE", "ClassPathClient").split(",")        
         cpathclient = []
         cpathclient.append(os.path.join(self.dirjars,"versions", self.versionClient, "%s.jar"%self.versionClient))
-        cpathclient.append(self.dirlib + '/')
-        cpathclient.append(os.path.join(self.dirlib,'*'))
-        if not len(configpathclient) == 1 or not configpathclient[0] == '':
+        cpathclient.append(self.dirlib + "/")
+        cpathclient.append(os.path.join(self.dirlib,"*"))
+        if not len(configpathclient) == 1 or not configpathclient[0] == "":
             cpathclient.extend(configpathclient)
 
         for library in self.mcLibraries.values():
-            cpathclient.append(os.path.join(self.dirjars,library['filename']))
+            cpathclient.append(os.path.join(self.dirjars,library["filename"]))
 
         self.cpathclient = [os.path.normpath(p) for p in cpathclient]
-        self.fixesclient = os.path.normpath(config.get('RECOMPILE', 'ClientFixes'))
+        self.fixesclient = os.path.normpath(config.get("RECOMPILE", "ClientFixes"))
 
-        configpathserver = config.get('RECOMPILE', 'ClassPathServer').split(',')        
+        configpathserver = config.get("RECOMPILE", "ClassPathServer").split(",")        
         cpathserver = []
-        cpathserver.append(self.dirlib + '/')
-        cpathserver.append(os.path.join(self.dirlib,'*'))
+        cpathserver.append(self.dirlib + "/")
+        cpathserver.append(os.path.join(self.dirlib,"*"))
         cpathserver.append(self.jarserver)
         configpathserver.extend(configpathserver)
         self.cpathserver = [os.path.normpath(p) for p in cpathserver]
 
-        if config.has_option('RECOMPILE', 'FixSound'):
-            self.fixsound = config.get('RECOMPILE', 'FixSound')
+        if config.has_option("RECOMPILE", "FixSound"):
+            self.fixsound = config.get("RECOMPILE", "FixSound")
         else:
             self.fixsound = None
-        self.fixstart = config.get('RECOMPILE', 'FixStart')
-        self.ignorepkg = config.get('RECOMPILE', 'IgnorePkg').split(',')
-        self.recompjavasrcclient = os.path.normpath(config.get('RECOMPILE', 'JavaSrcClient'))
-        self.recompjavasrcserver = os.path.normpath(config.get('RECOMPILE', 'JavaSrcServer'))
-        self.recompscalasrcclient = os.path.normpath(config.get('RECOMPILE', 'ScalaSrcClient'))
-        self.recompscalasrcserver = os.path.normpath(config.get('RECOMPILE', 'ScalaSrcServer'))
+        self.fixstart = config.get("RECOMPILE", "FixStart")
+        self.ignorepkg = config.get("RECOMPILE", "IgnorePkg").split(",")
+        self.recompjavasrcclient = os.path.normpath(config.get("RECOMPILE", "JavaSrcClient"))
+        self.recompjavasrcserver = os.path.normpath(config.get("RECOMPILE", "JavaSrcServer"))
+        self.recompscalasrcclient = os.path.normpath(config.get("RECOMPILE", "ScalaSrcClient"))
+        self.recompscalasrcserver = os.path.normpath(config.get("RECOMPILE", "ScalaSrcServer"))
 
         # HINT: Reobf related configs
-        self.md5client = os.path.normpath(config.get('REOBF', 'MD5Client'))
-        self.md5server = os.path.normpath(config.get('REOBF', 'MD5Server'))
-        self.md5reobfclient = os.path.normpath(config.get('REOBF', 'MD5PreReobfClient'))
-        self.md5reobfserver = os.path.normpath(config.get('REOBF', 'MD5PreReobfServer'))
-        self.rgclientrolog = os.path.normpath(config.get('REOBF', 'ClientRoLog'))
-        self.rgserverrolog = os.path.normpath(config.get('REOBF', 'ServerRoLog'))
-        self.cmpjarclient = os.path.normpath(config.get('REOBF', 'RecompJarClient'))
-        self.cmpjarserver = os.path.normpath(config.get('REOBF', 'RecompJarServer'))
-        self.reobfjarclient = os.path.normpath(config.get('REOBF', 'ObfJarClient'))
-        self.reobfjarserver = os.path.normpath(config.get('REOBF', 'ObfJarServer'))
-        self.dirreobfclt = os.path.normpath(config.get('REOBF', 'ReobfDirClient'))
-        self.dirreobfsrv = os.path.normpath(config.get('REOBF', 'ReobfDirServer'))
-        self.clientreoblog = os.path.normpath(config.get('REOBF', 'ReobfClientLog'))
-        self.serverreoblog = os.path.normpath(config.get('REOBF', 'ReobfServerLog'))
+        self.md5client = os.path.normpath(config.get("REOBF", "MD5Client"))
+        self.md5server = os.path.normpath(config.get("REOBF", "MD5Server"))
+        self.md5reobfclient = os.path.normpath(config.get("REOBF", "MD5PreReobfClient"))
+        self.md5reobfserver = os.path.normpath(config.get("REOBF", "MD5PreReobfServer"))
+        self.rgclientrolog = os.path.normpath(config.get("REOBF", "ClientRoLog"))
+        self.rgserverrolog = os.path.normpath(config.get("REOBF", "ServerRoLog"))
+        self.cmpjarclient = os.path.normpath(config.get("REOBF", "RecompJarClient"))
+        self.cmpjarserver = os.path.normpath(config.get("REOBF", "RecompJarServer"))
+        self.reobfjarclient = os.path.normpath(config.get("REOBF", "ObfJarClient"))
+        self.reobfjarserver = os.path.normpath(config.get("REOBF", "ObfJarServer"))
+        self.dirreobfclt = os.path.normpath(config.get("REOBF", "ReobfDirClient"))
+        self.dirreobfsrv = os.path.normpath(config.get("REOBF", "ReobfDirServer"))
+        self.clientreoblog = os.path.normpath(config.get("REOBF", "ReobfClientLog"))
+        self.serverreoblog = os.path.normpath(config.get("REOBF", "ReobfServerLog"))
 
-        self.mcprgindex = os.path.normpath(config.get('MCP', 'RGIndex'))
-        #self.mcpparamindex = os.path.normpath(config.get('MCP', 'ParamIndex')) Stored in the exc file now
+        self.mcprgindex = os.path.normpath(config.get("MCP", "RGIndex"))
+        #self.mcpparamindex = os.path.normpath(config.get("MCP", "ParamIndex")) Stored in the exc file now
 
         # Get changed source
-        self.srcmodclient = os.path.normpath(config.get('GETMODSOURCE', 'OutSRCClient'))
-        self.srcmodserver = os.path.normpath(config.get('GETMODSOURCE', 'OutSRCServer'))
+        self.srcmodclient = os.path.normpath(config.get("GETMODSOURCE", "OutSRCClient"))
+        self.srcmodserver = os.path.normpath(config.get("GETMODSOURCE", "OutSRCServer"))
 
         # Source formatter
-        self.astyleconf = os.path.normpath(config.get('ASTYLE', 'AstyleConfig'))
+        self.astyleconf = os.path.normpath(config.get("ASTYLE", "AstyleConfig"))
 
         # do we have a config for astyle
         self.has_astyle_cfg = False
         if os.path.isfile(self.astyleconf):
             self.has_astyle_cfg = True
         
-        # Check for SpecialSource and RetroGuard's existance
-        self.specialsource = os.path.normpath(self.config.get('COMMANDS', 'SpecialSource'))
+        # Check for SpecialSource and RetroGuard"s existance
+        self.specialsource = os.path.normpath(self.config.get("COMMANDS", "SpecialSource"))
         self.has_ss = os.path.isfile(self.specialsource)
         self.has_rg = os.path.isfile(self.retroguard)
 
@@ -765,86 +765,86 @@ class Commands(object):
             rgclientconf_file = self.rgclientconf
             rgserverconf_file = self.rgserverconf
 
-        with open(rgconfig_file, 'w') as rgout:
-            rgout.write('.option Application\n')
-            rgout.write('.option Applet\n')
-            rgout.write('.option Repackage\n')
-            rgout.write('.option Annotations\n')
-            rgout.write('.option MapClassString\n')
-            rgout.write('.attribute LineNumberTable\n')
-            rgout.write('.attribute EnclosingMethod\n')
-            rgout.write('.attribute Deprecated\n')
+        with open(rgconfig_file, "w") as rgout:
+            rgout.write(".option Application\n")
+            rgout.write(".option Applet\n")
+            rgout.write(".option Repackage\n")
+            rgout.write(".option Annotations\n")
+            rgout.write(".option MapClassString\n")
+            rgout.write(".attribute LineNumberTable\n")
+            rgout.write(".attribute EnclosingMethod\n")
+            rgout.write(".attribute Deprecated\n")
             if keep_lvt:
                 # may cause issues trying to patch/recompile when decompiling mods
-                rgout.write('.attribute LocalVariableTable\n')
+                rgout.write(".attribute LocalVariableTable\n")
             if keep_generics:
                 # still not very reliable even with rg fixed
-                rgout.write('.option Generic\n')
-                rgout.write('.attribute LocalVariableTypeTable\n')
+                rgout.write(".option Generic\n")
+                rgout.write(".attribute LocalVariableTypeTable\n")
             if reobf:
                 # this is obfuscated in vanilla and breaks the patches
-                rgout.write('.attribute SourceFile\n')
+                rgout.write(".attribute SourceFile\n")
 
-        with open(rgclientconf_file, 'w') as rgout:
-            rgout.write('%s = %s\n' % ('input', self.jarclient))
-            rgout.write('%s = %s\n' % ('output', self.rgclientout))
-            rgout.write('%s = %s\n' % ('reobinput', self.cmpjarclient))
-            rgout.write('%s = %s\n' % ('reoboutput', self.reobfjarclient))
+        with open(rgclientconf_file, "w") as rgout:
+            rgout.write("%s = %s\n" % ("input", self.jarclient))
+            rgout.write("%s = %s\n" % ("output", self.rgclientout))
+            rgout.write("%s = %s\n" % ("reobinput", self.cmpjarclient))
+            rgout.write("%s = %s\n" % ("reoboutput", self.reobfjarclient))
             if reobf:
-                rgout.write('%s = %s\n' % ('script', self.rgreobconfig))
-                rgout.write('%s = %s\n' % ('log', self.rgclientrolog))
+                rgout.write("%s = %s\n" % ("script", self.rgreobconfig))
+                rgout.write("%s = %s\n" % ("log", self.rgclientrolog))
             else:
-                rgout.write('%s = %s\n' % ('script', self.rgconfig))
-                rgout.write('%s = %s\n' % ('log', self.rgclientlog))
-            rgout.write('%s = %s\n' % ('deob', self.srgsclient))
+                rgout.write("%s = %s\n" % ("script", self.rgconfig))
+                rgout.write("%s = %s\n" % ("log", self.rgclientlog))
+            rgout.write("%s = %s\n" % ("deob", self.srgsclient))
             if srg_names:
-                rgout.write('%s = %s\n' % ('reob', self.reobsrgclientsrg))
-                rgout.write('%s = %s\n' % ('identifier', 'RGMCPSRG'))
+                rgout.write("%s = %s\n" % ("reob", self.reobsrgclientsrg))
+                rgout.write("%s = %s\n" % ("identifier", "RGMCPSRG"))
             else:
-                rgout.write('%s = %s\n' % ('reob', self.reobsrgclient))
-            rgout.write('%s = %s\n' % ('nplog', self.rgclientdeoblog))
-            rgout.write('%s = %s\n' % ('rolog', self.clientreoblog))
-            rgout.write('%s = %s\n' % ('verbose', '0'))
-            rgout.write('%s = %s\n' % ('quiet', '1'))
+                rgout.write("%s = %s\n" % ("reob", self.reobsrgclient))
+            rgout.write("%s = %s\n" % ("nplog", self.rgclientdeoblog))
+            rgout.write("%s = %s\n" % ("rolog", self.clientreoblog))
+            rgout.write("%s = %s\n" % ("verbose", "0"))
+            rgout.write("%s = %s\n" % ("quiet", "1"))
             if rg_update:
-                rgout.write('%s = %s\n' % ('fullmap', '1'))
-                rgout.write('%s = %s\n' % ('startindex', self.mcprgindex))
+                rgout.write("%s = %s\n" % ("fullmap", "1"))
+                rgout.write("%s = %s\n" % ("startindex", self.mcprgindex))
             else:
-                rgout.write('%s = %s\n' % ('fullmap', '0'))
-                rgout.write('%s = %s\n' % ('startindex', '0'))
+                rgout.write("%s = %s\n" % ("fullmap", "0"))
+                rgout.write("%s = %s\n" % ("startindex", "0"))
             for pkg in self.ignorepkg:
-                rgout.write('%s = %s\n' % ('protectedpackage', pkg))
+                rgout.write("%s = %s\n" % ("protectedpackage", pkg))
 
-        with open(rgserverconf_file, 'w') as rgout:
-            rgout.write('%s = %s\n' % ('startindex', '0'))
-            rgout.write('%s = %s\n' % ('input', self.jarserver))
-            rgout.write('%s = %s\n' % ('output', self.rgserverout))
-            rgout.write('%s = %s\n' % ('reobinput', self.cmpjarserver))
-            rgout.write('%s = %s\n' % ('reoboutput', self.reobfjarserver))
+        with open(rgserverconf_file, "w") as rgout:
+            rgout.write("%s = %s\n" % ("startindex", "0"))
+            rgout.write("%s = %s\n" % ("input", self.jarserver))
+            rgout.write("%s = %s\n" % ("output", self.rgserverout))
+            rgout.write("%s = %s\n" % ("reobinput", self.cmpjarserver))
+            rgout.write("%s = %s\n" % ("reoboutput", self.reobfjarserver))
             if reobf:
-                rgout.write('%s = %s\n' % ('script', self.rgreobconfig))
-                rgout.write('%s = %s\n' % ('log', self.rgserverrolog))
+                rgout.write("%s = %s\n" % ("script", self.rgreobconfig))
+                rgout.write("%s = %s\n" % ("log", self.rgserverrolog))
             else:
-                rgout.write('%s = %s\n' % ('script', self.rgconfig))
-                rgout.write('%s = %s\n' % ('log', self.rgserverlog))
-            rgout.write('%s = %s\n' % ('deob', self.srgsserver))
+                rgout.write("%s = %s\n" % ("script", self.rgconfig))
+                rgout.write("%s = %s\n" % ("log", self.rgserverlog))
+            rgout.write("%s = %s\n" % ("deob", self.srgsserver))
             if srg_names:
-                rgout.write('%s = %s\n' % ('reob', self.reobsrgserversrg))
-                rgout.write('%s = %s\n' % ('identifier', 'RGMCPSRG'))
+                rgout.write("%s = %s\n" % ("reob", self.reobsrgserversrg))
+                rgout.write("%s = %s\n" % ("identifier", "RGMCPSRG"))
             else:
-                rgout.write('%s = %s\n' % ('reob', self.reobsrgserver))
-            rgout.write('%s = %s\n' % ('nplog', self.rgserverdeoblog))
-            rgout.write('%s = %s\n' % ('rolog', self.serverreoblog))
-            rgout.write('%s = %s\n' % ('verbose', '0'))
-            rgout.write('%s = %s\n' % ('quiet', '1'))
+                rgout.write("%s = %s\n" % ("reob", self.reobsrgserver))
+            rgout.write("%s = %s\n" % ("nplog", self.rgserverdeoblog))
+            rgout.write("%s = %s\n" % ("rolog", self.serverreoblog))
+            rgout.write("%s = %s\n" % ("verbose", "0"))
+            rgout.write("%s = %s\n" % ("quiet", "1"))
             if rg_update:
-                rgout.write('%s = %s\n' % ('fullmap', '1'))
-                rgout.write('%s = %s\n' % ('startindex', self.mcprgindex))
+                rgout.write("%s = %s\n" % ("fullmap", "1"))
+                rgout.write("%s = %s\n" % ("startindex", self.mcprgindex))
             else:
-                rgout.write('%s = %s\n' % ('fullmap', '0'))
-                rgout.write('%s = %s\n' % ('startindex', '0'))
+                rgout.write("%s = %s\n" % ("fullmap", "0"))
+                rgout.write("%s = %s\n" % ("startindex", "0"))
             for pkg in self.ignorepkg:
-                rgout.write('%s = %s\n' % ('protectedpackage', pkg))
+                rgout.write("%s = %s\n" % ("protectedpackage", pkg))
 
     def createsrgs(self, side, use_srg=False):
         """Write the srgs files."""
@@ -853,12 +853,12 @@ class Commands(object):
 
         if use_srg:
             if not self.has_srg:
-                self.logger.error('!! srgs not found !!')
+                self.logger.error("!! srgs not found !!")
                 sys.exit(1)
             shutil.copyfile(srglk[side], sidelk[side])
         else:
             if not self.has_map_csv:
-                self.logger.error('!! csvs not found !!')
+                self.logger.error("!! csvs not found !!")
                 sys.exit(1)
             fixes = [self.fixstart]
             if self.fixsound:
@@ -869,87 +869,87 @@ class Commands(object):
     def checkjava(self):
         """Check for java and setup the proper directory if needed"""
         results = []
-        if self.osname == 'win':
+        if self.osname == "win":
             if not results:
                 import _winreg
 
                 for flag in [_winreg.KEY_WOW64_64KEY, _winreg.KEY_WOW64_32KEY]:
                     try:
-                        k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r'Software\JavaSoft\Java Development Kit', 0,
+                        k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"Software\JavaSoft\Java Development Kit", 0,
                                             _winreg.KEY_READ | flag)
-                        version, _ = _winreg.QueryValueEx(k, 'CurrentVersion')
+                        version, _ = _winreg.QueryValueEx(k, "CurrentVersion")
                         k.Close()
                         k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,
-                                            r'Software\JavaSoft\Java Development Kit\%s' % version, 0,
+                                            r"Software\JavaSoft\Java Development Kit\%s" % version, 0,
                                             _winreg.KEY_READ | flag)
-                        path, _ = _winreg.QueryValueEx(k, 'JavaHome')
+                        path, _ = _winreg.QueryValueEx(k, "JavaHome")
                         k.Close()
-                        path = os.path.join(str(path), 'bin')
-                        self.runcmd('"%s" -version' % os.path.join(path, 'javac'), quiet=True)
+                        path = os.path.join(str(path), "bin")
+                        self.runcmd("\"%s\" -version" % os.path.join(path, "javac"), quiet=True)
                         results.append(path)
                     except (CalledProcessError, OSError):
                         pass
             if not results:
                 try:
-                    self.runcmd('javac -version', quiet=True)
-                    results.append('')
+                    self.runcmd("javac -version", quiet=True)
+                    results.append("")
                 except (CalledProcessError, OSError):
                     pass
             if not results and os.getenv("JAVA_HOME") != None:
-                results.extend(whereis('javac.exe', os.getenv("JAVA_HOME")))
-            if not results and 'ProgramW6432' in os.environ:
-                results.extend(whereis('javac.exe', os.environ['ProgramW6432']))
-            if not results and 'ProgramFiles' in os.environ:
-                results.extend(whereis('javac.exe', os.environ['ProgramFiles']))
-            if not results and 'ProgramFiles(x86)' in os.environ:
-                results.extend(whereis('javac.exe', os.environ['ProgramFiles(x86)']))
-        elif self.osname in ['linux', 'osx']:
+                results.extend(whereis("javac.exe", os.getenv("JAVA_HOME")))
+            if not results and "ProgramW6432" in os.environ:
+                results.extend(whereis("javac.exe", os.environ["ProgramW6432"]))
+            if not results and "ProgramFiles" in os.environ:
+                results.extend(whereis("javac.exe", os.environ["ProgramFiles"]))
+            if not results and "ProgramFiles(x86)" in os.environ:
+                results.extend(whereis("javac.exe", os.environ["ProgramFiles(x86)"]))
+        elif self.osname in ["linux", "osx"]:
             if not results:
                 try:
-                    self.runcmd('javac -version', quiet=True)
-                    results.append('')
+                    self.runcmd("javac -version", quiet=True)
+                    results.append("")
                 except (CalledProcessError, OSError):
                     pass
             if not results and os.getenv("JAVA_HOME") != None:
-                results.extend(whereis('javac', os.getenv("JAVA_HOME")))
+                results.extend(whereis("javac", os.getenv("JAVA_HOME")))
             if not results:
-                results.extend(whereis('javac', '/usr/bin'))
+                results.extend(whereis("javac", "/usr/bin"))
             if not results:
-                results.extend(whereis('javac', '/usr/local/bin'))
+                results.extend(whereis("javac", "/usr/local/bin"))
             if not results:
-                results.extend(whereis('javac', '/opt'))
+                results.extend(whereis("javac", "/opt"))
         if not results:
-            self.logger.error('Java JDK is not installed ! Please install java JDK from http://java.oracle.com')
+            self.logger.error("Java JDK is not installed ! Please install java JDK from http://java.oracle.com")
             sys.exit(1)
-        self.cmdjavac = '"%s"' % os.path.join(results[0], 'javac')
-        self.cmdjava = '"%s"' % os.path.join(results[0], 'java')
+        self.cmdjavac = "\"%s\"" % os.path.join(results[0], "javac")
+        self.cmdjava = "\"%s\"" % os.path.join(results[0], "java")
 
     def checkscala(self):
         cmd = None
         try:
             # TODO:  Verify at least version 2.10
-            self.runcmd('scalac -version', quiet=True)
-            cmd = 'scalac'
+            self.runcmd("scalac -version", quiet=True)
+            cmd = "scalac"
         except (CalledProcessError, OSError):
             pass
         if cmd is None: # Stupid windows...
             try:
                 # TODO:  Verify at least version 2.10
-                self.runcmd('scalac.bat -version', quiet=True)
-                cmd = 'scalac.bat'
+                self.runcmd("scalac.bat -version", quiet=True)
+                cmd = "scalac.bat"
             except (CalledProcessError, OSError):
                 pass
             
         if cmd is None:
-            self.logger.warning('"scalac" is not found on the PATH.  Scala files will not be recompiled')
+            self.logger.warning("\"scalac\" is not found on the PATH.  Scala files will not be recompiled")
             self.cmdscalac = None
         else:
-            self.cmdscalac = '"%s"' % cmd
+            self.cmdscalac = "\"%s\"" % cmd
             
             try:
-                self.runcmd('%s -target:jvm-1.6 -version' % self.cmdscalac, quiet=True)
+                self.runcmd("%s -target:jvm-1.6 -version" % self.cmdscalac, quiet=True)
             except (CalledProcessError, OSError):
-                self.logger.info('%s does not support jvm-1.6 target, it is out of date. Ignoring' % self.cmdscalac)
+                self.logger.info("%s does not support jvm-1.6 target, it is out of date. Ignoring" % self.cmdscalac)
                 self.cmdscalac = None
         
     def checkjars(self, side):
@@ -958,22 +958,22 @@ class Commands(object):
 
         if not os.path.exists(jarlk[side]):
             return False
-        with open(jarlk[side], 'rb') as fh:
+        with open(jarlk[side], "rb") as fh:
             md5jar = md5(fh.read()).hexdigest()
-        self.logger.debug('%s md5: %s', SIDE_NAME[side], md5jar)
+        self.logger.debug("%s md5: %s", SIDE_NAME[side], md5jar)
         if md5jar != md5jarlk[side]:
-            self.logger.warning('!! Modified jar detected. Unpredictable results !!')
+            self.logger.warning("!! Modified jar detected. Unpredictable results !!")
         if side == CLIENT:
             fail = False
             for jar in self.jarslwjgl:
                 if not os.path.exists(jar):
-                    self.logger.error('!! %s not found !!' % jar)
+                    self.logger.error("!! %s not found !!" % jar)
                     fail = True
             if not os.path.exists(self.dirnatives):
-                self.logger.error('!! %s not found !!' % self.dirnatives)
+                self.logger.error("!! %s not found !!" % self.dirnatives)
                 fail = True
             if fail:
-                self.logger.error('!! Libraries check FAILED. Make sure to copy the entire .minecraft/libraries folder into jars !!')
+                self.logger.error("!! Libraries check FAILED. Make sure to copy the entire .minecraft/libraries folder into jars !!")
                 sys.exit(1)
         return True
 
@@ -989,7 +989,7 @@ class Commands(object):
         srclk = {CLIENT: self.srcclient, SERVER: self.srcserver}
         testlk = {CLIENT: self.testclient, SERVER: self.testserver}
 
-        if not os.path.exists(os.path.join(srclk[side], os.path.normpath(testlk[side] + '.java'))):
+        if not os.path.exists(os.path.join(srclk[side], os.path.normpath(testlk[side] + ".java"))):
             return False
         return True
 
@@ -997,7 +997,7 @@ class Commands(object):
         binlk = {CLIENT: self.binclient, SERVER: self.binserver}
         testlk = {CLIENT: self.testclient, SERVER: self.testserver}
 
-        if not os.path.exists(os.path.join(binlk[side], os.path.normpath(testlk[side] + '.class'))):
+        if not os.path.exists(os.path.join(binlk[side], os.path.normpath(testlk[side] + ".class"))):
             return False
         return True
 
@@ -1029,19 +1029,19 @@ class Commands(object):
         # updates disabled?
         if not self.updateurl:
             if not silent:
-                self.logger.debug('Updates disabled')
+                self.logger.debug("Updates disabled")
             return []
 
         # HINT: Each local entry is of the form dict[filename]=(md5,modificationtime)
         md5lcldict = {}
-        files = filterdirs('.', ignore_dirs=self.ignoreupdate, all_files=True)
+        files = filterdirs(".", ignore_dirs=self.ignoreupdate, all_files=True)
         for trgfile in files:
             cur_file = os.path.normpath(trgfile)
-            with open(cur_file, 'rb') as fh:
+            with open(cur_file, "rb") as fh:
                 md5_file = md5(fh.read()).hexdigest()
             md5lcldict[cur_file] = (md5_file, os.stat(cur_file).st_mtime)
         try:
-            update_url = self.updateurl + 'mcp.md5'
+            update_url = self.updateurl + "mcp.md5"
             listfh = urllib.urlopen(update_url)
             if listfh.getcode() != 200:
                 return []
@@ -1067,7 +1067,7 @@ class Commands(object):
                 results.append([key, value[0], value[1], value[2]])
 
         if results and not silent:
-            self.logger.warning('!! Updates available. Please run updatemcp to get them. !!')
+            self.logger.warning("!! Updates available. Please run updatemcp to get them. !!")
 
         return results
 
@@ -1075,7 +1075,7 @@ class Commands(object):
         pathbinlk = {CLIENT: self.binclient, SERVER: self.binserver}
 
         for path, _, filelist in os.walk(pathbinlk[side]):
-            for bin_file in fnmatch.filter(filelist, '*.class'):
+            for bin_file in fnmatch.filter(filelist, "*.class"):
                 os.remove(os.path.normpath(os.path.join(path, bin_file)))
 
     def cleanreobfdir(self, side):
@@ -1110,15 +1110,15 @@ class Commands(object):
                 shutil.copyfile(rgdeoblog[side], deobsrg[side])
                 shutil.copyfile(deobsrg[side], reobsrg[side])
         except CalledProcessError as ex:
-            self.logger.error('')
-            self.logger.error('== ERRORS FOUND ==')
-            self.logger.error('')
+            self.logger.error("")
+            self.logger.error("== ERRORS FOUND ==")
+            self.logger.error("")
             for line in ex.output.splitlines():
                 if line.strip():
-                    if line[0] != '#':
+                    if line[0] != "#":
                         self.logger.error(line)
-            self.logger.error('==================')
-            self.logger.error('')
+            self.logger.error("==================")
+            self.logger.error("")
             raise
             
     def applyss(self, side, reobf=False, srg_names=False, in_jar=None, out_jar=None, keep_lvt=False, keep_generics=False):
@@ -1143,10 +1143,10 @@ class Commands(object):
         if reobf:
             cmd = self.cmdssreobf
             if srg_names:
-                identifier = 'RGMCPSRG'
+                identifier = "RGMCPSRG"
                 srg = rsrgsrg[side]
             else:
-                identifier = 'RGMCP'
+                identifier = "RGMCP"
                 srg = reobsrg[side]
         else:
             cmd = self.cmdss
@@ -1159,9 +1159,9 @@ class Commands(object):
         
         forkcmd = cmd.format(classpath=sscp, injar=in_jar, outjar=out_jar, identifier=identifier, mapfile=srg)
         if not keep_lvt:
-            forkcmd += ' --kill-lvt'
+            forkcmd += " --kill-lvt"
         if not keep_generics:
-            forkcmd += ' --kill-generics'
+            forkcmd += " --kill-generics"
         
         try:
             self.runcmd(forkcmd)
@@ -1169,31 +1169,31 @@ class Commands(object):
                 shutil.copyfile(cfgsrg[side], deobsrg[side])
                 shutil.copyfile(deobsrg[side], reobsrg[side])
         except CalledProcessError as ex:
-            self.logger.error('')
-            self.logger.error('== ERRORS FOUND ==')
-            self.logger.error('')
+            self.logger.error("")
+            self.logger.error("== ERRORS FOUND ==")
+            self.logger.error("")
             for line in ex.output.splitlines():
                 if line.strip():
-                    if line[0] != '#':
+                    if line[0] != "#":
                         self.logger.error(line)
-            self.logger.error('==================')
-            self.logger.error('')
+            self.logger.error("==================")
+            self.logger.error("")
             raise
 
     def load_srg_arrays(self, file):
         if  not os.path.isfile(file):
             return None
-        srg_types = {'PK:': ['', ''], 'CL:': ['', ''], 'FD:': ['', ''], 'MD:': ['', '', '', '']}
-        parsed_dict = {'PK': [], 'CL': [], 'FD': [], 'MD': []}
+        srg_types = {"PK:": ["", ""], "CL:": ["", ""], "FD:": ["", ""], "MD:": ["", "", "", ""]}
+        parsed_dict = {"PK": [], "CL": [], "FD": [], "MD": []}
 
         def get_parsed_line(keyword, buf):
             return [value[1] for value in zip(srg_types[keyword], [i.strip() for i in buf])]
 
-        with open(file, 'r') as srg_file:
+        with open(file, "r") as srg_file:
             for buf in srg_file:
                 buf = buf.strip()
-                if  '#' in buf: buf = buf[:buf.find('#')]
-                if buf == '' or buf[0] == '#':
+                if  "#" in buf: buf = buf[:buf.find("#")]
+                if buf == "" or buf[0] == "#":
                     continue
                 buf = buf.split()
                 parsed_dict[buf[0][:2]].append(get_parsed_line(buf[0], buf[1:]))
@@ -1206,37 +1206,37 @@ class Commands(object):
         exclog = {CLIENT: self.xclientconf, SERVER: self.xserverconf}
 
         renames = {}
-        log = [l.strip() for l in open(exclog[side], 'r').readlines()]
+        log = [l.strip() for l in open(exclog[side], "r").readlines()]
 
         for line in log:
-            #if 'MarkerID' in line:
-            if '=CL_00' in line:
+            #if "MarkerID" in line:
+            if "=CL_00" in line:
                 columns = line.split("=")
-                renames[columns[0]] = columns[1] + '_' # This is added here just to make sure our numbers don't run on to anything else
+                renames[columns[0]] = columns[1] + "_" # This is added here just to make sure our numbers don"t run on to anything else
         
         srg = self.load_srg_arrays(reobsrg[side])
         os.remove(reobsrg[side])
         
-        fixed = {'PK': [], 'CL': [], 'FD': [], 'MD': []}
-        fixed['PK'] = [v for v in srg['PK']]
+        fixed = {"PK": [], "CL": [], "FD": [], "MD": []}
+        fixed["PK"] = [v for v in srg["PK"]]
         def rename(match):
-            return 'L' + renames.get(match.group(1), match.group(1)) + ';'        
-        for v in srg['CL']:
-            fixed['CL'].append([v[0], renames.get(v[1], v[1])])
-        for v in srg['FD']:
-            mcp = v[1].rsplit('/', 1)
-            fixed['FD'].append([v[0], renames.get(mcp[0], mcp[0]) + '/' + mcp[1]])        
-        reg = re.compile(r'L([^;]+);')
-        for v in srg['MD']:
-            mcp = v[2].rsplit('/', 1)
-            fixed['MD'].append([v[0], v[1], renames.get(mcp[0], mcp[0]) + '/' + mcp[1], reg.sub(rename, v[3])])
+            return "L" + renames.get(match.group(1), match.group(1)) + ";"        
+        for v in srg["CL"]:
+            fixed["CL"].append([v[0], renames.get(v[1], v[1])])
+        for v in srg["FD"]:
+            mcp = v[1].rsplit("/", 1)
+            fixed["FD"].append([v[0], renames.get(mcp[0], mcp[0]) + "/" + mcp[1]])        
+        reg = re.compile(r"L([^;]+);")
+        for v in srg["MD"]:
+            mcp = v[2].rsplit("/", 1)
+            fixed["MD"].append([v[0], v[1], renames.get(mcp[0], mcp[0]) + "/" + mcp[1], reg.sub(rename, v[3])])
 
-        lines =  ['PK: %s' % ' '.join(v) for v in fixed['PK']]
-        lines += ['CL: %s' % ' '.join(v) for v in sorted(fixed['CL'], key=lambda x: x[0])]
-        lines += ['FD: %s' % ' '.join(v) for v in sorted(fixed['FD'], key=lambda x: x[0])]
-        lines += ['MD: %s' % ' '.join(v) for v in sorted(fixed['MD'], key=lambda x: x[0] + x[1])]
-        with closing(open(clssrg[side], 'w')) as f:
-            f.write('\n'.join(lines))
+        lines =  ["PK: %s" % " ".join(v) for v in fixed["PK"]]
+        lines += ["CL: %s" % " ".join(v) for v in sorted(fixed["CL"], key=lambda x: x[0])]
+        lines += ["FD: %s" % " ".join(v) for v in sorted(fixed["FD"], key=lambda x: x[0])]
+        lines += ["MD: %s" % " ".join(v) for v in sorted(fixed["MD"], key=lambda x: x[0] + x[1])]
+        with closing(open(clssrg[side], "w")) as f:
+            f.write("\n".join(lines))
 
     def creatergreobfsrg(self, side):
         clssrg     = {CLIENT: self.reobsrgclientcls, SERVER: self.reobsrgservercls}
@@ -1246,66 +1246,66 @@ class Commands(object):
         exclogdry  = {CLIENT: self.xclientlogdry,    SERVER: self.xserverlogdry}
         
         if not os.path.isfile(exclogdry[side]):
-            raise Exception('Exceptor Log not found: ' + exclogdry[side])
+            raise Exception("Exceptor Log not found: " + exclogdry[side])
 
         def splitAccessLine(line):
-            pts = line.split(' ', 3)
-            owner = pts[2].split('/access$')[0]
-            name = pts[2].split('(', 1)[0][len(owner)+1:]
-            desc = '(%s' % pts[2].split('(', 1)[1]
-            return {'owner' : owner, 'name' : name, 'desc' : desc, 'ops' : pts[3] }
+            pts = line.split(" ", 3)
+            owner = pts[2].split("/access$")[0]
+            name = pts[2].split("(", 1)[0][len(owner)+1:]
+            desc = "(%s" % pts[2].split("(", 1)[1]
+            return {"owner" : owner, "name" : name, "desc" : desc, "ops" : pts[3] }
         
         def readLog(file):
-            ret = { 'access' : {}, 'renames' : {} }
-            log = [l.strip() for l in open(file, 'r').readlines()]
+            ret = { "access" : {}, "renames" : {} }
+            log = [l.strip() for l in open(file, "r").readlines()]
             for line in log:
-                if 'MarkerID' in line:
+                if "MarkerID" in line:
                     columns = line.split()
-                    ret['renames'][columns[2] + '_'] = columns[3]
-                elif 'Access:' in line:
+                    ret["renames"][columns[2] + "_"] = columns[3]
+                elif "Access:" in line:
                     acc = splitAccessLine(line)
-                    ret['access']['%s.%s%s' % (acc['owner'], acc['name'], acc['desc'])] = acc
+                    ret["access"]["%s.%s%s" % (acc["owner"], acc["name"], acc["desc"])] = acc
             return ret
         
         meta = {
-            'old' : readLog(excmeta[side]),
-            'new' : readLog(exclogdry[side])
+            "old" : readLog(excmeta[side]),
+            "new" : readLog(exclogdry[side])
         }
 
         # Fix for interfaces. We check the original joined.exc for the missing tags in the translation table.
         # We also ignore all the tags with bad behaviors (client/server asymetry)
-        #ignoreList = ['net/minecraft/server/MinecraftServer',
-        #              'net/minecraft/network/NetworkSystem',
-        #              'net/minecraft/creativetab/CreativeTabs']
+        #ignoreList = ["net/minecraft/server/MinecraftServer",
+        #              "net/minecraft/network/NetworkSystem",
+        #              "net/minecraft/creativetab/CreativeTabs"]
 
         #origtags = {}
-        #log = [l.strip() for l in open(excconf[side], 'r').readlines()]
+        #log = [l.strip() for l in open(excconf[side], "r").readlines()]
         #for line in log:
-        #    if '=CL' in line:
-        #        columns = line.split('=')
-        #        origtags[columns[1] + '_'] = columns[0]
+        #    if "=CL" in line:
+        #        columns = line.split("=")
+        #        origtags[columns[1] + "_"] = columns[0]
 
         #for tag, name in origtags.items():
-        #    if not tag in renames.keys() and name.split('$')[0] not in ignoreList:
+        #    if not tag in renames.keys() and name.split("$")[0] not in ignoreList:
         #        renames[tag] = name
         # -- End of fix --
         
         # build map of access function changes
         def filter_matched(key, value):
-            if not k in meta['old']['access']:
+            if not k in meta["old"]["access"]:
                 return False
-            return meta['old']['access'][k]['ops'] == value['ops']
-        access = [v for k,v in meta['new']['access'].items() if not filter_matched(k,v)]
+            return meta["old"]["access"][k]["ops"] == value["ops"]
+        access = [v for k,v in meta["new"]["access"].items() if not filter_matched(k,v)]
         
         mapped = {}
         unmapped = []
         for acc in access:
             matched = False
-            for k,v in meta['old']['access'].items():
-                if not v['owner'] == acc['owner'] or not v['desc'] == acc['desc'] or not v['ops'] == acc['ops']:
+            for k,v in meta["old"]["access"].items():
+                if not v["owner"] == acc["owner"] or not v["desc"] == acc["desc"] or not v["ops"] == acc["ops"]:
                     continue
                 matched = True
-                mapped['%s/%s' % (v['owner'], v['name'])] = '%s/%s' % (acc['owner'], acc['name'])
+                mapped["%s/%s" % (v["owner"], v["name"])] = "%s/%s" % (acc["owner"], acc["name"])
                 break
             if not matched:
                 unmapped.append(acc)
@@ -1313,20 +1313,20 @@ class Commands(object):
         #from pprint import pprint
         #pprint(unmapped)
         
-        reg = re.compile(r'CL_[0-9]+_')
-        with closing(open(clssrg[side], 'r')) as input:
-            with closing(open(reobsrg[side], 'w')) as output:
+        reg = re.compile(r"CL_[0-9]+_")
+        with closing(open(clssrg[side], "r")) as input:
+            with closing(open(reobsrg[side], "w")) as output:
                 lines = [l.strip() for l in input.readlines()]
                 def mapname(match):
-                    return meta['new']['renames'].get(match.group(0), match.group(0))
+                    return meta["new"]["renames"].get(match.group(0), match.group(0))
                 for line in lines:
                     line = reg.sub(mapname, line)
-                    if line.startswith('MD:'):
-                        pts = line.split(' ')
+                    if line.startswith("MD:"):
+                        pts = line.split(" ")
                         if pts[3] in mapped:
-                            #print ('%s -> %s' % (pts[3], mapped[pts[3]]))
-                            line = '%s %s %s %s %s' % (pts[0], pts[1], pts[2], mapped[pts[3]], pts[4])
-                    output.write('%s\n' % line)
+                            #print ("%s -> %s" % (pts[3], mapped[pts[3]]))
+                            line = "%s %s %s %s %s" % (pts[0], pts[1], pts[2], mapped[pts[3]], pts[4])
+                    output.write("%s\n" % line)
 
     def filterffjar(self, side):
         """Filter the exc output jar to only the things that Fernflower should decompile"""
@@ -1337,9 +1337,9 @@ class Commands(object):
         if os.path.isfile(ffinput):
             os.remove(ffinput)
         
-        with closing(zipfile.ZipFile(excoutput, mode='a')) as zip_in:
-            with closing(zipfile.ZipFile(ffinput, 'w', zipfile.ZIP_DEFLATED)) as zip_out:
-                with closing(zipfile.ZipFile(extra, 'w', zipfile.ZIP_DEFLATED)) as zip_extra:
+        with closing(zipfile.ZipFile(excoutput, mode="a")) as zip_in:
+            with closing(zipfile.ZipFile(ffinput, "w", zipfile.ZIP_DEFLATED)) as zip_out:
+                with closing(zipfile.ZipFile(extra, "w", zipfile.ZIP_DEFLATED)) as zip_extra:
                     for i in zip_in.filelist:
                         filtered = False
                         for p in self.ignorepkg:
@@ -1365,9 +1365,9 @@ class Commands(object):
         reallyrmtree(pathsrclk[side])
         os.makedirs(pathsrclk[side])
 
-        extra = '-e="%s"' % self.ffserverextra
+        extra = "-e=\"%s\"" % self.ffserverextra
         if side == CLIENT:
-            extra = ' '.join(['"-e=%s"' % os.path.join(self.dirjars, p['filename']) for p in self.mcLibraries.values()])
+            extra = " ".join(["\"-e=%s\"" % os.path.join(self.dirjars, p["filename"]) for p in self.mcLibraries.values()])
         
         # HINT: We pass in the exec output jar, this skips the need to extract the jar, and copy classes to there own folder
         forkcmd = self.cmdfernflower.format(indir=ffinput[side], outdir=pathsrclk[side], extra=extra)
@@ -1376,7 +1376,7 @@ class Commands(object):
         #HINT: For debugging purposes we backup the decompiled jar file before we do anymore processing.
         shutil.move(jarout, ffoutput[side])
 
-        self.logger.info('> Unpacking jar')
+        self.logger.info("> Unpacking jar")
         # HINT: We extract the jar to the right location
         # ideally we would do this in a seperate step, and do any fixes that are needed in memory.
         with closing(zipfile.ZipFile(ffoutput[side])) as zipjar:
@@ -1400,7 +1400,7 @@ class Commands(object):
             forkcmd = self.cmdexceptordry.format(input=excinputdry[side], conf=excconf[side], log=exclogdry[side], json=json[side])
 
         if exc_update:
-            forkcmd += ' --mapOut %s.exc' % (exclog[side])
+            forkcmd += " --mapOut %s.exc" % (exclog[side])
         self.runcmd(forkcmd)
         
         if not dryrun:
@@ -1411,8 +1411,8 @@ class Commands(object):
         pathclslk = {CLIENT: self.clsclienttmp, SERVER: self.clsservertmp}
 
         ignoredirs = [os.path.normpath(p) for p in self.ignorepkg]
-        pkglist = filterdirs(pathclslk[side], '*.class', ignore_dirs=ignoredirs)
-        dirs = ' '.join(pkglist)
+        pkglist = filterdirs(pathclslk[side], "*.class", ignore_dirs=ignoredirs)
+        dirs = " ".join(pkglist)
         forkcmd = self.cmdjadretro.format(targetdir=dirs)
         self.runcmd(forkcmd)
 
@@ -1426,13 +1426,13 @@ class Commands(object):
         os.makedirs(pathsrclk[side])
 
         ignoredirs = [os.path.normpath(p) for p in self.ignorepkg]
-        pkglist = filterdirs(pathclslk[side], '*.class', ignore_dirs=ignoredirs, append_pattern=True)
+        pkglist = filterdirs(pathclslk[side], "*.class", ignore_dirs=ignoredirs, append_pattern=True)
         outdir = pathsrclk[side]
         # on linux with wine we need to use \\ as a directory seperator
-        if self.cmdjad[:4] == 'wine':
-            pkglist = [p.replace(os.sep, '\\\\') for p in pkglist]
-            outdir = outdir.replace(os.sep, '\\\\')
-        dirs = ' '.join(pkglist)
+        if self.cmdjad[:4] == "wine":
+            pkglist = [p.replace(os.sep, "\\\\") for p in pkglist]
+            outdir = outdir.replace(os.sep, "\\\\")
+        dirs = " ".join(pkglist)
         forkcmd = self.cmdjad.format(outdir=outdir, classes=dirs)
         self.runcmd(forkcmd)
 
@@ -1460,8 +1460,8 @@ class Commands(object):
                       SERVER: []
                       }
 
-        decompLogData = open(exclog[side], 'r').readlines()
-        reobfLogData = open(exclogdry[side], 'r').readlines()
+        decompLogData = open(exclog[side], "r").readlines()
+        reobfLogData = open(exclogdry[side], "r").readlines()
 
         for line in decompLogData:
             if "MarkerID" in line:
@@ -1474,15 +1474,13 @@ class Commands(object):
                 reobfDict[columns[3]] = columns[2]
 
         for key in decompDict:
-            if key in ignoreErrorDict[side] or key.split('$')[0] in ignoreErrorDict[side]:
+            if key in ignoreErrorDict[side] or key.split("$")[0] in ignoreErrorDict[side]:
                 pass
 
             elif not key in reobfDict:
                 raise Error("Class not found prereobfuscation : %s"%key)
-            #    print "Class not found prereobfuscation : %s"%key
-            #elif decompDict[key] != reobfDict[key]:
-            #    print 'Error : %s %s %s'%(key, decompDict[key],reobfDict[key])
-            elif decompDict[key] != reobfDict[key]: # and not key in ignoreErrorDict[side]:
+
+            elif decompDict[key] != reobfDict[key]:
                 raise Error("Mismatched ano class index : %s %s %s"%(key, decompDict[key],reobfDict[key]))
 
     def applypatches(self, side, use_ff=False, use_osx=False):
@@ -1497,15 +1495,15 @@ class Commands(object):
 
         if use_ff:
             if not self.has_ff_patch:
-                self.logger.error('!! Missing ff patches. Aborting !!')
+                self.logger.error("!! Missing ff patches. Aborting !!")
                 sys.exit(1)
         elif use_osx:
             if not self.has_osx_patch:
-                self.logger.warning('!! Missing osx patches. Aborting !!')
+                self.logger.warning("!! Missing osx patches. Aborting !!")
                 return False
         else:
             if not self.has_jad_patch:
-                self.logger.error('!! Missing jad patches. Aborting !!')
+                self.logger.error("!! Missing jad patches. Aborting !!")
                 sys.exit(1)
 
         if os.path.isdir(patchlk[side]):
@@ -1520,36 +1518,36 @@ class Commands(object):
         try:
             self.runcmd(forkcmd)
         except CalledProcessError as ex:
-            self.logger.warning('')
-            self.logger.warning('== ERRORS FOUND ==')
+            self.logger.warning("")
+            self.logger.warning("== ERRORS FOUND ==")
             if side == CLIENT and not use_ff:
-                self.logger.warning('When decompiling with ModLoader a single hunk failure in RenderBlocks is expected '
-                                    'and is not a problem')
-            self.logger.warning('')
+                self.logger.warning("When decompiling with ModLoader a single hunk failure in RenderBlocks is expected "
+                                    "and is not a problem")
+            self.logger.warning("")
             for line in ex.output.splitlines():
-                if 'saving rejects' in line:
+                if "saving rejects" in line:
                     self.logger.warning(line)
-            self.logger.warning('==================')
-            self.logger.warning('')
+            self.logger.warning("==================")
+            self.logger.warning("")
             
     def apply_patch_dir(self, patch_dir, target_dir):
         from glob import glob
         patches = {}
-        for f in glob(os.path.join(patch_dir, '*.patch')):
+        for f in glob(os.path.join(patch_dir, "*.patch")):
             base = os.path.basename(f)
             patches[base] = [f]
-            for e in glob(os.path.join(patch_dir, base + '.*')):
+            for e in glob(os.path.join(patch_dir, base + ".*")):
                 patches[base].append(e)
         
         def apply_patchlist(list):
             forkcmd = None
             for patch in list:
-                self.logger.debug('Attempting patch: ' + patch)
+                self.logger.debug("Attempting patch: " + patch)
                 normalisepatch(patch, self.patchtemp)
                 patchfile = os.path.relpath(self.patchtemp, target_dir)
                 forkcmd = self.cmdpatch.format(srcdir=target_dir, patchfile=patchfile)
                 try:
-                    self.runcmd(forkcmd + ' --dry-run', quiet=True)
+                    self.runcmd(forkcmd + " --dry-run", quiet=True)
                     break # if we get here the command ran without a hitch meaning all chunks applied properly
                 except CalledProcessError as ex:
                     pass
@@ -1558,14 +1556,14 @@ class Commands(object):
             try:
                 self.runcmd(forkcmd)
             except CalledProcessError as ex:
-                self.logger.warning('')
-                self.logger.warning('== ERRORS FOUND ==')
-                self.logger.warning('')
+                self.logger.warning("")
+                self.logger.warning("== ERRORS FOUND ==")
+                self.logger.warning("")
                 for line in ex.output.splitlines():
-                    if 'saving rejects' in line:
+                    if "saving rejects" in line:
                         self.logger.warning(line)
-                self.logger.warning('==================')
-                self.logger.warning('')
+                self.logger.warning("==================")
+                self.logger.warning("")
                 
         for k,v in patches.items():
             apply_patchlist(v)
@@ -1584,33 +1582,33 @@ class Commands(object):
 
         # HINT: We create a temp file containing all files to compile, this bypasses the OS command length limit
         # we may need to also move the classpath, if mojang ever adds to many libraries
-        pkglist = filterdirs(pathsrclk[side], '*.java', all_files=True)
-        with open(javasrc[side], 'w') as f:
-            f.write('\n'.join(pkglist))
+        pkglist = filterdirs(pathsrclk[side], "*.java", all_files=True)
+        with open(javasrc[side], "w") as f:
+            f.write("\n".join(pkglist))
         
         if self.cmdrecompscala: # Compile scala before java as scala scans java files, but not vice-versa
-            pkglist = filterdirs(pathsrclk[side], '*.scala', all_files=True)
-            with open(scalasrc[side], 'w') as f:
-                f.write('\n'.join(pkglist))
+            pkglist = filterdirs(pathsrclk[side], "*.scala", all_files=True)
+            with open(scalasrc[side], "w") as f:
+                f.write("\n".join(pkglist))
             classpath = os.pathsep.join(cplk[side])
             forkcmd = self.cmdrecompscala.format(classpath=classpath, sourcepath=pathsrclk[side], outpath=pathbinlk[side], 
                 javasrc=javasrc[side], scalasrc=scalasrc[side])
             try:
                 self.runcmd(forkcmd, log_file=pathlog[side])
             except CalledProcessError as ex:
-                self.logger.error('')
-                self.logger.error('== ERRORS FOUND in SCALA CODE ==')
-                self.logger.error('')
+                self.logger.error("")
+                self.logger.error("== ERRORS FOUND in SCALA CODE ==")
+                self.logger.error("")
                 for line in ex.output.splitlines():
                     if line.strip():
                         if line.find("jvm-1.6") != -1:
-                            self.logger.error(' === Your scala version is out of date, update to at least 2.10.0 ===')
-                        if line[0] != '[' and line[0:4] != 'Note':
+                            self.logger.error(" === Your scala version is out of date, update to at least 2.10.0 ===")
+                        if line[0] != "[" and line[0:4] != "Note":
                             self.logger.error(line)
-                            if '^' in line:
-                                self.logger.error('')
-                self.logger.error('================================')
-                self.logger.error('')
+                            if "^" in line:
+                                self.logger.error("")
+                self.logger.error("================================")
+                self.logger.error("")
                 raise
         classpath = os.pathsep.join(cplk[side])
         forkcmd = self.cmdrecomp.format(classpath=classpath, sourcepath=pathsrclk[side], outpath=pathbinlk[side],
@@ -1618,22 +1616,22 @@ class Commands(object):
         try:
             self.runcmd(forkcmd, log_file=pathlog[side])
         except CalledProcessError as ex:
-            self.logger.error('')
-            self.logger.error('== ERRORS FOUND in JAVA CODE ==')
-            self.logger.error('')
+            self.logger.error("")
+            self.logger.error("== ERRORS FOUND in JAVA CODE ==")
+            self.logger.error("")
             for line in ex.output.splitlines():
                 if line.strip():
-                    if line[0] != '[' and line[0:4] != 'Note':
+                    if line[0] != "[" and line[0:4] != "Note":
                         self.logger.error(line)
-                        if '^' in line:
-                            self.logger.error('')
-            self.logger.error('==================')
-            self.logger.error('')
+                        if "^" in line:
+                            self.logger.error("")
+            self.logger.error("==================")
+            self.logger.error("")
             raise
 
     def startserver(self, mainclass, extraargs):
         classpath = [self.binserver] + self.cpathserver
-        classpath = [os.path.join('..', p) for p in classpath]
+        classpath = [os.path.join("..", p) for p in classpath]
         classpath = os.pathsep.join(classpath)
         os.chdir(self.dirjars)
         forkcmd = self.cmdstartsrv.format(classpath=classpath, mainclass=mainclass, extraargs=extraargs)
@@ -1641,9 +1639,9 @@ class Commands(object):
 
     def startclient(self, mainclass, extraargs):
         classpath = [self.binclient, self.srcclient] + self.cpathclient
-        classpath = [os.path.join('..', p) for p in classpath]
+        classpath = [os.path.join("..", p) for p in classpath]
         classpath = os.pathsep.join(classpath)
-        natives = os.path.join('..', self.dirnatives)
+        natives = os.path.join("..", self.dirnatives)
         os.chdir(self.dirjars)
         forkcmd = self.cmdstartclt.format(classpath=classpath, natives=natives, mainclass=mainclass, extraargs=extraargs)
         self.runmc(forkcmd)
@@ -1651,19 +1649,19 @@ class Commands(object):
     def runcmd(self, forkcmd, quiet=False, check_return=True, log_file=None):
         forklist = cmdsplit(forkcmd)
         if not quiet:
-            self.logger.debug("runcmd: '%s'", truncate(forkcmd, 500))
+            self.logger.debug("runcmd: \"%s\"", truncate(forkcmd, 500))
             self.logger.debug("shlex: %s", truncate(str(forklist), 500))
         process = subprocess.Popen(forklist, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=-1)
         output, _ = process.communicate()
         if log_file is not None:
-            with open(log_file, 'w') as log:
+            with open(log_file, "w") as log:
                 log.write(output)
         if not quiet:
             for line in output.splitlines():
                 self.logger.debug(line)
         if process.returncode:
             if not quiet:
-                self.logger.error("'%s' failed : %d", truncate(forkcmd, 100), process.returncode)
+                self.logger.error("\"%s\" failed : %d", truncate(forkcmd, 100), process.returncode)
             if check_return:
                 raise CalledProcessError(process.returncode, forkcmd, output)
         return output
@@ -1671,9 +1669,9 @@ class Commands(object):
     def runmc(self, forkcmd, quiet=False, check_return=True):
         forklist = cmdsplit(forkcmd)
         if not quiet:
-            self.logger.debug("runmc: '%s'", truncate(forkcmd, 500))
+            self.logger.debug("runmc: \"%s\"", truncate(forkcmd, 500))
             self.logger.debug("shlex: %s", truncate(str(forklist), 500))
-        output = ''
+        output = ""
         process = subprocess.Popen(forklist, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1)
         while process.poll() is None:
             line = process.stdout.readline()
@@ -1684,7 +1682,7 @@ class Commands(object):
                     self.loggermc.debug(line)
         if process.returncode:
             if not quiet:
-                self.logger.error("'%s' failed : %d", truncate(forkcmd, 100), process.returncode)
+                self.logger.error("\"%s\" failed : %d", truncate(forkcmd, 100), process.returncode)
             if check_return:
                 raise CalledProcessError(process.returncode, forkcmd, output)
         return output
@@ -1712,7 +1710,7 @@ class Commands(object):
         os.makedirs(pathclslk[side])
 
         ignore_dirs = [os.path.normpath(p) for p in self.ignorepkg]
-        files = filterdirs(pathbinlk[side], '*.class', ignore_dirs=ignore_dirs, all_files=True)
+        files = filterdirs(pathbinlk[side], "*.class", ignore_dirs=ignore_dirs, all_files=True)
         for src_file in files:
             sub_dir = os.path.relpath(os.path.dirname(src_file), pathbinlk[side])
             dest_file = os.path.join(pathclslk[side], sub_dir, os.path.basename(src_file))
@@ -1734,17 +1732,17 @@ class Commands(object):
 
         # HINT: copy Start and soundfix to source dir
         if side == CLIENT:
-            normaliselines(os.path.join(self.fixesclient, self.fixstart + '.java'),
-                           os.path.join(pathsrclk[side], self.fixstart + '.java'))
+            normaliselines(os.path.join(self.fixesclient, self.fixstart + ".java"),
+                           os.path.join(pathsrclk[side], self.fixstart + ".java"))
             if self.fixsound:
-                normaliselines(os.path.join(self.fixesclient, self.fixsound + '.java'),
-                               os.path.join(pathsrclk[side], self.fixsound + '.java'))
+                normaliselines(os.path.join(self.fixesclient, self.fixsound + ".java"),
+                               os.path.join(pathsrclk[side], self.fixsound + ".java"))
 
     def copyandfixsrc(self, src_dir, dest_dir):
         src_dir = os.path.normpath(src_dir)
         dest_dir = os.path.normpath(dest_dir)
         ignore_dirs = [os.path.normpath(p) for p in self.ignorepkg]
-        files = filterdirs(src_dir, '*.java', ignore_dirs=ignore_dirs, all_files=True)
+        files = filterdirs(src_dir, "*.java", ignore_dirs=ignore_dirs, all_files=True)
         for src_file in files:
             sub_dir = os.path.relpath(os.path.dirname(src_file), src_dir)
             dest_file = os.path.join(dest_dir, sub_dir, os.path.basename(src_file))
@@ -1760,41 +1758,41 @@ class Commands(object):
         excmeta = {CLIENT: self.xclientmeta, SERVER: self.xservermeta}
 
         if not self.has_name_csv:
-            self.logger.warning('!! renaming disabled due to no csvs !!')
+            self.logger.warning("!! renaming disabled due to no csvs !!")
             return False
 
         # HINT: We read the relevant CSVs
-        names = {'methods': {}, 'fields': {}, 'params': {}}
-        with open(self.csvmethods, 'rb') as fh:
+        names = {"methods": {}, "fields": {}, "params": {}}
+        with open(self.csvmethods, "rb") as fh:
             methodsreader = csv.DictReader(fh)
             for row in methodsreader:
-                if int(row['side']) == side or int(row['side']) == 2:
-                    if row['name'] != row['searge']:
-                        names['methods'][row['searge']] = row['name']
-        with open(self.csvfields, 'rb') as fh:
+                if int(row["side"]) == side or int(row["side"]) == 2:
+                    if row["name"] != row["searge"]:
+                        names["methods"][row["searge"]] = row["name"]
+        with open(self.csvfields, "rb") as fh:
             fieldsreader = csv.DictReader(fh)
             for row in fieldsreader:
-                if int(row['side']) == side or int(row['side']) == 2:
-                    if row['name'] != row['searge']:
-                        names['fields'][row['searge']] = row['name']
+                if int(row["side"]) == side or int(row["side"]) == 2:
+                    if row["name"] != row["searge"]:
+                        names["fields"][row["searge"]] = row["name"]
         if self.has_param_csv:
-            with open(self.csvparams, 'rb') as fh:
+            with open(self.csvparams, "rb") as fh:
                 paramsreader = csv.DictReader(fh)
                 for row in paramsreader:
-                    if int(row['side']) == side or int(row['side']) == 2:
-                        names['params'][row['param']] = row['name']
+                    if int(row["side"]) == side or int(row["side"]) == 2:
+                        names["params"][row["param"]] = row["name"]
 
         regexps = {
-            'methods': re.compile(r'func_[0-9]+_[a-zA-Z_]+'),
-            'fields': re.compile(r'field_[0-9]+_[a-zA-Z_]+'),
-            'params': re.compile(r'p_[\w]+_\d+_'),
+            "methods": re.compile(r"func_[0-9]+_[a-zA-Z_]+"),
+            "fields": re.compile(r"field_[0-9]+_[a-zA-Z_]+"),
+            "params": re.compile(r"p_[\w]+_\d+_"),
         }
 
         def updatefile(src_file):
-            tmp_file = src_file + '.tmp'
-            with open(src_file, 'r') as fh:
+            tmp_file = src_file + ".tmp"
+            with open(src_file, "r") as fh:
                 buf = fh.read()
-            for group in ['methods', 'fields', 'params']:
+            for group in ["methods", "fields", "params"]:
                 def mapname(match):
                     try:
                         return names[group][match.group(0)]
@@ -1802,7 +1800,7 @@ class Commands(object):
                         pass
                     return match.group(0)
                 buf = regexps[group].sub(mapname, buf)
-            with open(tmp_file, 'w') as fh:
+            with open(tmp_file, "w") as fh:
                 fh.write(buf)
             shutil.move(tmp_file, src_file)
 
@@ -1813,7 +1811,7 @@ class Commands(object):
 
         # HINT: We pathwalk the sources
         for path, _, filelist in os.walk(pathsrclk[side], followlinks=True):
-            for cur_file in fnmatch.filter(filelist, '*.java'):
+            for cur_file in fnmatch.filter(filelist, "*.java"):
                 updatefile(os.path.normpath(os.path.join(path, cur_file)))
         return True
 
@@ -1822,45 +1820,45 @@ class Commands(object):
         pathsrclk = {CLIENT: self.srcclient, SERVER: self.srcserver}
 
         if not self.has_renumber_csv:
-            self.logger.warning('!! renumbering disabled due to no csv !!')
+            self.logger.warning("!! renumbering disabled due to no csv !!")
             return False
 
         regexps = {
-            'methods': re.compile(r'func_([0-9]+)_[a-zA-Z_]+'),
-            'fields': re.compile(r'field_([0-9]+)_[a-zA-Z_]+'),
-            'params': re.compile(r'p_[\d]+_'),
+            "methods": re.compile(r"func_([0-9]+)_[a-zA-Z_]+"),
+            "fields": re.compile(r"field_([0-9]+)_[a-zA-Z_]+"),
+            "params": re.compile(r"p_[\d]+_"),
         }
 
         # HINT: We read the relevant CSVs
-        mapping = {'methods': {}, 'fields': {}, 'params': {}}
-        with open(self.csvnewids, 'rb') as fh:
+        mapping = {"methods": {}, "fields": {}, "params": {}}
+        with open(self.csvnewids, "rb") as fh:
             in_csv = csv.DictReader(fh)
             for line in in_csv:
                 in_id = None
                 if side == CLIENT:
-                    if line['client'] != '*':
-                        in_id = line['client']
+                    if line["client"] != "*":
+                        in_id = line["client"]
                 else:
-                    if line['server'] != '*':
-                        in_id = line['server']
+                    if line["server"] != "*":
+                        in_id = line["server"]
                 if in_id:
-                    method_match = regexps['methods'].match(in_id)
+                    method_match = regexps["methods"].match(in_id)
                     if method_match is not None:
-                        if in_id not in mapping['methods']:
-                            mapping['methods'][in_id] = line['newid']
-                            in_param = 'p_' + method_match.group(1) + '_'
-                            method_match = regexps['methods'].match(line['newid'])
+                        if in_id not in mapping["methods"]:
+                            mapping["methods"][in_id] = line["newid"]
+                            in_param = "p_" + method_match.group(1) + "_"
+                            method_match = regexps["methods"].match(line["newid"])
                             if method_match is not None:
-                                out_param = 'p_' + method_match.group(1) + '_'
-                                mapping['params'][in_param] = out_param
-                    field_match = regexps['fields'].match(in_id)
+                                out_param = "p_" + method_match.group(1) + "_"
+                                mapping["params"][in_param] = out_param
+                    field_match = regexps["fields"].match(in_id)
                     if field_match is not None:
-                        if in_id not in mapping['fields']:
-                            mapping['fields'][in_id] = line['newid']
+                        if in_id not in mapping["fields"]:
+                            mapping["fields"][in_id] = line["newid"]
 
         def updatefile(src_file):
-            tmp_file = src_file + '.tmp'
-            with open(src_file, 'r') as fh:
+            tmp_file = src_file + ".tmp"
+            with open(src_file, "r") as fh:
                 buf = fh.read()
             for group in mapping.keys():
                 def mapname(match):
@@ -1870,13 +1868,13 @@ class Commands(object):
                         pass
                     return match.group(0)
                 buf = regexps[group].sub(mapname, buf)
-            with open(tmp_file, 'w') as fh:
+            with open(tmp_file, "w") as fh:
                 fh.write(buf)
             shutil.move(tmp_file, src_file)
 
         # HINT: We pathwalk the sources
         for path, _, filelist in os.walk(pathsrclk[side], followlinks=True):
-            for cur_file in fnmatch.filter(filelist, '*.java'):
+            for cur_file in fnmatch.filter(filelist, "*.java"):
                 updatefile(os.path.normpath(os.path.join(path, cur_file)))
         return True
 
@@ -1886,7 +1884,7 @@ class Commands(object):
 
         # HINT: We pathwalk the sources
         for path, _, filelist in os.walk(pathsrclk[side], followlinks=True):
-            for cur_file in fnmatch.filter(filelist, '*.java'):
+            for cur_file in fnmatch.filter(filelist, "*.java"):
                 src_file = os.path.normpath(os.path.join(path, cur_file))
                 annotate_file(src_file)
 
@@ -1907,88 +1905,88 @@ class Commands(object):
         pathsrclk = {CLIENT: self.srcclient, SERVER: self.srcserver}
 
         if not self.has_doc_csv:
-            self.logger.warning('!! javadoc disabled due to no csvs !!')
+            self.logger.warning("!! javadoc disabled due to no csvs !!")
             return False
 
         #HINT: We read the relevant CSVs
-        methodsreader = csv.DictReader(open(self.csvmethods, 'r'))
-        fieldsreader = csv.DictReader(open(self.csvfields, 'r'))
+        methodsreader = csv.DictReader(open(self.csvmethods, "r"))
+        fieldsreader = csv.DictReader(open(self.csvfields, "r"))
 
         methods = {}
         for row in methodsreader:
             #HINT: Only include methods that have a non-empty description
-            if (int(row['side']) == side or int(row['side']) == 2) and row['desc']:
-                methods[row['searge']] = row['desc'].replace('*/', '* /')
+            if (int(row["side"]) == side or int(row["side"]) == 2) and row["desc"]:
+                methods[row["searge"]] = row["desc"].replace("*/", "* /")
 
         fields = {}
         for row in fieldsreader:
             #HINT: Only include fields that have a non-empty description
-            if (int(row['side']) == side or int(row['side']) == 2) and row['desc']:
-                fields[row['searge']] = row['desc'].replace('*/', '* /')
+            if (int(row["side"]) == side or int(row["side"]) == 2) and row["desc"]:
+                fields[row["searge"]] = row["desc"].replace("*/", "* /")
 
         regexps = {
-            'field': re.compile(r'^(?P<indent> {4}|\t)(?:[\w$.[\]]+ )*(?P<name>field_[0-9]+_[a-zA-Z_]+) *(?:=|;)'),
-            'method': re.compile(r'^(?P<indent> {4}|\t)(?:[\w$.[\]]+ )*(?P<name>func_[0-9]+_[a-zA-Z_]+)\('),
+            "field": re.compile(r"^(?P<indent> {4}|\t)(?:[\w$.[\]]+ )*(?P<name>field_[0-9]+_[a-zA-Z_]+) *(?:=|;)"),
+            "method": re.compile(r"^(?P<indent> {4}|\t)(?:[\w$.[\]]+ )*(?P<name>func_[0-9]+_[a-zA-Z_]+)\("),
         }
         wrapper = TextWrapper(width=120)
 
         # HINT: We pathwalk the sources
         for path, _, filelist in os.walk(pathsrclk[side], followlinks=True):
-            for cur_file in fnmatch.filter(filelist, '*.java'):
+            for cur_file in fnmatch.filter(filelist, "*.java"):
                 src_file = os.path.normpath(os.path.join(path, cur_file))
-                tmp_file = src_file + '.tmp'
-                with open(src_file, 'r') as fh:
+                tmp_file = src_file + ".tmp"
+                with open(src_file, "r") as fh:
                     buf_in = fh.readlines()
 
                 buf_out = []
                 #HINT: Look for method/field declarations in this file
                 for line in buf_in:
-                    fielddecl = regexps['field'].match(line)
-                    methoddecl = regexps['method'].match(line)
+                    fielddecl = regexps["field"].match(line)
+                    methoddecl = regexps["method"].match(line)
                     if fielddecl:
                         prev_line = buf_out[-1].strip()
-                        indent = fielddecl.group('indent')
-                        name = fielddecl.group('name')
+                        indent = fielddecl.group("indent")
+                        name = fielddecl.group("name")
                         if name in fields:
                             desc = fields[name]
-                            if len(desc) < 70 and desc.find(r'\n') == -1:
-                                if prev_line != '' and prev_line != '{':
-                                    buf_out.append('\n')
-                                buf_out.append(indent + '/** ')
+                            if len(desc) < 70 and desc.find(r"\n") == -1:
+                                if prev_line != "" and prev_line != "{":
+                                    buf_out.append("\n")
+                                buf_out.append(indent + "/** ")
                                 buf_out.append(desc)
-                                buf_out.append(' */\n')
+                                buf_out.append(" */\n")
                             else:
-                                wrapper.initial_indent = indent + ' * '
-                                wrapper.subsequent_indent = indent + ' * '
-                                if prev_line != '' and prev_line != '{':
-                                    buf_out.append('\n')
-                                buf_out.append(indent + '/**\n')
-                                desc_lines = desc.split(r'\n')
+                                wrapper.initial_indent = indent + " * "
+                                wrapper.subsequent_indent = indent + " * "
+                                if prev_line != "" and prev_line != "{":
+                                    buf_out.append("\n")
+                                buf_out.append(indent + "/**\n")
+                                desc_lines = desc.split(r"\n")
                                 for desc_line in desc_lines:
-                                    wrapper.drop_whitespace = desc_line != ' '
-                                    buf_out.append(wrapper.fill(desc_line) + '\n')
+                                    wrapper.drop_whitespace = desc_line != " "
+                                    buf_out.append(wrapper.fill(desc_line) + "\n")
                                 wrapper.drop_whitespace = True
-                                buf_out.append(indent + ' */\n')
+                                buf_out.append(indent + " */\n")
                     elif methoddecl:
                         prev_line = buf_out[-1].strip()
-                        indent = methoddecl.group('indent')
-                        name = methoddecl.group('name')
+                        indent = methoddecl.group("indent")
+                        name = methoddecl.group("name")
                         if name in methods:
                             desc = methods[name]
-                            wrapper.initial_indent = indent + ' * '
-                            wrapper.subsequent_indent = indent + ' * '
-                            if prev_line != '' and prev_line != '{':
-                                buf_out.append('\n')
-                            buf_out.append(indent + '/**\n')
-                            desc_lines = desc.split(r'\n')
+                            wrapper.initial_indent = indent + " * "
+                            wrapper.subsequent_indent = indent + " * "
+                            if prev_line != "" and prev_line != "{":
+                                buf_out.append("\n")
+                            buf_out.append(indent + "/**\n")
+                            desc_lines = desc.split(r"\n")
                             for desc_line in desc_lines:
-                                wrapper.drop_whitespace = desc_line != ' '
-                                buf_out.append(wrapper.fill(desc_line) + '\n')
+                                wrapper.drop_whitespace = desc_line != " "
+                                buf_out.append(wrapper.fill(desc_line) + "\n")
                             wrapper.drop_whitespace = True
-                            buf_out.append(indent + ' */\n')
+                            buf_out.append(indent + " */\n")
                     buf_out.append(line)
 
-                with open(tmp_file, 'w') as fh:
+                with open(tmp_file, "w") as fh:
                     fh.writelines(buf_out)
                 shutil.move(tmp_file, src_file)
         return True
@@ -1998,12 +1996,12 @@ class Commands(object):
         pathsrclk = {CLIENT: self.srcclient, SERVER: self.srcserver}
 
         if not self.has_astyle_cfg:
-            self.logger.warning('!! reformatting disabled due to no config !!')
+            self.logger.warning("!! reformatting disabled due to no config !!")
             return False
 
         # HINT: We create the list of source directories based on the list of packages
-        pkglist = filterdirs(pathsrclk[side], '*.java', append_pattern=True)
-        dirs = ' '.join(pkglist)
+        pkglist = filterdirs(pathsrclk[side], "*.java", append_pattern=True)
+        dirs = " ".join(pkglist)
         forkcmd = self.cmdastyle.format(classes=dirs, conffile=self.astyleconf)
         self.runcmd(forkcmd)
         return True
@@ -2015,20 +2013,20 @@ class Commands(object):
             md5lk = {CLIENT: self.md5reobfclient, SERVER: self.md5reobfserver}
         pathbinlk = {CLIENT: self.binclient, SERVER: self.binserver}
 
-        with open(md5lk[side], 'w') as md5file:
+        with open(md5lk[side], "w") as md5file:
             # HINT: We pathwalk the recompiled classes
             for path, _, filelist in os.walk(pathbinlk[side]):
-                class_path = os.path.relpath(path, pathbinlk[side]).replace(os.sep, '/')
-                if class_path == '.':
-                    class_path = ''
+                class_path = os.path.relpath(path, pathbinlk[side]).replace(os.sep, "/")
+                if class_path == ".":
+                    class_path = ""
                 else:
-                    class_path += '/'
-                for class_file in fnmatch.filter(filelist, '*.class'):
+                    class_path += "/"
+                for class_file in fnmatch.filter(filelist, "*.class"):
                     class_name = class_path + os.path.splitext(class_file)[0]
                     bin_file = os.path.normpath(os.path.join(path, class_file))
-                    with open(bin_file, 'rb') as fh:
+                    with open(bin_file, "rb") as fh:
                         class_md5 = md5(fh.read()).hexdigest()
-                    md5file.write('%s %s\n' % (class_name, class_md5))
+                    md5file.write("%s %s\n" % (class_name, class_md5))
 
     def packbin(self, side):
         jarlk = {CLIENT: self.cmpjarclient, SERVER: self.cmpjarserver}
@@ -2037,19 +2035,19 @@ class Commands(object):
 
         ignore_files = []
         if side == CLIENT:
-            ignore_files.append(self.fixstart + '.class')
+            ignore_files.append(self.fixstart + ".class")
             if self.fixsound:
-                ignore_files.append(self.fixsound + '.class')
+                ignore_files.append(self.fixsound + ".class")
 
         # HINT: We create the zipfile and add all the files from the bin directory
-        with closing(zipfile.ZipFile(jarlk[side], 'w')) as zipjar:
+        with closing(zipfile.ZipFile(jarlk[side], "w")) as zipjar:
             for path, _, filelist in os.walk(pathbinlk[side]):
-                class_path = os.path.relpath(path, pathbinlk[side]).replace(os.sep, '/')
-                if class_path == '.':
-                    class_path = ''
+                class_path = os.path.relpath(path, pathbinlk[side]).replace(os.sep, "/")
+                if class_path == ".":
+                    class_path = ""
                 else:
-                    class_path += '/'
-                for class_file in fnmatch.filter(filelist, '*.class'):
+                    class_path += "/"
+                for class_file in fnmatch.filter(filelist, "*.class"):
                     class_name = class_path + class_file
                     bin_file = os.path.normpath(os.path.join(path, class_file))
                     if class_name not in ignore_files:
@@ -2057,12 +2055,12 @@ class Commands(object):
             for pkg in self.ignorepkg:
                 curpath = os.path.join(pathtmpbinlk[side], os.path.normpath(pkg))
                 for path, _, filelist in os.walk(curpath):
-                    class_path = os.path.relpath(path, pathtmpbinlk[side]).replace(os.sep, '/')
-                    if class_path == '.':
-                        class_path = ''
+                    class_path = os.path.relpath(path, pathtmpbinlk[side]).replace(os.sep, "/")
+                    if class_path == ".":
+                        class_path = ""
                     else:
-                        class_path += '/'
-                    for class_file in fnmatch.filter(filelist, '*.class'):
+                        class_path += "/"
+                    for class_file in fnmatch.filter(filelist, "*.class"):
                         class_name = class_path + class_file
                         bin_file = os.path.join(path, class_file)
                         zipjar.write(bin_file, class_name)
@@ -2079,13 +2077,13 @@ class Commands(object):
 
         # HINT: We need a table for the old md5 and the new ones
         md5table = {}
-        with open(md5lk[side], 'r') as fh:
+        with open(md5lk[side], "r") as fh:
             for row in fh:
                 row = row.strip().split()
                 if len(row) == 2:
                     md5table[row[0]] = row[1]
         md5reobtable = {}
-        with open(md5reoblk[side], 'r') as fh:
+        with open(md5reoblk[side], "r") as fh:
             for row in fh:
                 row = row.strip().split()
                 if len(row) == 2:
@@ -2101,61 +2099,61 @@ class Commands(object):
                 continue
             if key not in md5table:
 
-                # We get the classname by splitting the path first than splitting on '$'
-                mainname = os.path.basename(key).split('$')[0]
+                # We get the classname by splitting the path first than splitting on "$"
+                mainname = os.path.basename(key).split("$")[0]
                 
                 # We recheck all the key to see if their main class is equivalent. If it is, we append the class to the marked classes
                 for subkey in md5reobtable.keys():
-                    subclassname = os.path.basename(subkey).split('$')[0]
+                    subclassname = os.path.basename(subkey).split("$")[0]
                     if subclassname == mainname and not subkey in trgclasses:
                         trgclasses.append(subkey)
 
             elif md5table[key] != md5reobtable[key]:
                 
-                # We get the classname by splitting the path first than splitting on '$'
-                mainname = os.path.basename(key).split('$')[0]
+                # We get the classname by splitting the path first than splitting on "$"
+                mainname = os.path.basename(key).split("$")[0]
                 
                 # We recheck all the key to see if their main class is equivalent. If it is, we append the class to the marked classes
                 for subkey in md5reobtable.keys():
-                    subclassname = os.path.basename(subkey).split('$')[0]
+                    subclassname = os.path.basename(subkey).split("$")[0]
                     if subclassname == mainname and not subkey in trgclasses:
                         trgclasses.append(subkey)
 
             elif reobf_all:
                 trgclasses.append(key)
-                #self.logger.info('> Unchanged class found: %s', key)
+                #self.logger.info("> Unchanged class found: %s", key)
                 
         for key in trgclasses:
-            if '$' in key and not key in md5table:
-                self.logger.info('> New inner class found: %s', key)
-            elif '$' in key and key in md5table:
-                self.logger.info('> Modified inner class found: %s', key)
-            elif not '$' in key and not key in md5table:
-                self.logger.info('> New class found: %s', key)
-            elif not '$' in key and key in md5table:    
-                self.logger.info('> Modified class found      : %s', key)                           
+            if "$" in key and not key in md5table:
+                self.logger.info("> New inner class found: %s", key)
+            elif "$" in key and key in md5table:
+                self.logger.info("> Modified inner class found: %s", key)
+            elif not "$" in key and not key in md5table:
+                self.logger.info("> New class found: %s", key)
+            elif not "$" in key and key in md5table:    
+                self.logger.info("> Modified class found      : %s", key)                           
                 
         classes = {}
         srg_data = parse_srg(srglk[side])
-        for row in srg_data['CL']:
-            classes[row['deobf_name']] = row['obf_name']
+        for row in srg_data["CL"]:
+            classes[row["deobf_name"]] = row["obf_name"]
 
         if not os.path.exists(outpathlk[side]):
             os.makedirs(outpathlk[side])
-        reserved = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', 'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9', 'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9']
+        reserved = ["CON", "PRN", "AUX", "NUL", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"]
             
         # HINT: We extract the modified class files
         with closing(zipfile.ZipFile(jarlk[side])) as zipjar:
             for in_class in trgclasses:
-                parent_class, sep, inner_class = in_class.partition('$')
+                parent_class, sep, inner_class = in_class.partition("$")
                 if in_class in classes:
-                    out_class = classes[in_class] + '.class'
+                    out_class = classes[in_class] + ".class"
                 elif parent_class in classes:
-                    out_class = classes[parent_class] + sep + inner_class + '.class'
+                    out_class = classes[parent_class] + sep + inner_class + ".class"
                 else:
-                    out_class = in_class + '.class'
-                    out_class = out_class.replace(self.nullpkg, '')
-                    if out_class[0] == '/':
+                    out_class = in_class + ".class"
+                    out_class = out_class.replace(self.nullpkg, "")
+                    if out_class[0] == "/":
                         out_class = out_class[1:]
                         
                 rename = False
@@ -2167,61 +2165,61 @@ class Commands(object):
                         
                 if rename:
                     try:
-                        f = open(os.path.join(outpathlk[side], '_' + out_class), 'wb')
+                        f = open(os.path.join(outpathlk[side], "_" + out_class), "wb")
                         f.write(zipjar.read(out_class))
                         f.close()
-                        self.logger.info('> Outputted %s to %s as %s', in_class.ljust(35), outpathlk[side], '_' + out_class)
+                        self.logger.info("> Outputted %s to %s as %s", in_class.ljust(35), outpathlk[side], "_" + out_class)
                     except IOError:
-                        self.logger.error('* File %s failed extracting for %s', out_class, in_class)
+                        self.logger.error("* File %s failed extracting for %s", out_class, in_class)
                     continue
                 try:
                     zipjar.extract(out_class, outpathlk[side])
-                    self.logger.info('> Outputted %s to %s as %s', in_class.ljust(35), outpathlk[side], out_class)
+                    self.logger.info("> Outputted %s to %s as %s", in_class.ljust(35), outpathlk[side], out_class)
                 except KeyError:
-                    self.logger.error('* File %s not found for %s', out_class, in_class)
+                    self.logger.error("* File %s not found for %s", out_class, in_class)
                 except IOError:
-                    self.logger.error('* File %s failed extracting for %s', out_class, in_class)
+                    self.logger.error("* File %s failed extracting for %s", out_class, in_class)
 
     def downloadupdates(self, force=False):
         if not self.updateurl:
-            self.logger.error('Updates disabled.')
+            self.logger.error("Updates disabled.")
             return
 
         newfiles = self.checkupdates(silent=True)
         if not newfiles:
-            self.logger.info('No new updates found.')
+            self.logger.info("No new updates found.")
             return
 
         for entry in newfiles:
-            if entry[3] == 'U':
-                self.logger.info('New version found for : %s', entry[0])
-            elif entry[3] == 'D':
-                self.logger.info('File tagged for deletion : %s', entry[0])
+            if entry[3] == "U":
+                self.logger.info("New version found for : %s", entry[0])
+            elif entry[3] == "D":
+                self.logger.info("File tagged for deletion : %s", entry[0])
 
-        if 'CHANGELOG' in [i[0] for i in newfiles]:
-            print ('')
-            self.logger.info('== CHANGELOG ==')
-            changelog_url = self.updateurl + 'mcp/CHANGELOG'
+        if "CHANGELOG" in [i[0] for i in newfiles]:
+            print("")
+            self.logger.info("== CHANGELOG ==")
+            changelog_url = self.updateurl + "mcp/CHANGELOG"
             changelog = urllib.urlopen(changelog_url).readlines()
             for line in changelog:
                 self.logger.info(line.strip())
                 if not line.strip():
                     break
-            print('')
-            print ('')
+            print("")
+            print("")
 
         if not force:
-            print ('WARNING:')
-            print ('You are going to update MCP')
-            print ('Are you sure you want to continue ?')
-            answer = raw_input('If you really want to update, enter "Yes" ')
-            if answer.lower() not in ['yes', 'y']:
-                print ('You have not entered "Yes", aborting the update process')
+            print("WARNING:")
+            print("You are going to update MCP")
+            print("Are you sure you want to continue ?")
+            answer = raw_input("Do you really want to update? [y/n]: ")
+            if answer.lower() not in ["yes", "y"]:
+                print("You have not entered \"Yes\", aborting the update process")
                 sys.exit(1)
 
         for entry in newfiles:
-            if entry[3] == 'U':
-                self.logger.info('Retrieving file from server : %s', entry[0])
+            if entry[3] == "U":
+                self.logger.info("Retrieving file from server : %s", entry[0])
                 cur_file = os.path.normpath(entry[0])
                 path = os.path.dirname(cur_file)
                 if not os.path.isdir(path):
@@ -2229,10 +2227,10 @@ class Commands(object):
                         os.makedirs(path)
                     except OSError:
                         pass
-                file_url = self.updateurl + 'mcp/' + entry[0]
+                file_url = self.updateurl + "mcp/" + entry[0]
                 urllib.urlretrieve(file_url, cur_file)
-            elif entry[3] == 'D':
-                self.logger.info('Removing file from local install : %s', entry[0])
+            elif entry[3] == "D":
+                self.logger.info("Removing file from local install : %s", entry[0])
                 # Remove file here
 
     def unpackmodifiedclasses(self, side):
@@ -2243,13 +2241,13 @@ class Commands(object):
 
         # HINT: We need a table for the old md5 and the new ones
         md5table = {}
-        with open(md5lk[side], 'r') as fh:
+        with open(md5lk[side], "r") as fh:
             for row in fh:
                 row = row.strip().split()
                 if len(row) == 2:
                     md5table[row[0]] = row[1]
         md5reobtable = {}
-        with open(md5reoblk[side], 'r') as fh:
+        with open(md5reoblk[side], "r") as fh:
             for row in fh:
                 row = row.strip().split()
                 if len(row) == 2:
@@ -2257,50 +2255,50 @@ class Commands(object):
         trgclasses = []
         for key in md5reobtable.keys():
             if key not in md5table:
-                # We get the classname by splitting the path first than splitting on '$'
-                mainname = os.path.basename(key).split('$')[0]
+                # We get the classname by splitting the path first than splitting on "$"
+                mainname = os.path.basename(key).split("$")[0]
                 
                 # We recheck all the key to see if their main class is equivalent. If it is, we append the class to the marked classes
                 for subkey in md5reobtable.keys():
-                    subclassname = os.path.basename(subkey).split('$')[0]
+                    subclassname = os.path.basename(subkey).split("$")[0]
                     if subclassname == mainname and not subkey in trgclasses:
                         trgclasses.append(subkey)
                     
             elif md5table[key] != md5reobtable[key]:
-                # We get the classname by splitting the path first than splitting on '$'
-                mainname = os.path.basename(key).split('$')[0]
+                # We get the classname by splitting the path first than splitting on "$"
+                mainname = os.path.basename(key).split("$")[0]
                 
                 # We recheck all the key to see if their main class is equivalent. If it is, we append the class to the marked classes
                 for subkey in md5reobtable.keys():
-                    subclassname = os.path.basename(subkey).split('$')[0]
+                    subclassname = os.path.basename(subkey).split("$")[0]
                     if subclassname == mainname and not subkey in trgclasses:
                         trgclasses.append(subkey)
 
         for key in trgclasses:
-            if '$' in key and not key in md5table:
-                self.logger.info('> New inner class found: %s', key)
-            elif '$' in key and key in md5table:
-                self.logger.info('> Modified inner class found: %s', key)
-            elif not '$' in key and not key in md5table:
-                self.logger.info('> New class found: %s', key)
-            elif not '$' in key and key in md5table:    
-                self.logger.info('> Modified class found      : %s', key)                           
+            if "$" in key and not key in md5table:
+                self.logger.info("> New inner class found: %s", key)
+            elif "$" in key and key in md5table:
+                self.logger.info("> Modified inner class found: %s", key)
+            elif not "$" in key and not key in md5table:
+                self.logger.info("> New class found: %s", key)
+            elif not "$" in key and key in md5table:    
+                self.logger.info("> Modified class found      : %s", key)                           
 
         if not os.path.exists(outpathlk[side]):
             os.makedirs(outpathlk[side])
 
         # HINT: We extract the source files for the modified class files
         for in_class in trgclasses:
-            src_file = os.path.normpath(os.path.join(src[side], in_class + '.java'))
-            dest_file = os.path.normpath(os.path.join(outpathlk[side], in_class + '.java'))
+            src_file = os.path.normpath(os.path.join(src[side], in_class + ".java"))
+            dest_file = os.path.normpath(os.path.join(outpathlk[side], in_class + ".java"))
             if os.path.isfile(src_file):
                 if not os.path.exists(os.path.dirname(dest_file)):
                     os.makedirs(os.path.dirname(dest_file))
                 try:
                     shutil.copyfile(src_file, dest_file)
-                    self.logger.info('> Outputted %s to %s', in_class.ljust(35), outpathlk[side])
+                    self.logger.info("> Outputted %s to %s", in_class.ljust(35), outpathlk[side])
                 except IOError:
-                    self.logger.error('* File %s copy failed', in_class)
+                    self.logger.error("* File %s copy failed", in_class)
 
     def createreobfsrg(self):
         targsrg = {CLIENT: self.reobsrgclientsrg, SERVER: self.reobsrgserversrg}
@@ -2312,7 +2310,7 @@ class Commands(object):
                 continue
             deob = self.loadsrg(deobsrg[side], reverse=True)
             reob = self.loadsrg(reobsrg[side], reverse=False)
-            out = {'CL:': {}, 'MD:': {}, 'FD:': {}, 'PK:': {}}
+            out = {"CL:": {}, "MD:": {}, "FD:": {}, "PK:": {}}
             
             for type,de in deob.items():
                 re = reob[type]
@@ -2321,29 +2319,29 @@ class Commands(object):
             if os.path.isfile(targsrg[side]):
                 os.remove(targsrg[side])
             
-            with open(targsrg[side], 'wb') as fh:
-                for type in ['PK:', 'CL:', 'FD:', 'MD:']:
+            with open(targsrg[side], "wb") as fh:
+                for type in ["PK:", "CL:", "FD:", "MD:"]:
                     for k in sorted(out[type], key=out[type].get):
-                        fh.write('%s %s %s\n' % (type, k, out[type][k]))
+                        fh.write("%s %s %s\n" % (type, k, out[type][k]))
     
     def loadsrg(self, srg_file, reverse=False):
-        with open(srg_file, 'r') as fh:
+        with open(srg_file, "r") as fh:
             lines = fh.readlines()
-        srg = {'CL:': {}, 'MD:': {}, 'FD:': {}, 'PK:': {}}
+        srg = {"CL:": {}, "MD:": {}, "FD:": {}, "PK:": {}}
         
         for line in lines:
             line = line.strip()
             if len(line) == 0: continue
-            if line[0] == '#': continue
-            args = line.split(' ')
+            if line[0] == "#": continue
+            args = line.split(" ")
             type = args[0]
             
-            if type == 'PK:' or type == 'CL:' or type == 'FD:':
+            if type == "PK:" or type == "CL:" or type == "FD:":
                 srg[type][args[1]] = args[2]
-            elif type == 'MD:':
-                srg[type][args[1] + ' ' + args[2]] = args[3] + ' ' + args[4]
+            elif type == "MD:":
+                srg[type][args[1] + " " + args[2]] = args[3] + " " + args[4]
             else:
-                assert 'Unknown type %s' % line
+                assert "Unknown type %s" % line
 
         if reverse:
             for type,map in srg.items():

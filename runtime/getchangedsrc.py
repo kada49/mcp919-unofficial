@@ -15,10 +15,10 @@ from mcp import getchangedsrc_side
 
 
 def main():
-    parser = OptionParser(version='MCP %s' % Commands.fullversion())
-    parser.add_option('--client', dest='only_client', action='store_true', help='only process client', default=False)
-    parser.add_option('--server', dest='only_server', action='store_true', help='only process server', default=False)
-    parser.add_option('-c', '--config', dest='config', help='additional configuration file')
+    parser = OptionParser(version="MCP %s" % Commands.fullversion())
+    parser.add_option("--client", dest="only_client", action="store_true", help="only process client", default=False)
+    parser.add_option("--server", dest="only_server", action="store_true", help="only process server", default=False)
+    parser.add_option("-c", "--config", dest="config", help="additional configuration file")
     options, _ = parser.parse_args()
     getchangedsrc(options.config, options.only_client, options.only_server)
 
@@ -40,8 +40,8 @@ def getchangedsrc(conffile, only_client, only_server):
         if process_server:
             getchangedsrc_side(commands, SERVER)
     except Exception:  # pylint: disable-msg=W0703
-        logging.exception('FATAL ERROR')
+        logging.exception("FATAL ERROR")
         sys.exit(1)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

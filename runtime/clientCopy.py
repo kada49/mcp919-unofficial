@@ -1,8 +1,8 @@
-'''
+"""
 Created on Jun 30, 2013
 
 @author: kickban
-'''
+"""
 import os, sys
 import shutil
 import zipfile
@@ -17,47 +17,21 @@ def copyAssets(src, dst):
     try:
         shutil.copytree(src, dst)
     except:
-        print ("Error copying assets.")
+        print("Error copying assets.")
         sys.exit()
-
 
 def copyLibrary(src, dst, library):
     try:
-        dstPath = os.path.split(os.path.join(dst, library['filename']))[0]
+        dstPath = os.path.split(os.path.join(dst, library["filename"]))[0]
         
         if os.path.exists(dstPath):
             shutil.rmtree(dstPath)
         os.makedirs(dstPath)
         
-        shutil.copy2(os.path.join(src, library['filename']), dstPath)
+        shutil.copy2(os.path.join(src, library["filename"]), dstPath)
     except:
-        print ("Error copying library %s"%library['name'])
+        print("Error copying library %s"%library["name"])
         sys.exit()
-
-#def extractLibrary(src, dst, library, version):
-#    try:
-#        srcPath = os.path.join(src, library['filename'])
-#        dstPath = os.path.join(dst, "versions", version, "%s-natives"%version)
-#    
-#        if not os.path.exists(dstPath):
-#            os.makedirs(dstPath)
-#        
-#        jarFile = zipfile.ZipFile(srcPath)
-#        fileList = jarFile.namelist()
-#    
-#        for _file in fileList:
-#            if not os.path.exists(os.path.join(dstPath, _file)):
-#                exclude = False;
-#                for entry in library['exclude']:
-#                    if entry in _file:
-#                        exclude = True
-#                if not exclude:
-#                    print("Extracting file %s from library %s"%(_file, library['name'].split(":")[1]))
-#                    jarFile.extract(_file, dstPath)
-#
-#    except:
-#        print ("Error extracting library %s"%library['name'])
-#        sys.exit()
 
 def extractNative(root, name, jarname, version):
     try:
@@ -70,7 +44,7 @@ def extractNative(root, name, jarname, version):
         jarFile = zipfile.ZipFile(srcPath)
         jarFile.extract(name, dstPath)
     except:
-        print ("Error extracting native %s from %s"%(name, jarname))
+        print("Error extracting native %s from %s"%(name, jarname))
         sys.exit()
 
 def copyMinecraft(src, dst, version):
@@ -86,10 +60,8 @@ def copyMinecraft(src, dst, version):
         shutil.copy2(jarSrcPath, dstPath)
         shutil.copy2(jsonSrcPath, dstPath)
     except Exception as e:
-        print ("\nError while copying Minecraft : %s"%e)
+        print("\nError while copying Minecraft : %s"%e)
         sys.exit()    
-
-#########################################################################################################
 
 def copyClientAssets(commands, workDir = None):
     currentVersion = commands.versionClient
@@ -103,15 +75,7 @@ def copyClientAssets(commands, workDir = None):
     else:
         mcDir = workDir
 
-    #if not workDir:
-    #    mcDir = MinecraftDiscovery.getMinecraftPath()
-    #else:
-    #    mcDir = workDir
-
     dstDir       = commands.dirjars
-
-    #versionDir   = os.path.join(mcDir, "versions")
-    #librariesDir = os.path.join(mcDir, "libraries")
 
     print("Looking in %s for mc installs..."%os.path.join(mcDir, "versions")),
     MinecraftDiscovery.checkMCDir(mcDir, currentVersion)
@@ -125,29 +89,29 @@ def copyClientAssets(commands, workDir = None):
     mcLibraries = MinecraftDiscovery.getLibraries(mcDir, MinecraftDiscovery.getJSONFilename(mcDir, currentVersion), osKeyword)
     print("OK")
 
-    print ("Looking for minecraft main jar..."),
+    print("Looking for minecraft main jar..."),
     if (MinecraftDiscovery.checkMinecraftExists(dstDir, currentVersion)):
-        print ("OK")
+        print("OK")
     else:
-        print ("Not found")
-        print ("Copying minecraft main jar..."),
+        print("Not found")
+        print("Copying minecraft main jar..."),
         copyMinecraft(mcDir, dstDir, currentVersion)
         print("OK")
 
-    print ("> Checking libraries...")
+    print("> Checking libraries...")
     for library in mcLibraries.values():
         if not MinecraftDiscovery.checkLibraryExists(dstDir, library):
-            print ("\tCopying library %s..."%library['name'].split(':')[1]),
+            print("\tCopying library %s..."%library["name"].split(":")[1]),
             copyLibrary(mcDir, dstDir, library)
-            print ("OK")
+            print("OK")
 
-    print ("> Checking Natives...")
+    print("> Checking Natives...")
     for native, jarname in MinecraftDiscovery.getNatives(dstDir, mcLibraries).items():
         if not MinecraftDiscovery.checkNativeExists(dstDir, native, currentVersion):
-            print ("\tExtracting native %s..."%native),
+            print("\tExtracting native %s..."%native),
             extractNative(dstDir, native, jarname, currentVersion)
-            print ("OK")
+            print("OK")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     commands = Commands()
     copyClientAssets(commands)

@@ -15,10 +15,10 @@ from mcp import reformat_side
 
 
 def main():
-    parser = OptionParser(version='MCP %s' % Commands.fullversion())
-    parser.add_option('--client', dest='only_client', action='store_true', help='only process client', default=False)
-    parser.add_option('--server', dest='only_server', action='store_true', help='only process server', default=False)
-    parser.add_option('-c', '--config', dest='config', help='additional configuration file')
+    parser = OptionParser(version="MCP %s" % Commands.fullversion())
+    parser.add_option("--client", dest="only_client", action="store_true", help="only process client", default=False)
+    parser.add_option("--server", dest="only_server", action="store_true", help="only process server", default=False)
+    parser.add_option("-c", "--config", dest="config", help="additional configuration file")
     options, _ = parser.parse_args()
     reformat(options.config, options.only_client, options.only_server)
 
@@ -40,18 +40,18 @@ def reformat(conffile, only_client, only_server):
                 reformat_side(commands, CLIENT)
             except CalledProcessError:
                 # astyle failed
-                commands.logger.error('Reformat of client failed')
+                commands.logger.error("Reformat of client failed")
 
         if process_server:
             try:
                 reformat_side(commands, SERVER)
             except CalledProcessError:
                 # astyle failed
-                commands.logger.error('Reformat of server failed')
+                commands.logger.error("Reformat of server failed")
     except Exception:  # pylint: disable-msg=W0703
-        logging.exception('FATAL ERROR')
+        logging.exception("FATAL ERROR")
         sys.exit(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

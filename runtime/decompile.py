@@ -16,34 +16,34 @@ import clientCopy
 
 
 def main():
-    parser = OptionParser(version='MCP %s' % Commands.fullversion())
-    parser.add_option('--client', dest='only_client', action='store_true', help='only process client', default=False)
-    parser.add_option('--server', dest='only_server', action='store_true', help='only process server', default=False)
-    parser.add_option('-j', '--jad', dest='force_jad', action='store_true',
-                      help='force use of JAD even if Fernflower available', default=False)
-    parser.add_option('--rg', dest='force_rg', action='store_true',
-                      help='force use of RetroGuard even if SpecialSource available', default=False)
-    parser.add_option('-s', '--csv', dest='force_csv', action='store_true',
-                      help='force use of CSVs even if SRGs available', default=False)
-    parser.add_option('-r', '--norecompile', dest='no_recompile', action='store_true',
-                      help='disable recompile after decompile', default=False)
-    parser.add_option('-d', '--nocomments', dest='no_comments', action='store_true', help='disable javadoc',
+    parser = OptionParser(version="MCP %s" % Commands.fullversion())
+    parser.add_option("--client", dest="only_client", action="store_true", help="only process client", default=False)
+    parser.add_option("--server", dest="only_server", action="store_true", help="only process server", default=False)
+    parser.add_option("-j", "--jad", dest="force_jad", action="store_true",
+                      help="force use of JAD even if Fernflower available", default=False)
+    parser.add_option("--rg", dest="force_rg", action="store_true",
+                      help="force use of RetroGuard even if SpecialSource available", default=False)
+    parser.add_option("-s", "--csv", dest="force_csv", action="store_true",
+                      help="force use of CSVs even if SRGs available", default=False)
+    parser.add_option("-r", "--norecompile", dest="no_recompile", action="store_true",
+                      help="disable recompile after decompile", default=False)
+    parser.add_option("-d", "--nocomments", dest="no_comments", action="store_true", help="disable javadoc",
                       default=False)
-    parser.add_option('-a', '--noreformat', dest='no_reformat', action='store_true',
-                      help='disable source reformatting', default=False)
-    parser.add_option('-n', '--norenamer', dest='no_renamer', action='store_true',
-                      help='disable field and method renaming', default=False)
-    parser.add_option('-l', '--kill_lvt', dest='keep_lvt', action='store_false', help='erase local variable table',
+    parser.add_option("-a", "--noreformat", dest="no_reformat", action="store_true",
+                      help="disable source reformatting", default=False)
+    parser.add_option("-n", "--norenamer", dest="no_renamer", action="store_true",
+                      help="disable field and method renaming", default=False)
+    parser.add_option("-l", "--kill_lvt", dest="keep_lvt", action="store_false", help="erase local variable table",
                       default=True)
-    parser.add_option('-g', '--kill_generics', dest='keep_generics', action='store_false',
-                      help='Destroy generics', default=True)
-    parser.add_option('-o', '--onlypatch', dest='only_patch', action='store_true', help='only patch source',
+    parser.add_option("-g", "--kill_generics", dest="keep_generics", action="store_false",
+                      help="Destroy generics", default=True)
+    parser.add_option("-o", "--onlypatch", dest="only_patch", action="store_true", help="only patch source",
                       default=False)
-    parser.add_option('-p', dest='no_patch', action='store_true', help='Undocumented magic', default=False)
-    parser.add_option('-c', '--config', dest='config', help='additional configuration file')
-    parser.add_option('-w', '--workDir', dest='workdir', help='Change client lookup place (by default, ~/.minecraft)')
-    parser.add_option('--json', dest='json', help='Location of the json file for none standard installs')   
-    parser.add_option('--nocopy', dest='nocopy', action='store_true', help='Do not try to copy assets from minecraft install', default=False)       
+    parser.add_option("-p", dest="no_patch", action="store_true", help="Undocumented magic", default=False)
+    parser.add_option("-c", "--config", dest="config", help="additional configuration file")
+    parser.add_option("-w", "--workDir", dest="workdir", help="Change client lookup place (by default, ~/.minecraft)")
+    parser.add_option("--json", dest="json", help="Location of the json file for none standard installs")   
+    parser.add_option("--nocopy", dest="nocopy", action="store_true", help="Do not try to copy assets from minecraft install", default=False)       
 
 
     options, _ = parser.parse_args()
@@ -66,15 +66,15 @@ def decompile(conffile, force_jad, force_csv, no_recompile, no_comments, no_refo
         use_srg = commands.has_srg and not force_csv
 
         if force_jad and not commands.has_jad:
-            commands.logger.error('!! forcing jad when not available !!')
+            commands.logger.error("!! forcing jad when not available !!")
             sys.exit(1)
 
         if force_rg and not commands.has_rg:
-            commands.logger.error('!! forcing retroguard when not available !!')
+            commands.logger.error("!! forcing retroguard when not available !!")
             sys.exit(1)
 
         if force_csv and not commands.has_map_csv:
-            commands.logger.error('!! forcing csvs when not available !!')
+            commands.logger.error("!! forcing csvs when not available !!")
             sys.exit(1)
 
         # client or server
@@ -122,7 +122,7 @@ def decompile(conffile, force_jad, force_csv, no_recompile, no_comments, no_refo
             keep_lvt = True
 
         if force_rg:
-            commands.logger.info('> Creating Retroguard config files')
+            commands.logger.info("> Creating Retroguard config files")
             commands.creatergcfg(reobf=False, keep_lvt=keep_lvt, keep_generics=keep_generics, rg_update=rg_update)
 
         if not nocopy:
@@ -145,12 +145,12 @@ def decompile(conffile, force_jad, force_csv, no_recompile, no_comments, no_refo
                 srvdecomp = False
         except CalledProcessError:
             # retroguard or other called process error so bail
-            commands.logger.error('Decompile failed')
+            commands.logger.error("Decompile failed")
             sys.exit(1)
             
-        commands.logger.info('> Fixing \'StructureMineshaftPieces.java\'')
+        commands.logger.info("> Fixing \"StructureMineshaftPieces.java\"")
         commands.fixMCFile(0)
-        commands.logger.info('> Fixing \'Cartesian.java\'')
+        commands.logger.info("> Fixing \"Cartesian.java\"")
         commands.fixMCFile(1)
         
         if not no_recompile:
@@ -158,18 +158,18 @@ def decompile(conffile, force_jad, force_csv, no_recompile, no_comments, no_refo
                 try:
                     updatemd5_side(commands, CLIENT)
                 except CalledProcessError:
-                    commands.logger.error('Initial client recompile failed, correct source then run updatemd5')
+                    commands.logger.error("Initial client recompile failed, correct source then run updatemd5")
             if srvdecomp:
                 try:
                     updatemd5_side(commands, SERVER)
                 except CalledProcessError:
-                    commands.logger.error('Initial server recompile failed, correct source then run updatemd5')
+                    commands.logger.error("Initial server recompile failed, correct source then run updatemd5")
         else:
-            commands.logger.info('!! recompile disabled !!')
+            commands.logger.info("!! recompile disabled !!")
     except Exception:  # pylint: disable-msg=W0703
-        logging.exception('FATAL ERROR')
+        logging.exception("FATAL ERROR")
         sys.exit(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
